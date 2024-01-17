@@ -1,37 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import React from "react";
+// import { createRoot } from "react-dom/client";
+// import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
-function App() {
-  const [count, setCount] = useState(0)
-  console.log(GOOGLE_MAPS_API_KEY)
-  // console.log(process.env.GOOGLE_MAPS_API_KEY)
+// const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+// export default function App() {
 
+//   <APIProvider apiKey={API_KEY}>
+//     <Map
+//       zoom={3}
+//       center={{ lat: 22.54992, lng: 0 }}
+//       gestureHandling={"greedy"}
+//       disableDefaultUI={true}
+//     />
+//   </APIProvider>;
+// }
+
+import React from "react";
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  Pin,
+  InfoWindow,
+} from "@vis.gl/react-google-maps";
+
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+export default function App() {
+  const position = { lat: 52.52,  lng: 13.41 };
+  // 52.52437, 13.41053.
+  const [open, setOpen] = React.useState(false);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <APIProvider apiKey={API_KEY}>
+      <div style={{ height: "100vh", width: "100%" }}>
+        <Map
+          zoom={9}
+          center={position}
+          gestureHandling={"greedy"}
+          disableDefaultUI={false} //trueにすると、ズームのアイコンなどが全て非表示になる
+          mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
+        >
+          <AdvancedMarker position={position} onClick={() => setOpen(true)}>
+            <Pin
+              background={"green"}
+              borderColor={"pink"}
+              glyphColor={"yellow"}
+            ></Pin>
+          </AdvancedMarker>
+          {open && (
+            <InfoWindow position={position} onCloseClick={()=>setOpen(false)}>
+              <p>I'm in Berlin!</p>
+            </InfoWindow>
+          )}
+        </Map>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </APIProvider>
+  );
 }
-
-export default App
