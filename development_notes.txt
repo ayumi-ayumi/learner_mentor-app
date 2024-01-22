@@ -24,3 +24,7 @@ const todoItems = todos.map((todo) =>
     {todo.text}
   </li>
 )
+
+2. <input id="apple"/> 
+    <label htmlFor="apple">Apple</label> 
+  if having "htmlFor" in a label tag, clickable even on the text "Apple"

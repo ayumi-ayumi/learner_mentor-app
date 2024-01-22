@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import ShowMap from "./components/ShowMap";
-import Test from "./components/Test";
+import AddMyself from "./components/AddMyself";
 
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<ShowMap />} />
-      <Route path="test" element={<Test />} />
+      <Route path="addmyself" element={<AddMyself />} />
     </Routes>
     </BrowserRouter>
 
