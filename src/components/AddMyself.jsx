@@ -1,50 +1,49 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../styles/AddMyself.scss";
+import { db, userCollection,} from "../firebase";
+import { collection, addDoc, getDoc, doc, getDocs, onSnapshot } from "firebase/firestore"; 
 
-// export default function AddMyself() {
-//   const { register, handleSubmit } = useForm();
-
-//   const onSubmit = (data) => {
-//     alert(JSON.stringify(data));
-//   };
-
-//   const Input = ({ label, register, required }) => (
-//     <>
-//       <label>{label}</label>
-//       <input {...register(label, { required })} />
-//     </>
-//   );
-
-//   const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
-//     <>
-//       <label>{label}</label>
-//       <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
-//         <option value="20">20</option>
-//         <option value="30">30</option>
-//       </select>
-//     </>
-//   ));
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <Input label="First Name" register={register}  />
-//       <Select label="Age" {...register("Age")} />
-//       <input type="submit" />
-//     </form>
-//   );
-// }
 
 export default function AddMyself() {
+
+  const [users, setUsers] = useState([])
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  //Store the user data when clicking the submit button
+  const onSubmit = (data) => {
+    addDoc(collection(db, "userCollection"), data)
+    console.log(data)
+  };
   console.log(errors);
 
+
+  //Obtain data from firebase
+  React.useEffect(()=>{
+    const userCollection = getDocs(collection(db, "userCollection"));
+    userCollection.then(snap => setUsers(snap.docs.map((doc)=>({...doc.data()}))))
+    
+    /* リアルタイムで取得 */
+    // onSnapshot(userCollection, (snap) => {
+      //   // console.log(querySnapshot.docs);
+      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+      // });
+    }, [])
+
+
+
   return (
+    <>
+    <div> 
+    {users.map((user) => (
+      <p>{user.name}</p>
+        ))}
+    </div>
     <div className="form-container">
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* 1. Learner or Mentor */}
@@ -95,42 +94,42 @@ export default function AddMyself() {
         <div className="input-container">
           <legend>What do you currently learn?</legend>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="HTML&CSS"
             id="htmlAndCss"
           />
           <label htmlFor="htmlAndCss">HTML&CSS</label>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="JavaScript"
             id="javascript"
           />
           <label htmlFor="javascript">JavaScript</label>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="Python"
             id="python"
           />
           <label htmlFor="python">Python</label>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="React"
             id="react"
           />
           <label htmlFor="react">React</label>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="TypeScript"
             id="typescript"
           />
           <label htmlFor="typescript">TypeScript</label>
           <input
-            {...register("checkbox")}
+            {...register("whatToLearn")}
             type="checkbox"
             value="PHP"
             id="php"
@@ -160,7 +159,7 @@ export default function AddMyself() {
                 // required: "Choose learner or mentor",
               })}
             />
-            <label htmlFor="howLongLearned"> &lt; 3 months</label>
+            <label htmlFor="lessThan3Months"> &lt; 3 months</label>
 
             <input
               type="radio"
@@ -198,42 +197,42 @@ export default function AddMyself() {
         <div className="input-container">
           <legend>Which Language do you speak?</legend>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="English"
             id="english"
           />
           <label htmlFor="english">English</label>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="Spanish"
             id="spanish"
           />
           <label htmlFor="spanish">Spanish</label>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="French"
             id="french"
           />
           <label htmlFor="french">French</label>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="Chinese"
             id="chinese"
           />
           <label htmlFor="chinese">Chinese</label>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="German"
             id="german"
           />
           <label htmlFor="german">German</label>
           <input
-            {...register("checkbox")}
+            {...register("languageToSpeak")}
             type="checkbox"
             value="Italian"
             id="italian"
@@ -244,14 +243,14 @@ export default function AddMyself() {
         <div className="input-container">
           <legend>Do you want to meet in person or online?</legend>
           <input
-            {...register("checkbox")}
+            {...register("inPersonOrOnline")}
             type="checkbox"
             value="In person"
             id="inPerson"
           />
           <label htmlFor="inPerson">In person</label>
           <input
-            {...register("checkbox")}
+            {...register("inPersonOrOnline")}
             type="checkbox"
             value="Online"
             id="online"
@@ -294,5 +293,7 @@ export default function AddMyself() {
         <input type="submit" value="Add Me!" />
       </form>
     </div>
+
+    </>
   );
 }

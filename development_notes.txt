@@ -28,3 +28,8 @@ const todoItems = todos.map((todo) =>
 2. <input id="apple"/> 
     <label htmlFor="apple">Apple</label> 
   if having "htmlFor" in a label tag, clickable even on the text "Apple"
+
+
+  -----------
+  the data on AddMyself page will be stored on firebase.
+  the data from firebase will be shown on the main page.
