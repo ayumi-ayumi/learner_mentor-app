@@ -9,7 +9,7 @@ export default function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<ShowMap />} />
-      <Route path="/test" element={<Test />} />
+      <Route path="test" element={<Test />} />
     </Routes>
     </BrowserRouter>
 
