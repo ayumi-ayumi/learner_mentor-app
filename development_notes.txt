@@ -29,6 +29,17 @@ const todoItems = todos.map((todo) =>
     <label htmlFor="apple">Apple</label> 
   if having "htmlFor" in a label tag, clickable even on the text "Apple"
 
+3. Error on console: "Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance."
+>>> I dont know well but, after I set css 
+#root, #map {
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  // justify-content: baseline;
+  }
+
+  , then the map shows up
+
 
   -----------
   the data on AddMyself page will be stored on firebase.

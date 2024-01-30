@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/ShowMap.scss";
 import {
   APIProvider,
@@ -7,11 +7,23 @@ import {
   Pin,
   InfoWindow,
   Marker,
+  useApiIsLoaded,
+  APILoadingStatus,
+  useApiLoadingStatus
 } from "@vis.gl/react-google-maps";
+// import { Loader } from "@googlemaps/js-api-loader"
+
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function ShowMap() {
+  // const loader = new Loader({
+  //   apiKey: API_KEY,
+  //   version: "weekly",
+  // });
+
+  // console.log(loader.load())
+
   // const position = { lat: 52.52, lng: 13.41 }; //Berlin
   const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState({});
@@ -67,32 +79,33 @@ export default function ShowMap() {
           center={{ lat: 52.52, lng: 13.41 }}
           gestureHandling={"greedy"}
           disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-          mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
+          // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
           // onClick={() => setActiveMarker(null)}
         >
-          {markers.map((marker) => (
-            //{markers.map(({ id, name, position }) => (
-            <Marker
-              key={marker.id}
-              position={marker.position}
-              // onClick={() => setOpen(true)}
-              onClick={() => onMarkerClick(marker)}
-            />
-          ))}
-
-          {/* {selectPlace &&  ( */}
-          {open && (
-            <InfoWindow
-              position={selectPlace.position}
-              onCloseClick={() => setOpen(false)} // なくても動く
-            >
-              <p style={{ backgroundColor: "yellow" }}>
-                I'm ! I'm in {selectPlace.name}!
-              </p>
-            </InfoWindow>
-          )}
         </Map>
-      </div>
+      </div> 
     </APIProvider>
   );
 }
+
+// {markers.map((marker) => (
+//   //{markers.map(({ id, name, position }) => (
+//   <Marker
+//     key={marker.id}
+//     position={marker.position}
+//     // onClick={() => setOpen(true)}
+//     onClick={() => onMarkerClick(marker)}
+//   />
+// ))}
+
+// {/* {selectPlace &&  ( */}
+// {open && (
+//   <InfoWindow
+//     position={selectPlace.position}
+//     onCloseClick={() => setOpen(false)} // なくても動く
+//   >
+//     <p style={{ backgroundColor: "yellow" }}>
+//       I'm ! I'm in {selectPlace.name}!
+//     </p>
+//   </InfoWindow>
+// )}
