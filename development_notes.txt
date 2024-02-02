@@ -42,5 +42,5 @@ const todoItems = todos.map((todo) =>
 
 
   -----------
-  the data on AddMyself page will be stored on firebase.
+  the data on AddProfile page will be stored on firebase.
   the data from firebase will be shown on the main page.

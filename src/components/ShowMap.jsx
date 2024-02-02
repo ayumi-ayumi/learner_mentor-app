@@ -9,20 +9,25 @@ import {
   Marker,
   useApiIsLoaded,
   APILoadingStatus,
-  useApiLoadingStatus
+  useApiLoadingStatus,
 } from "@vis.gl/react-google-maps";
-// import { Loader } from "@googlemaps/js-api-loader"
-
+import { db } from "../firebase";
+import {
+  collection,
+  addDoc,
+  getDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  setDoc,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function ShowMap() {
-  // const loader = new Loader({
-  //   apiKey: API_KEY,
-  //   version: "weekly",
-  // });
-
-  // console.log(loader.load())
+  const [users, setUsers] = useState([]);
 
   // const position = { lat: 52.52, lng: 13.41 }; //Berlin
   const [open, setOpen] = useState(false);
@@ -42,7 +47,26 @@ export default function ShowMap() {
   //   setActiveMarker(marker); //id:3
   // };
 
+  //Obtain data from firebase
+  React.useEffect(() => {
+    // const users = getDocs(collection(db, "users"));
+    // users.then((snap) =>
+    //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })))
+    // );
+    
+    //Order by the date 
+    const postData = collection(db,"users");
+    const queryRef = query(postData,orderBy("datetime","asc"));
+    onSnapshot(queryRef,(post)=>{
+      setUsers(post.docs.map((doc)=>({...doc.data()})))
+    });
 
+    /* リアルタイムで取得 */
+    // onSnapshot(users, (snap) => {
+      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+      // });
+    }, []);
+    console.log(users)
 
   const onClose = () => {
     setSelectPlace(null);
@@ -73,6 +97,11 @@ export default function ShowMap() {
 
   return (
     <APIProvider apiKey={API_KEY}>
+      <div>
+        {users.map((user) => (
+          <div key={user.id}>{user.name}</div>
+        ))}
+      </div>
       <div id="map">
         <Map
           zoom={11}
@@ -82,30 +111,29 @@ export default function ShowMap() {
           // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
           // onClick={() => setActiveMarker(null)}
         >
+          {markers.map((marker) => (
+            //{markers.map(({ id, name, position }) => (
+            <Marker
+              key={marker.id}
+              position={marker.position}
+              // onClick={() => setOpen(true)}
+              onClick={() => onMarkerClick(marker)}
+            />
+          ))}
+
+          {/* {selectPlace &&  ( */}
+          {open && (
+            <InfoWindow
+              position={selectPlace.position}
+              onCloseClick={() => setOpen(false)} // なくても動く
+            >
+              <p style={{ backgroundColor: "yellow" }}>
+                I'm ! I'm in {selectPlace.name}!
+              </p>
+            </InfoWindow>
+          )}
         </Map>
-      </div> 
+      </div>
     </APIProvider>
   );
 }
-
-// {markers.map((marker) => (
-//   //{markers.map(({ id, name, position }) => (
-//   <Marker
-//     key={marker.id}
-//     position={marker.position}
-//     // onClick={() => setOpen(true)}
-//     onClick={() => onMarkerClick(marker)}
-//   />
-// ))}
-
-// {/* {selectPlace &&  ( */}
-// {open && (
-//   <InfoWindow
-//     position={selectPlace.position}
-//     onCloseClick={() => setOpen(false)} // なくても動く
-//   >
-//     <p style={{ backgroundColor: "yellow" }}>
-//       I'm ! I'm in {selectPlace.name}!
-//     </p>
-//   </InfoWindow>
-// )}
