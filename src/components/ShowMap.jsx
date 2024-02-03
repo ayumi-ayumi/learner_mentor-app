@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/ShowMap.scss";
 import {
   APIProvider,
@@ -10,6 +10,7 @@ import {
   useApiIsLoaded,
   APILoadingStatus,
   useApiLoadingStatus,
+  useAutocomplete,
 } from "@vis.gl/react-google-maps";
 import { db } from "../firebase";
 import {
@@ -29,7 +30,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export default function ShowMap() {
   const [users, setUsers] = useState([]);
 
-  // const position = { lat: 52.52, lng: 13.41 }; //Berlin
+  const center = { lat: 52.52, lng: 13.41 }; //Berlin
   const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState({});
   const [selectPlace, setSelectPlace] = useState({});
@@ -53,26 +54,25 @@ export default function ShowMap() {
     // users.then((snap) =>
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })))
     // );
-    
-    //Order by the date 
-    const postData = collection(db,"users");
-    const queryRef = query(postData,orderBy("datetime","asc"));
-    onSnapshot(queryRef,(post)=>{
-      setUsers(post.docs.map((doc)=>({...doc.data()})))
+
+    //Order by the date
+    const postData = collection(db, "users");
+    const queryRef = query(postData, orderBy("datetime", "asc"));
+    onSnapshot(queryRef, (post) => {
+      setUsers(post.docs.map((doc) => ({ ...doc.data() })));
     });
 
     /* リアルタイムで取得 */
     // onSnapshot(users, (snap) => {
-      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
-      // });
-    }, []);
-    console.log(users)
+    //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+    // });
+  }, []);
 
   const onClose = () => {
     setSelectPlace(null);
   };
 
-  const markers = [
+  const sampleMarkers = [
     {
       id: 1,
       name: "Treptower Park",
@@ -94,18 +94,147 @@ export default function ShowMap() {
       position: { lat: 52.554803, lng: 13.28903 },
     },
   ];
+  const [markers, setMarkers] = useState(sampleMarkers)
+  // console.log(markers)
+  // setMarkers([...markers, {
+  //   id: 1,
+  //   name: "Treptower Park",
+  //   position: { lat: 52.488449, lng: 13.469631 },
+  // }])
+  // setFruits([...fruits, 'ドリアン'])
+
+
+  // const inputRef = useRef(null);
+  // const [inputValue, setInputValue] = useState("");
+
+  // const onPlaceChanged = (place) => {
+  //   if (place) {
+  //     setInputValue(place.formatted_address || place.name);
+  //   }
+
+  //   // Keep focus on input element
+  //   inputRef.current && inputRef.current.focus();
+  // };
+
+  // useAutocomplete({
+  //   inputField: inputRef && inputRef.current,
+  //   onPlaceChanged,
+  // });
+
+  // const handleInputChange = (event) => {
+  //   setInputValue(event.target.value);
+  // };
+
+  // console.log(inputValue)
+
+  // const inputRef = useRef(null);
+  // const [inputValue, setInputValue] = useState('');
+  // const [data, setData] = useState();
+
+  // const onPlaceChanged = () => {
+  //   if (place) {
+  //     setInputValue(place.formatted_address || place.name);
+  //   }
+
+  //   // Keep focus on input element
+  //   inputRef.current && inputRef.current.focus();
+  // };
+
+  // const autocompleteInstance = useAutocomplete({
+  //   inputField: inputRef && inputRef.current,
+  //   onPlaceChanged,
+  // });
+
+  // const handleInputChange = (event) => {
+  //   setInputValue(event.target.value);
+  // };
+  // console.log(autocompleteInstance)
+
+  // useEffect(() => {
+  //   if (autocompleteInstance?.getPlace()) {
+  //     const { formatted_address, name } = autocompleteInstance.getPlace();
+  //     console.log(123)
+
+  //     setData((prev) => {
+  //       return {
+  //         ...prev,
+  //         place: formatted_address || name,
+  //       };
+  //     });
+  //   }
+  // }, [inputValue]);
+
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState('');
+  const [markerPoint, setMarkerPoint] = useState("");
+  // const [markerPoint, setMarkerPoint] = useState({key: "apple", lat:0, lng:0});
+  // const [markerPoint, setMarkerPoint] = useState(center);
+  // console.log(center)
+  
+  
+  function getMapData() {
+    try {
+      setIsLoading(true);
+      // geocoderオブジェクトの取得
+      const geocoder = new window.google.maps.Geocoder();
+      let getLat = 0;
+      let getLng = 0;
+      // 検索キーワードを使ってGeocodeでの位置検索
+      geocoder.geocode({ address: searchWord }, async (results, status) => {
+        if (status === 'OK' && results) {
+          getLat = results[0].geometry.location.lat();
+          getLng = results[0].geometry.location.lng();
+          // const center = {
+            //     lat: results[0].geometry.location.lat(),
+            //     lng: results[0].geometry.location.lng()
+            //   };
+            //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+            //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+            
+            const searchWordPosition = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng()
+            };
+            console.log(getLat, getLng)
+            console.log(searchWordPosition)
+            console.log(markerPoint)
+            setMarkerPoint("banana");
+            console.log(markerPoint)
+            
+          // setPerson({
+          //   ...person, // Copy the old fields
+          //   firstName: e.target.value // But override this one
+          // });
+
+            // getNearFood(getLat, getLng);
+            // setMarkers([...markers, {id: markers.length + 1, name: searchWord,  position: { lat: markerPoint.lat, lng: markerPoint.lng },}])
+            setSearchWord("")
+            console.log(markers)
+          }
+        
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      alert('検索処理でエラーが発生しました！');
+      setIsLoading(false);
+      throw error;
+    }
+  }
+
 
   return (
-    <APIProvider apiKey={API_KEY}>
-      <div>
+    <APIProvider apiKey={API_KEY} libraries={['places']}>
+      {/* <div>
         {users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
-      </div>
+      </div> */}
       <div id="map">
         <Map
           zoom={11}
-          center={{ lat: 52.52, lng: 13.41 }}
+          center={center}
           gestureHandling={"greedy"}
           disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
           // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
@@ -133,6 +262,14 @@ export default function ShowMap() {
             </InfoWindow>
           )}
         </Map>
+        {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
+          <input type="text"  style={{ width: '100%' }} onChange={(e) => { setSearchWord(e.target.value) }}></input>
+          <button
+            type="button"
+            onClick={() => getMapData() }
+          >
+            検索
+          </button>
       </div>
     </APIProvider>
   );

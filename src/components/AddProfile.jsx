@@ -14,6 +14,8 @@ import {
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 export default function AddProfile() {
   const [users, setUsers] = useState([]);
 
@@ -41,12 +43,11 @@ export default function AddProfile() {
     // const users = getDocs(collection(db, "users"));
     // users.then((snap) => setUsers(snap.docs.map((doc) => ({ ...doc.data() }))));
 
-    const postData = collection(db,"users");
-    const queryRef = query(postData,orderBy("datetime","asc"));
-    onSnapshot(queryRef,(post)=>{
-      setUsers(post.docs.map((doc)=>({...doc.data()})))
+    const postData = collection(db, "users");
+    const queryRef = query(postData, orderBy("datetime", "asc"));
+    onSnapshot(queryRef, (post) => {
+      setUsers(post.docs.map((doc) => ({ ...doc.data() })));
     });
-
 
     /* リアルタイムで取得 */
     // onSnapshot(users, (snap) => {
@@ -313,6 +314,11 @@ export default function AddProfile() {
           <input type="submit" value="Add Me!" />
         </form>
       </div>
+      <script
+        async
+        src={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`}
+        // src="https://maps.googleapis.com/maps/api/js?key={API_KEY}&libraries=places&callback=initMap"
+      ></script>
     </>
   );
 }
