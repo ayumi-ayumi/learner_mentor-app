@@ -167,28 +167,89 @@ export default function ShowMap() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState('');
-  const [markerPoint, setMarkerPoint] = useState("");
+  const [markerPoint, setMarkerPoint] = useState();
+  // const [markerPoint, setMarkerPoint] = useState(center);
   // const [markerPoint, setMarkerPoint] = useState({key: "apple", lat:0, lng:0});
   // const [markerPoint, setMarkerPoint] = useState(center);
   // console.log(center)
   
-  
+  // function abc() {
+  //   const new_count = markerPoint + 1;
+  //   setMarkerPoint(new_count)
+  //   console.log(new_count)
+  // }
+  // function getMapData() {
+  //     // setIsLoading(true);
+  //     // geocoderオブジェクトの取得
+  //     setMarkerPoint("apple")
+  //     console.log(markerPoint)
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     let getLat = 0;
+  //     let getLng = 0;
+  //     // 検索キーワードを使ってGeocodeでの位置検索
+  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
+  //       if (status === 'OK' && results) {
+  //         // console.log(results)
+  //         // getLat = results[0].geometry.location.lat();
+  //         // getLng = results[0].geometry.location.lng();
+  //         // const center = {
+  //         //       lat: results[0].geometry.location.lat(),
+  //         //       lng: results[0].geometry.location.lng()
+  //         //     };
+  //           //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  //           //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+            
+  //           const searchWordPosition = {
+  //             lat: results[0].geometry.location.lat(),
+  //             lng: results[0].geometry.location.lng()
+  //           };
+            
+  //           console.log(searchWordPosition)
+  //           // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+  //           // const searchWordPosition = {
+  //           //   lat: results[0].geometry.location.lat(),
+  //           //   lng: results[0].geometry.location.lng()
+  //           // };
+
+  //           // console.log(getLat, getLng)
+  //           // console.log(searchWord)
+  //           // console.log(searchWordPosition)
+  //           // console.log(markerPoint)
+  //           // setMarkerPoint("banana");
+  //           // console.log(markerPoint)
+            
+  //         // setPerson({
+  //         //   ...person, // Copy the old fields
+  //         //   firstName: e.target.value // But override this one
+  //         // });
+
+  //           // getNearFood(getLat, getLng);
+  //           // setMarkers([...markers, {id: markers.length + 1, name: searchWord,  position: { lat: markerPoint.lat, lng: markerPoint.lng },}])
+  //           setSearchWord("")
+  //           console.log(markers)
+  //         }
+        
+  //     });
+
+  //     setIsLoading(false);
+  // }
+
   function getMapData() {
     try {
       setIsLoading(true);
       // geocoderオブジェクトの取得
       const geocoder = new window.google.maps.Geocoder();
-      let getLat = 0;
-      let getLng = 0;
+      // let getLat = 0;
+      // let getLng = 0;
       // 検索キーワードを使ってGeocodeでの位置検索
       geocoder.geocode({ address: searchWord }, async (results, status) => {
         if (status === 'OK' && results) {
-          getLat = results[0].geometry.location.lat();
-          getLng = results[0].geometry.location.lng();
+          // getLat = results[0].geometry.location.lat();
+          // getLng = results[0].geometry.location.lng();
           // const center = {
-            //     lat: results[0].geometry.location.lat(),
-            //     lng: results[0].geometry.location.lng()
-            //   };
+          //       lat: results[0].geometry.location.lat(),
+          //       lng: results[0].geometry.location.lng()
+          //     };
             //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
             //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
             
@@ -196,11 +257,21 @@ export default function ShowMap() {
               lat: results[0].geometry.location.lat(),
               lng: results[0].geometry.location.lng()
             };
-            console.log(getLat, getLng)
-            console.log(searchWordPosition)
-            console.log(markerPoint)
-            setMarkerPoint("banana");
-            console.log(markerPoint)
+            
+            // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+            setMarkerPoint(searchWordPosition)
+            setMarkers([...markers, {id: markers.length + 1, name: searchWord,  position: { lat: searchWordPosition.lat, lng: searchWordPosition.lng },}])
+            // const searchWordPosition = {
+            //   lat: results[0].geometry.location.lat(),
+            //   lng: results[0].geometry.location.lng()
+            // };
+
+            // console.log(getLat, getLng)
+            // console.log(searchWord)
+            // console.log(searchWordPosition)
+            // console.log(markerPoint)
+            // setMarkerPoint("banana");
+            // console.log(markerPoint)
             
           // setPerson({
           //   ...person, // Copy the old fields
@@ -208,9 +279,7 @@ export default function ShowMap() {
           // });
 
             // getNearFood(getLat, getLng);
-            // setMarkers([...markers, {id: markers.length + 1, name: searchWord,  position: { lat: markerPoint.lat, lng: markerPoint.lng },}])
             setSearchWord("")
-            console.log(markers)
           }
         
       });
@@ -222,6 +291,7 @@ export default function ShowMap() {
       throw error;
     }
   }
+  console.log(markers)
 
 
   return (
@@ -267,6 +337,8 @@ export default function ShowMap() {
           <button
             type="button"
             onClick={() => getMapData() }
+            // onClick={ abc }
+            // onClick={() => abc() }
           >
             検索
           </button>
