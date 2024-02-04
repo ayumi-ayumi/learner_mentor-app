@@ -61,40 +61,140 @@ export default function ShowMap() {
     onSnapshot(queryRef, (post) => {
       setUsers(post.docs.map((doc) => ({ ...doc.data() })));
     });
-
+    
     /* リアルタイムで取得 */
     // onSnapshot(users, (snap) => {
-    //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
-    // });
-  }, []);
+      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+      // });
+    }, []);
 
   const onClose = () => {
     setSelectPlace(null);
   };
 
-  const sampleMarkers = [
-    {
-      id: 1,
-      name: "Treptower Park",
-      position: { lat: 52.488449, lng: 13.469631 },
-    },
-    {
-      id: 2,
-      name: "Tempelhofer Feld ",
-      position: { lat: 52.474926, lng: 13.400312 },
-    },
-    {
-      id: 3,
-      name: "Alexanderplatz",
-      position: { lat: 52.521992, lng: 13.413244 },
-    },
-    {
-      id: 4,
-      name: "Tegel airport",
-      position: { lat: 52.554803, lng: 13.28903 },
-    },
-  ];
-  const [markers, setMarkers] = useState(sampleMarkers)
+
+  // const sampleMarkers = [
+  //   {
+  //     id: 1,
+  //     name: "Treptower Park",
+  //     position: { lat: 52.488449, lng: 13.469631 },
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Tempelhofer Feld ",
+  //     position: { lat: 52.474926, lng: 13.400312 },
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Alexanderplatz",
+  //     position: { lat: 52.521992, lng: 13.413244 },
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Tegel airport",
+  //     position: { lat: 52.554803, lng: 13.28903 },
+  //   },
+  // ];
+  
+  const [markers, setMarkers] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
+  const [markerPoint, setMarkerPoint] = useState();
+
+  function getMapData(location) {
+    try {
+      setIsLoading(true);
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ address: location }, async (results, status) => {
+        if (status === "OK" && results) {
+          // const a = results[0].address_components
+          // console.log(a)
+
+          // for (let i = 0; i < a.length; i++) {
+          //   if(a[i].types[0] === "postal_code") {
+          //     console.log(a[i].types[0])
+          //   }
+          // }
+
+          const locationPosition = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+          console.log(locationPosition)
+          return locationPosition
+
+
+          // setMarkerPoint(locationPosition);
+          // setMarkers([
+          //   ...markers,
+          //   {
+          //     id: markers.length + 1,
+          //     name: location,
+          //     position: {
+          //       lat: locationPosition.lat,
+          //       lng: locationPosition.lng,
+          //     },
+          //   },
+          // ]);
+          // setSearchWord("");
+        }
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      alert("検索処理でエラーが発生しました！");
+      setIsLoading(false);
+      throw error;
+    }
+  }
+  
+  //Catch the location data from firebase, make into the array.
+  const [usersLocation, setUsersLocation] = useState([]); //Array of zipcode
+
+  // // console.log(users)
+  // console.log(getMapData(13357))
+  // console.log(getMapData("Gropiusstr.6"))
+  
+  // useEffect(()=>{
+
+  //   // console.log(123)
+  //   const locationFromAddProfile = users.map((user)=>{
+  //     // const a = getMapData(user.location)
+  //     console.log("apple")
+  //     // console.log(getMapData(user.location))
+  //     if(!user.location) {
+  //       return {...user, postion: null}
+  //     } else {
+  //       return {
+  //         ...user,
+  //         postion: getMapData(user.location)
+  //       }
+  //     }
+  //   })
+  //   console.log(locationFromAddProfile)
+  //   // return locationFromAddProfile
+  //   setUsersLocation(locationFromAddProfile)
+  // },[users])
+  const locationFromAddProfile = users.map((user)=>{
+    // const a = getMapData(user.location)
+    // console.log(getMapData(user.location))
+    if(!user.location) {
+      return {...user, postion: null}
+    } else {
+      console.log("apple")
+      return {
+        ...user,
+        postion: ()=>{getMapData(user.location)}
+      }
+    }
+  })
+
+  console.log(locationFromAddProfile)
+  
+
+
+
+  // const [markers, setMarkers] = useState(sampleMarkers);
   // console.log(markers)
   // setMarkers([...markers, {
   //   id: 1,
@@ -102,7 +202,6 @@ export default function ShowMap() {
   //   position: { lat: 52.488449, lng: 13.469631 },
   // }])
   // setFruits([...fruits, 'ドリアン'])
-
 
   // const inputRef = useRef(null);
   // const [inputValue, setInputValue] = useState("");
@@ -164,15 +263,16 @@ export default function ShowMap() {
   //   }
   // }, [inputValue]);
 
-  
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState('');
-  const [markerPoint, setMarkerPoint] = useState();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [searchWord, setSearchWord] = useState("");
+  // const [markerPoint, setMarkerPoint] = useState();
+
+
   // const [markerPoint, setMarkerPoint] = useState(center);
   // const [markerPoint, setMarkerPoint] = useState({key: "apple", lat:0, lng:0});
   // const [markerPoint, setMarkerPoint] = useState(center);
   // console.log(center)
-  
+
   // function abc() {
   //   const new_count = markerPoint + 1;
   //   setMarkerPoint(new_count)
@@ -198,12 +298,12 @@ export default function ShowMap() {
   //         //     };
   //           //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
   //           //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
-            
+
   //           const searchWordPosition = {
   //             lat: results[0].geometry.location.lat(),
   //             lng: results[0].geometry.location.lng()
   //           };
-            
+
   //           console.log(searchWordPosition)
   //           // setMarkerPoint({...markerPoint, lat: 52.6117109,})
   //           // const searchWordPosition = {
@@ -217,7 +317,7 @@ export default function ShowMap() {
   //           // console.log(markerPoint)
   //           // setMarkerPoint("banana");
   //           // console.log(markerPoint)
-            
+
   //         // setPerson({
   //         //   ...person, // Copy the old fields
   //         //   firstName: e.target.value // But override this one
@@ -228,79 +328,87 @@ export default function ShowMap() {
   //           setSearchWord("")
   //           console.log(markers)
   //         }
-        
+
   //     });
 
   //     setIsLoading(false);
   // }
 
-  function getMapData() {
-    try {
-      setIsLoading(true);
-      // geocoderオブジェクトの取得
-      const geocoder = new window.google.maps.Geocoder();
-      // let getLat = 0;
-      // let getLng = 0;
-      // 検索キーワードを使ってGeocodeでの位置検索
-      geocoder.geocode({ address: searchWord }, async (results, status) => {
-        if (status === 'OK' && results) {
-          // getLat = results[0].geometry.location.lat();
-          // getLng = results[0].geometry.location.lng();
-          // const center = {
-          //       lat: results[0].geometry.location.lat(),
-          //       lng: results[0].geometry.location.lng()
-          //     };
-            //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
-            //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
-            
-            const searchWordPosition = {
-              lat: results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng()
-            };
-            
-            // setMarkerPoint({...markerPoint, lat: 52.6117109,})
-            setMarkerPoint(searchWordPosition)
-            setMarkers([...markers, {id: markers.length + 1, name: searchWord,  position: { lat: searchWordPosition.lat, lng: searchWordPosition.lng },}])
-            // const searchWordPosition = {
-            //   lat: results[0].geometry.location.lat(),
-            //   lng: results[0].geometry.location.lng()
-            // };
+  // function getMapData() {
+  //   try {
+  //     setIsLoading(true);
+  //     // geocoderオブジェクトの取得
+  //     // const geocoder = new google.maps.Geocoder();
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     // let getLat = 0;
+  //     // let getLng = 0;
+  //     // 検索キーワードを使ってGeocodeでの位置検索
+  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
+  //       if (status === "OK" && results) {
+  //         // getLat = results[0].geometry.location.lat();
+  //         // getLng = results[0].geometry.location.lng();
+  //         // const center = {
+  //         //       lat: results[0].geometry.location.lat(),
+  //         //       lng: results[0].geometry.location.lng()
+  //         //     };
+  //         //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  //         //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
 
-            // console.log(getLat, getLng)
-            // console.log(searchWord)
-            // console.log(searchWordPosition)
-            // console.log(markerPoint)
-            // setMarkerPoint("banana");
-            // console.log(markerPoint)
-            
-          // setPerson({
-          //   ...person, // Copy the old fields
-          //   firstName: e.target.value // But override this one
-          // });
+  //         const searchWordPosition = {
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         };
 
-            // getNearFood(getLat, getLng);
-            setSearchWord("")
-          }
-        
-      });
+  //         // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+  //         setMarkerPoint(searchWordPosition);
+  //         setMarkers([
+  //           ...markers,
+  //           {
+  //             id: markers.length + 1,
+  //             name: searchWord,
+  //             position: {
+  //               lat: searchWordPosition.lat,
+  //               lng: searchWordPosition.lng,
+  //             },
+  //           },
+  //         ]);
+  //         // const searchWordPosition = {
+  //         //   lat: results[0].geometry.location.lat(),
+  //         //   lng: results[0].geometry.location.lng()
+  //         // };
 
-      setIsLoading(false);
-    } catch (error) {
-      alert('検索処理でエラーが発生しました！');
-      setIsLoading(false);
-      throw error;
-    }
-  }
-  console.log(markers)
+  //         // console.log(getLat, getLng)
+  //         // console.log(searchWord)
+  //         // console.log(searchWordPosition)
+  //         // console.log(markerPoint)
+  //         // setMarkerPoint("banana");
+  //         // console.log(markerPoint)
 
+  //         // setPerson({
+  //         //   ...person, // Copy the old fields
+  //         //   firstName: e.target.value // But override this one
+  //         // });
+
+  //         // getNearFood(getLat, getLng);
+  //         setSearchWord("");
+  //       }
+  //     });
+
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     alert("検索処理でエラーが発生しました！");
+  //     setIsLoading(false);
+  //     throw error;
+  //   }
+  // }
 
   return (
-    <APIProvider apiKey={API_KEY} libraries={['places']}>
-      {/* <div>
+    <APIProvider apiKey={API_KEY} libraries={["places"]}>
+      <div>
         {users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
-      </div> */}
+      </div>
       <div id="map">
         <Map
           zoom={11}
@@ -310,7 +418,9 @@ export default function ShowMap() {
           // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
           // onClick={() => setActiveMarker(null)}
         >
-          {markers.map((marker) => (
+
+
+          {/* {markers.map((marker) => (
             //{markers.map(({ id, name, position }) => (
             <Marker
               key={marker.id}
@@ -318,7 +428,7 @@ export default function ShowMap() {
               // onClick={() => setOpen(true)}
               onClick={() => onMarkerClick(marker)}
             />
-          ))}
+          ))} */}
 
           {/* {selectPlace &&  ( */}
           {open && (
@@ -333,15 +443,31 @@ export default function ShowMap() {
           )}
         </Map>
         {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
-          <input type="text"  style={{ width: '100%' }} onChange={(e) => { setSearchWord(e.target.value) }}></input>
           <button
             type="button"
-            onClick={() => getMapData() }
+            onClick={() => getMapData("Gropiusstr.6")}
             // onClick={ abc }
             // onClick={() => abc() }
           >
             検索
           </button>
+        {/* <div className="searchBox-container">
+          <input
+            type="text"
+            style={{ width: "100%" }}
+            onChange={(e) => {
+              setSearchWord(e.target.value);
+            }}
+          ></input>
+          <button
+            type="button"
+            onClick={() => getMapData()}
+            // onClick={ abc }
+            // onClick={() => abc() }
+          >
+            検索
+          </button>
+        </div> */}
       </div>
     </APIProvider>
   );

@@ -13,6 +13,18 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  Pin,
+  InfoWindow,
+  Marker,
+  useApiIsLoaded,
+  APILoadingStatus,
+  useApiLoadingStatus,
+  useAutocomplete,
+} from "@vis.gl/react-google-maps";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -55,15 +67,69 @@ export default function AddProfile() {
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
     // });
   }, []);
-  console.log(users);
+  // console.log(users);  
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
+  const [markerPoint, setMarkerPoint] = useState();
+
+  function getMapData() {
+    try {
+      setIsLoading(true);
+      // geocoderオブジェクトの取得
+      // const geocoder = new google.maps.Geocoder();
+      const geocoder = new window.google.maps.Geocoder();
+      // let getLat = 0;
+      // let getLng = 0;
+      // 検索キーワードを使ってGeocodeでの位置検索
+      geocoder.geocode({ address: searchWord }, async (results, status) => {
+        if (status === "OK" && results) {
+          // getLat = results[0].geometry.location.lat();
+          // getLng = results[0].geometry.location.lng();
+          // const center = {
+          //       lat: results[0].geometry.location.lat(),
+          //       lng: results[0].geometry.location.lng()
+          //     };
+          //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+          //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+
+          const searchWordPosition = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+
+          // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+          setMarkerPoint(searchWordPosition);
+          // setMarkers([
+          //   ...markers,
+          //   {
+          //     id: markers.length + 1,
+          //     name: searchWord,
+          //     position: {
+          //       lat: searchWordPosition.lat,
+          //       lng: searchWordPosition.lng,
+          //     },
+          //   },
+          // ]);
+          setSearchWord("");
+        }
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      alert("検索処理でエラーが発生しました！");
+      setIsLoading(false);
+      throw error;
+    }
+  }
 
   return (
     <>
-      <div>
+      {/* <div>
         {users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
-      </div>
+      </div> */}
       <div className="form-container">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 1. Learner or Mentor */}
@@ -105,12 +171,22 @@ export default function AddProfile() {
           </div>
 
           {/* 3. Location */}
+          <div className="input-container">
+            <label htmlFor="location">Your location? Type the zipcode or your address</label>
+            <input
+              type="text"
+              id="location"
+              {...register("location", { required: "Type your location" })}
+            />
+            {errors.location && <p>{errors.location.message}</p>}
+          </div>
           {/* <select {...register("Title", )}>
           <option value="Mr">Mr</option>
           <option value="Mrs">Mrs</option>
           <option value="Miss">Miss</option>
           <option value="Dr">Dr</option>
         </select> */}
+
           {/* 4. What do you currently learn? select*/}
           <div className="input-container">
             <legend>What do you currently learn?</legend>
@@ -313,12 +389,30 @@ export default function AddProfile() {
 
           <input type="submit" value="Add Me!" />
         </form>
+        {/* <div className="searchBox-container">
+          <input
+            type="text"
+            style={{ width: "100%" }}
+            onChange={(e) => {
+              setSearchWord(e.target.value);
+            }}
+          ></input>
+          <button
+            type="button"
+            onClick={() => getMapData()}
+            // onClick={ abc }
+            // onClick={() => abc() }
+          >
+            検索
+          </button>
+          <div>{markerPoint}</div>
+        </div> */}
       </div>
-      <script
+      {/* <script
         async
         src={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`}
         // src="https://maps.googleapis.com/maps/api/js?key={API_KEY}&libraries=places&callback=initMap"
-      ></script>
+      ></script> */}
     </>
   );
 }
