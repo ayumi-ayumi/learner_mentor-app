@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useMapsLibrary, useApiIsLoaded } from "@vis.gl/react-google-maps";
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
-// export default function Geocoding () {
-export default function useGeocoding() {
-   // Google Maps Loading State
-   const IsLoaded = useApiIsLoaded();
+export function useGeocoding() {
   const geocodingApiLoaded = useMapsLibrary("geocoding");
-  console.log(IsLoaded);
   const [geocodingService, setGeocodingService] = useState();
   const [geocodingResult, setGeocodingResult] = useState();
   const [address, _setAddress] = useState("10 Front St, Toronto");
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
 
   useEffect(() => {
     if (!geocodingApiLoaded) return;
     setGeocodingService(new window.google.maps.Geocoder());
-    // console.log(123)
-  }, [IsLoaded, geocodingApiLoaded]);
-  // }, [geocodingApiLoaded]);
+    console.log(0)
+  }, [geocodingApiLoaded]);
 
   useEffect(() => {
     if (!geocodingService || !address) return;
@@ -24,26 +21,28 @@ export default function useGeocoding() {
     geocodingService.geocode({ address }, (results, status) => {
       if (results && status === "OK") {
         setGeocodingResult(results[0]);
+        setLat(results[0].geometry.location.lat());
+        setLng(results[0].geometry.location.lng());
+        console.log(123)
       }
     });
   }, [geocodingService, address]);
 
-  if (!geocodingService) return <div>Loading...</div>;
-  if (!geocodingResult) return <div>Geocoding...</div>;
+  return console.log(123)
+  // return geocodingResult;
+  // return { lat, lng };
 
-  let lat = geocodingResult.geometry.location.lat();
-  let lng = geocodingResult.geometry.location.lng();
+  // useEffect(()=>{
+  //   return props.getLoc({lat, lng})
+  // }, [lat, lng])
 
-  // return (geocodingResult.geometry.location.lng())
-  return {lat: lat, lng: lng}
-  // return lat;
-  // return geocodingResult.geometry.location.lat()
-  // console.log(123)
-
+  // if(!geocodingService) return <div>Loading...</div>;
+  // if(!geocodingResult) return <div>Geocoding...</div>;
+  // return null;
   // return (
   //   <div>
-  //     <p>Geo</p>
-  //     <p>{geocodingResult.geometry.location.lng()}</p>
+  //     {/* <p>Geo</p> */}
+  //     {/* <p>{geocodingResult.geometry.location.lat()}</p> */}
   //   </div>
   // )
 }

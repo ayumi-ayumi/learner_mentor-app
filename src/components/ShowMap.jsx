@@ -25,6 +25,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import Geocoding from "./Geocoding";
+import {useGeocoding} from "./GeocodingHook";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -36,6 +37,14 @@ export default function ShowMap() {
   // const [selected, setSelected] = useState({});
   const [selectPlace, setSelectPlace] = useState({});
   const [geo, setGeo] = useState([]);
+  const [loc, setLoc] = useState([]);
+
+  const lat = useGeocoding()
+  // const {lat, lng} = useGeocoding()
+  // console.log({lat, lng})
+  // console.log(loc)
+  // console.log(geo)
+  console.log(useGeocoding())
 
 function getLoc (value) {
     setGeo(value)
@@ -447,7 +456,8 @@ function getLoc (value) {
           <div key={user.id}>{user.name}</div>
         ))}
       </div>
-      {/* <div>{getMapData()}</div> */}
+      <div> aaa{lat}</div>
+      {/* <div> aaa{lng}</div> */}
       <Geocoding getLoc={getLoc}/>
       <div id="map">
         <Map
