@@ -24,6 +24,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+import Geocoding from "./Geocoding";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -34,6 +35,11 @@ export default function ShowMap() {
   const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState({});
   const [selectPlace, setSelectPlace] = useState({});
+  const [geo, setGeo] = useState([]);
+
+function getLoc (value) {
+    setGeo(value)
+  }
 
   function onMarkerClick(marker) {
     setOpen(true);
@@ -101,52 +107,52 @@ export default function ShowMap() {
   const [searchWord, setSearchWord] = useState("");
   const [markerPoint, setMarkerPoint] = useState();
 
-  function getMapData(location) {
-    try {
-      setIsLoading(true);
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: location }, async (results, status) => {
-        if (status === "OK" && results) {
-          // const a = results[0].address_components
-          // console.log(a)
+  // function getMapData(location) {
+  //   try {
+  //     setIsLoading(true);
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     geocoder.geocode({ address: location }, async (results, status) => {
+  //       if (status === "OK" && results) {
+  //         // const a = results[0].address_components
+  //         // console.log(a)
 
-          // for (let i = 0; i < a.length; i++) {
-          //   if(a[i].types[0] === "postal_code") {
-          //     console.log(a[i].types[0])
-          //   }
-          // }
+  //         // for (let i = 0; i < a.length; i++) {
+  //         //   if(a[i].types[0] === "postal_code") {
+  //         //     console.log(a[i].types[0])
+  //         //   }
+  //         // }
 
-          const locationPosition = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
-          console.log(locationPosition)
-          return locationPosition
+  //         const locationPosition = {
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         };
+  //         console.log(locationPosition)
+  //         return locationPosition
 
 
-          // setMarkerPoint(locationPosition);
-          // setMarkers([
-          //   ...markers,
-          //   {
-          //     id: markers.length + 1,
-          //     name: location,
-          //     position: {
-          //       lat: locationPosition.lat,
-          //       lng: locationPosition.lng,
-          //     },
-          //   },
-          // ]);
-          // setSearchWord("");
-        }
-      });
+  //         // setMarkerPoint(locationPosition);
+  //         // setMarkers([
+  //         //   ...markers,
+  //         //   {
+  //         //     id: markers.length + 1,
+  //         //     name: location,
+  //         //     position: {
+  //         //       lat: locationPosition.lat,
+  //         //       lng: locationPosition.lng,
+  //         //     },
+  //         //   },
+  //         // ]);
+  //         // setSearchWord("");
+  //       }
+  //     });
 
-      setIsLoading(false);
-    } catch (error) {
-      alert("検索処理でエラーが発生しました！");
-      setIsLoading(false);
-      throw error;
-    }
-  }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     alert("検索処理でエラーが発生しました！");
+  //     setIsLoading(false);
+  //     throw error;
+  //   }
+  // }
   
   //Catch the location data from firebase, make into the array.
   const [usersLocation, setUsersLocation] = useState([]); //Array of zipcode
@@ -175,21 +181,53 @@ export default function ShowMap() {
   //   // return locationFromAddProfile
   //   setUsersLocation(locationFromAddProfile)
   // },[users])
+
+  // async function getMapData () {
+  //   const options = {
+  //     address : "Seattle, WA"
+  //   }
+  //   const geocoder = new window.google.maps.Geocoder()
+  //   // const geocoder = new window.google.maps.Geocoder(options)
+  //   const {results} = await geocoder.geocode(options)
+  //   let lat;
+  //   if(results[0]) {
+  //     //  lat = res.results[0].geometry.location.lat();
+  //      return results[0].geometry.location.lat();
+  //   }
+  // }
+  // async function getMapData () {
+  // // async function getMapData (location) {
+  //   const options = {
+  //         address : "Seattle, WA"
+  //       }
+  //   const geocoder = new window.google.maps.Geocoder();
+  //   const res = await geocoder.geocode(location);
+  //   const results = res.results[0]
+  //   const lat = results.geometry.location.lat();
+  //   const lng = results.geometry.location.lng();
+  //   console.log(lat, lng)
+  //   return {lat, lng}
+  // }
+  // console.log(getMapData())
+
   const locationFromAddProfile = users.map((user)=>{
     // const a = getMapData(user.location)
     // console.log(getMapData(user.location))
     if(!user.location) {
       return {...user, postion: null}
     } else {
-      console.log("apple")
+      // console.log("apple")
+      // let loc =  ()=>getMapData(user.location)
+      // console.log(loc)
       return {
         ...user,
-        postion: ()=>{getMapData(user.location)}
+        // postion: ()=>{getMapData(user.location)}
+        // postion: getMapData(user.location)
       }
     }
   })
 
-  console.log(locationFromAddProfile)
+  // console.log(locationFromAddProfile)
   
 
 
@@ -409,6 +447,8 @@ export default function ShowMap() {
           <div key={user.id}>{user.name}</div>
         ))}
       </div>
+      {/* <div>{getMapData()}</div> */}
+      <Geocoding getLoc={getLoc}/>
       <div id="map">
         <Map
           zoom={11}
