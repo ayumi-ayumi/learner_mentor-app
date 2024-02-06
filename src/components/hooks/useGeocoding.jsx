@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useMapsLibrary, useApiIsLoaded } from "@vis.gl/react-google-maps";
 
-export function useGeocoding() {
+export function useGeocoding (initialValue) {
+  const apiIsLoaded = useApiIsLoaded();
   const geocodingApiLoaded = useMapsLibrary("geocoding");
   const [geocodingService, setGeocodingService] = useState();
   const [geocodingResult, setGeocodingResult] = useState();
-  const [address, _setAddress] = useState("10 Front St, Toronto");
+  const [address, setAddress] = useState(initialValue);
+  // const [address, _setAddress] = useState("10 Front St, Toronto");
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
+  console.log(apiIsLoaded)
 
   useEffect(() => {
-    if (!geocodingApiLoaded) return;
+    if (!apiIsLoaded) return;
+    // if (!geocodingApiLoaded) return;
     setGeocodingService(new window.google.maps.Geocoder());
-    console.log(0)
-  }, [geocodingApiLoaded]);
+  }, [geocodingApiLoaded, apiIsLoaded]);
 
   useEffect(() => {
     if (!geocodingService || !address) return;
@@ -28,8 +31,9 @@ export function useGeocoding() {
     });
   }, [geocodingService, address]);
 
-  return console.log(123)
+  // return console.log(123)
   // return geocodingResult;
+  return lat;
   // return { lat, lng };
 
   // useEffect(()=>{

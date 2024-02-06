@@ -25,6 +25,7 @@ export default function Geocoding (props) {
     if (!geocodingApiLoaded) return;
     setGeocodingService(new window.google.maps.Geocoder());
   }, [geocodingApiLoaded])
+  console.log(geocodingApiLoaded)
 
   useEffect(()=>{
     if(!geocodingService || !address) return;
@@ -42,9 +43,10 @@ export default function Geocoding (props) {
   useEffect(()=>{
     return props.getLoc({lat, lng})
   }, [lat, lng])
-
-  if(!geocodingService) return <div>Loading...</div>;
-  if(!geocodingResult) return <div>Geocoding...</div>;
+    console.log(123)
+  // return { lat, lng }
+  // if(!geocodingService) return <div>Loading...</div>;
+  // if(!geocodingResult) return <div>Geocoding...</div>;
   return null;
   // return (
   //   <div>

@@ -45,27 +45,4 @@ const todoItems = todos.map((todo) =>
   the data on AddProfile page will be stored on firebase.
   the data from firebase will be shown on the main page.
 
-  4. infinite loop TT
-  function getMapData(location) {
-    try {
-      setIsLoading(true);
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: location }, async (results, status) => {
-        if (status === "OK" && results) {
-
-          const locationPosition = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
-          // console.log(locationPosition)
-          return locationPosition
-        }
-      });
-
-      setIsLoading(false);
-    } catch (error) {
-      alert("検索処理でエラーが発生しました！");
-      setIsLoading(false);
-      throw error;
-    }
-  }
+  4. Github can be searched by the code!

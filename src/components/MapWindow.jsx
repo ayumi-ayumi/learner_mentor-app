@@ -24,12 +24,21 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import Geocoding from "./Geocoding";
-import {useGeocoding} from "./hooks/useGeocoding";
+// import Geocoding from "./Geocoding";
+// import { useGeocoding } from "./hooks/useGeocoding";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-export default function ShowMap() {
+export default function MapWindow() {
+  return (
+    <APIProvider apiKey={API_KEY} libraries={["places"]}>
+      <Geocoding />
+      {/* <Geocoding address={address} /> */}
+    </APIProvider>
+  );
+}
+
+function Geocoding() {
   const apiIsLoaded = useApiIsLoaded();
   const [users, setUsers] = useState([]);
 
@@ -45,16 +54,16 @@ export default function ShowMap() {
   // // const {lat, lng} = useGeocoding()
   // console.log(useGeocoding("10 Front St, Toronto"))
 
-function getLoc (value) {
-    setGeo(value)
+  function getLoc(value) {
+    setGeo(value);
   }
-let berlinLoc;
-  if(apiIsLoaded) {
-    berlinLoc = useGeocoding("Berlin")
-    return berlinLoc
-  }
+  // let berlinLoc;
+  // if (apiIsLoaded) {
+  //   berlinLoc = useGeocoding("Berlin");
+  //   return berlinLoc;
+  // }
 
-  console.log(berlinLoc)
+  // console.log(berlinLoc);
   // useEffect(() => {
   //   {<Geocoding getLoc={getLoc} />}
   // },[users])
@@ -86,42 +95,41 @@ let berlinLoc;
     onSnapshot(queryRef, (post) => {
       setUsers(post.docs.map((doc) => ({ ...doc.data() })));
     });
-    
+
     /* リアルタイムで取得 */
     // onSnapshot(users, (snap) => {
-      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
-      // });
-    }, []);
+    //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+    // });
+  }, []);
 
   const onClose = () => {
     setSelectPlace(null);
   };
 
+  const sampleMarkers = [
+    {
+      id: 1,
+      name: "Treptower Park",
+      position: { lat: 52.488449, lng: 13.469631 },
+    },
+    {
+      id: 2,
+      name: "Tempelhofer Feld ",
+      position: { lat: 52.474926, lng: 13.400312 },
+    },
+    {
+      id: 3,
+      name: "Alexanderplatz",
+      position: { lat: 52.521992, lng: 13.413244 },
+    },
+    {
+      id: 4,
+      name: "Tegel airport",
+      position: { lat: 52.554803, lng: 13.28903 },
+    },
+  ];
 
-  // const sampleMarkers = [
-  //   {
-  //     id: 1,
-  //     name: "Treptower Park",
-  //     position: { lat: 52.488449, lng: 13.469631 },
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Tempelhofer Feld ",
-  //     position: { lat: 52.474926, lng: 13.400312 },
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Alexanderplatz",
-  //     position: { lat: 52.521992, lng: 13.413244 },
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Tegel airport",
-  //     position: { lat: 52.554803, lng: 13.28903 },
-  //   },
-  // ];
-  
-  const [markers, setMarkers] = useState([])
+  // const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [markerPoint, setMarkerPoint] = useState();
@@ -148,7 +156,6 @@ let berlinLoc;
   //         console.log(locationPosition)
   //         return locationPosition
 
-
   //         // setMarkerPoint(locationPosition);
   //         // setMarkers([
   //         //   ...markers,
@@ -172,35 +179,23 @@ let berlinLoc;
   //     throw error;
   //   }
   // }
-  
+
   //Catch the location data from firebase, make into the array.
   const [usersLocation, setUsersLocation] = useState([]); //Array of zipcode
 
-
-
-  const locationFromAddProfile = users.map((user)=>{
-    // const a = getMapData(user.location)
-    // console.log(getMapData(user.location))
-    if(!user.location) {
-      return {...user, postion: null}
+  const locationFromAddProfile = users.map((user) => {
+    if (!user.location) {
+      return { ...user, postion: null };
     } else {
-      // console.log("apple")
-      // let loc =  ()=>getMapData(user.location)
-      // console.log(loc)
       return {
         ...user,
         // postion: ()=>{getMapData(user.location)}
         // postion: getMapData(user.location)
-      }
+      };
     }
-  })
+  });
 
-  
-
-
-
-  // const [markers, setMarkers] = useState(sampleMarkers);
-  // console.log(markers)
+  const [markers, setMarkers] = useState(sampleMarkers);
   // setMarkers([...markers, {
   //   id: 1,
   //   name: "Treptower Park",
@@ -272,15 +267,13 @@ let berlinLoc;
   // const [searchWord, setSearchWord] = useState("");
   // const [markerPoint, setMarkerPoint] = useState();
 
-
   // const [markerPoint, setMarkerPoint] = useState(center);
   // const [markerPoint, setMarkerPoint] = useState({key: "apple", lat:0, lng:0});
   // const [markerPoint, setMarkerPoint] = useState(center);
   // console.log(center)
 
-
   return (
-    <APIProvider apiKey={API_KEY} libraries={["places"]}>
+    <>
       {/* <div>
         {users.map((user) => (
           <div key={user.id}>{user.name}</div>
@@ -289,18 +282,16 @@ let berlinLoc;
       {/* <div> aaa{berlinLoc.lat}</div> */}
       {/* <div> aaa{geo.lat}</div> */}
       {/* <Geocoding getLoc={getLoc}/> */}
-      <div id="map">
-        <Map
-          zoom={11}
-          center={center}
-          gestureHandling={"greedy"}
-          disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-          // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
-          // onClick={() => setActiveMarker(null)}
-        >
-
-
-          {/* {markers.map((marker) => (
+      <Map
+        zoom={11}
+        center={center}
+        gestureHandling={"greedy"}
+        disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
+        style={{ minWidth: 500, minHeight: 500 }}
+        // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
+        // onClick={() => setActiveMarker(null)}
+      >
+        {markers.map((marker) => (
             //{markers.map(({ id, name, position }) => (
             <Marker
               key={marker.id}
@@ -308,30 +299,30 @@ let berlinLoc;
               // onClick={() => setOpen(true)}
               onClick={() => onMarkerClick(marker)}
             />
-          ))} */}
+          ))}
 
-          {/* {selectPlace &&  ( */}
-          {open && (
-            <InfoWindow
-              position={selectPlace.position}
-              onCloseClick={() => setOpen(false)} // なくても動く
-            >
-              <p style={{ backgroundColor: "yellow" }}>
-                I'm ! I'm in {selectPlace.name}!
-              </p>
-            </InfoWindow>
-          )}
-        </Map>
-        {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
-          <button
+        {/* {selectPlace &&  ( */}
+        {open && (
+          <InfoWindow
+            position={selectPlace.position}
+            onCloseClick={() => setOpen(false)} // なくても動く
+          >
+            <p style={{ backgroundColor: "yellow" }}>
+              I'm ! I'm in {selectPlace.name}!
+            </p>
+          </InfoWindow>
+        )}
+      </Map>
+      {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
+      {/* <button
             type="button"
             onClick={() => getMapData("Gropiusstr.6")}
             // onClick={ abc }
             // onClick={() => abc() }
           >
             検索
-          </button>
-        {/* <div className="searchBox-container">
+          </button> */}
+      {/* <div className="searchBox-container">
           <input
             type="text"
             style={{ width: "100%" }}
@@ -348,7 +339,6 @@ let berlinLoc;
             検索
           </button>
         </div> */}
-      </div>
-    </APIProvider>
+    </>
   );
 }
