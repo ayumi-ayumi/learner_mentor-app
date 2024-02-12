@@ -33,8 +33,8 @@ export function useGeocoding (initialValue) {
 
   // return console.log(123)
   // return geocodingResult;
-  return lat;
-  // return { lat, lng };
+  // return lat;
+  return { lat, lng };
 
   // useEffect(()=>{
   //   return props.getLoc({lat, lng})

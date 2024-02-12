@@ -25,7 +25,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 // import Geocoding from "./Geocoding";
-// import { useGeocoding } from "./hooks/useGeocoding";
+import { useGeocoding } from "./hooks/useGeocoding";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -64,10 +64,12 @@ function Geocoding() {
   // }
 
   // console.log(berlinLoc);
-  // useEffect(() => {
-  //   {<Geocoding getLoc={getLoc} />}
-  // },[users])
-  // console.log(geo)
+  useEffect(() => {
+    console.log("before")
+    {<Geocoding getLoc={getLoc} />}
+    console.log("after")
+  },[users])
+  console.log(geo)
 
   function onMarkerClick(marker) {
     setOpen(true);

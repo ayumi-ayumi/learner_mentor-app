@@ -47,7 +47,8 @@ export default function Geocoding (props) {
   // return { lat, lng }
   // if(!geocodingService) return <div>Loading...</div>;
   // if(!geocodingResult) return <div>Geocoding...</div>;
-  return null;
+  // return null;
+  return {lat, lng};
   // return (
   //   <div>
   //     {/* <p>Geo</p> */}
