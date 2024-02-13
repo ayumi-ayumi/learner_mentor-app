@@ -11,6 +11,7 @@ import {
   APILoadingStatus,
   useApiLoadingStatus,
   useAutocomplete,
+  useMapsLibrary
 } from "@vis.gl/react-google-maps";
 import { db } from "../firebase";
 import {
@@ -23,9 +24,10 @@ import {
   setDoc,
   query,
   orderBy,
+  updateDoc
 } from "firebase/firestore";
+import {useGeocoding} from "./hooks/useGeocoding";
 // import Geocoding from "./Geocoding";
-import { useGeocoding } from "./hooks/useGeocoding";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -33,7 +35,6 @@ export default function MapWindow() {
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>
       <Geocoding />
-      {/* <Geocoding address={address} /> */}
     </APIProvider>
   );
 }
@@ -46,30 +47,119 @@ function Geocoding() {
   const [open, setOpen] = useState(false);
   // const [selected, setSelected] = useState({});
   const [selectPlace, setSelectPlace] = useState({});
-  const [geo, setGeo] = useState([]);
+  // const [geo, setGeo] = useState([]);
   // const [loc, setLoc] = useState([]);
+  const [arr, setArr] =useState([])
 
-  // const berlinLoc = useGeocoding("Berlin")
+
+
+  const geocodingLibrary = useMapsLibrary("geocoding");
+  const [geocodingService, setGeocodingService] = useState();
+  // const [geocodingResult, setGeocodingResult] = useState();
+  const [address, setAddresses] = useState("Berlin");
+  const [lat, setLat] = useState([]);
+  const [lng, setLng] = useState();
+  const [latLng, setLatLng] = useState([]);
+  
+  useEffect(() => {
+    if (!geocodingLibrary) return;
+    setGeocodingService(new window.google.maps.Geocoder());
+  }, [geocodingLibrary]);
+  // console.log(apiIsLoaded, geocodingLibrary, geocodingService)
+
+
+  // function geo () {
+    if(geocodingService){
+      geocodingService.geocode({address: "berlin"}, (results, status) => {
+        if (results && status === "OK") {
+          // const a = results[0].geometry.location.lat()
+          // return results[0].geometry.location.lat()
+        // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+        setLatLng({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+          // return a
+        }})
+  
+      }
+  // }
+  // useEffect(()=>{
+    console.log(latLng)
+
+  // }, [geocodingLibrary])
+  // function geo (loc) {
+  //   if (!geocodingService || !arr) return;
+  //     let a = 0;
+  //     if(geocodingService){
+  //       geocodingService.geocode({ address:loc },  (results, status) => {
+  //        if (results && status === "OK") {
+  //                // console.log({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+  //                 // a = {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+  //                 a = results[0].geometry.location.lat()
+  //                 // a=345
+  //                 // console.log(a)
+  //                //  return results[0].geometry.location.lat()
+  //                // return ({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+  //                // return console.log(a)
+  //               } 
+  //             });
+              
+  //           }
+  //           return a
+  // }
+
+
+
+  // // console.log(arr)
+  // useEffect(()=>{
+
+  //     const newLocArr = arr.map(loc=>{
+  //       geocodingService.geocode({address: loc}, (results, status) => {
+  //             if (results && status === "OK") {
+  //               console.log({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+  //               // a = {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+                
+  //               // setLatLng([...latLng, {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}])}
+  //             }
+  //           })
+  //     })
+  //     console.log(newLocArr)
+  //     setLatLng(newLocArr)
+  //   }, [geocodingService, arr])
+  // useEffect(()=>{
+  //     if (!geocodingService || !arr) return;
+  //     geocodingService.geocode({ address }, (results, status) => {
+  //           if (results && status === "OK") {
+  //             setLatLng([...latLng, {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}])
+  //           }
+  //         })
+  //   }, [geocodingService, arr])
+    // console.log(latLng)
+
+  // console.log(users)
+  // const berlinLoc = useGeocoding(users)
   // console.log(berlinLoc)
-  // // const {lat, lng} = useGeocoding()
+  // // // const {lat, lng} = useGeocoding()
   // console.log(useGeocoding("10 Front St, Toronto"))
 
-  function getLoc(value) {
-    setGeo(value);
-  }
+  // function getLoc(value) {
+  //   setGeo(value);
+  // }
+
   // let berlinLoc;
   // if (apiIsLoaded) {
   //   berlinLoc = useGeocoding("Berlin");
   //   return berlinLoc;
   // }
+  // console.log(berlinLoc)
 
-  // console.log(berlinLoc);
-  useEffect(() => {
-    console.log("before")
-    {<Geocoding getLoc={getLoc} />}
-    console.log("after")
-  },[users])
-  console.log(geo)
+  // useEffect(() => {
+  //   console.log("before")
+  //   {<Geocoding getLoc={getLoc} />}
+  //   console.log("after")
+  // },[users])
+  // console.log(geo)
+ 
+  // const locArr = useGeocoding(a)
+  // console.log(locArr)
 
   function onMarkerClick(marker) {
     setOpen(true);
@@ -90,19 +180,30 @@ function Geocoding() {
     // users.then((snap) =>
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })))
     // );
-
     //Order by the date
     const postData = collection(db, "users");
     const queryRef = query(postData, orderBy("datetime", "asc"));
     onSnapshot(queryRef, (post) => {
-      setUsers(post.docs.map((doc) => ({ ...doc.data() })));
+      setUsers(post.docs.map((doc) => ({ ...doc.data()})));
+      // setUsers(post.docs.map((doc) => ({ ...doc.data(), position:useGeocoding(doc.data().location) })));
     });
-
+    
     /* リアルタイムで取得 */
     // onSnapshot(users, (snap) => {
-    //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
-    // });
-  }, []);
+      //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
+      // });
+    }, []);
+
+    useEffect(()=>{
+      const newArr = users.map(user =>{
+        return user.location
+      })
+      setArr(newArr)
+    }, [users])
+    
+    // console.log(arr)
+    
+
 
   const onClose = () => {
     setSelectPlace(null);
@@ -185,17 +286,50 @@ function Geocoding() {
   //Catch the location data from firebase, make into the array.
   const [usersLocation, setUsersLocation] = useState([]); //Array of zipcode
 
-  const locationFromAddProfile = users.map((user) => {
-    if (!user.location) {
-      return { ...user, postion: null };
-    } else {
-      return {
-        ...user,
-        // postion: ()=>{getMapData(user.location)}
-        // postion: getMapData(user.location)
-      };
-    }
-  });
+  // const result = words.filter((word) => word.length > 6);
+  // const a = users.filter(user => user.location)
+  // console.log(users)
+ 
+
+
+    // const bb = aa.map(a => {
+    //   return useGeocoding(a)
+    // })
+    // console.log(bb)
+
+  // console.log(locationFromAddProfile)
+  // let locationFromAddProfile
+  // const [locationFromAddProfile, setLocationFromAddProfile] = useState()
+  // useEffect(()=>{
+  //   const a = users.map((user) => {
+  //     if (!user.location) {
+  //       return { ...user, position: null };
+  //     } else {
+  //       return {
+  //         ...user,
+  //         // postion: ()=>{getMapData(user.location)}
+  //         position: useGeocoding(user.location)
+  //       };
+  //     }
+  //   });
+  //   setLocationFromAddProfile(a)
+
+  // }, [users])
+  // const locationFromAddProfile = users.map((user) => {
+  //   if (user.location) {
+  //     return useGeocoding(user.location)
+  //     // return console.log(useGeocoding(user.location))
+  //     // return {
+  //     //   ...user,
+  //     //   postion: ()=>{useGeocoding(user.location)}
+  //     //   // postion: ()=>{getMapData(user.location)}
+  //     //   // postion: 123
+  //     // };
+  //   } else {
+  //     return { ...user, position: null };
+  //   }
+  // });
+  // console.log(locationFromAddProfile)
 
   const [markers, setMarkers] = useState(sampleMarkers);
   // setMarkers([...markers, {
@@ -273,14 +407,16 @@ function Geocoding() {
   // const [markerPoint, setMarkerPoint] = useState({key: "apple", lat:0, lng:0});
   // const [markerPoint, setMarkerPoint] = useState(center);
   // console.log(center)
-
+  // const locArr = useGeocoding(arr)
+  // console.log(locArr)
+  
   return (
     <>
-      {/* <div>
+      <div>
         {users.map((user) => (
-          <div key={user.id}>{user.name}</div>
+          <div key={user.id}>{user.location} </div>
         ))}
-      </div> */}
+      </div>
       {/* <div> aaa{berlinLoc.lat}</div> */}
       {/* <div> aaa{geo.lat}</div> */}
       {/* <Geocoding getLoc={getLoc}/> */}
@@ -297,6 +433,7 @@ function Geocoding() {
             //{markers.map(({ id, name, position }) => (
             <Marker
               key={marker.id}
+              // position = {useGeocoding('Berlin')}
               position={marker.position}
               // onClick={() => setOpen(true)}
               onClick={() => onMarkerClick(marker)}

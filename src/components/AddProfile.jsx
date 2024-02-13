@@ -11,6 +11,7 @@ import {
   onSnapshot,
   query,
   orderBy,
+  updateDoc
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import {
@@ -25,6 +26,7 @@ import {
   useApiLoadingStatus,
   useAutocomplete,
 } from "@vis.gl/react-google-maps";
+// import { useGeocoding } from "./hooks/useGeocoding";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -39,6 +41,7 @@ export default function AddProfile() {
     formState: { errors },
   } = useForm();
 
+
   //Store the user data when clicking the submit button
   const onSubmit = (data) => {
     addDoc(collection(db, "users"), {
@@ -46,9 +49,13 @@ export default function AddProfile() {
       id: nanoid(),
       datetime: new Date(),
     });
+    // updateDoc(collection(db, "users"), {
+    //   position: useGeocoding(location),
+    // });
     reset(); //送信後の入力フォーム欄を初期値に戻す
   };
   // console.log(watch());//入力の値を常時監視する
+  // console.log(data)
 
   //Obtain data from firebase
   React.useEffect(() => {
@@ -122,6 +129,10 @@ export default function AddProfile() {
       throw error;
     }
   }
+
+  
+  // console.log(useGeocoding())
+
 
   return (
     <>
