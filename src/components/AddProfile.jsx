@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../styles/AddProfile.scss";
 import { db } from "../firebase";
@@ -11,7 +11,7 @@ import {
   onSnapshot,
   query,
   orderBy,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import {
@@ -31,6 +31,8 @@ import {
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function AddProfile() {
+  const center = { lat: 52.52, lng: 13.41 }; //Berlin
+
   const [users, setUsers] = useState([]);
 
   const {
@@ -41,13 +43,13 @@ export default function AddProfile() {
     formState: { errors },
   } = useForm();
 
-
   //Store the user data when clicking the submit button
   const onSubmit = (data) => {
     addDoc(collection(db, "users"), {
       ...data,
       id: nanoid(),
       datetime: new Date(),
+      location: location.place
     });
     // updateDoc(collection(db, "users"), {
     //   position: useGeocoding(location),
@@ -55,7 +57,6 @@ export default function AddProfile() {
     reset(); //送信後の入力フォーム欄を初期値に戻す
   };
   // console.log(watch());//入力の値を常時監視する
-  // console.log(data)
 
   //Obtain data from firebase
   React.useEffect(() => {
@@ -74,65 +75,99 @@ export default function AddProfile() {
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })));
     // });
   }, []);
-  // console.log(users);  
+  // console.log(users);
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [markerPoint, setMarkerPoint] = useState();
 
-  function getMapData() {
-    try {
-      setIsLoading(true);
-      // geocoderオブジェクトの取得
-      // const geocoder = new google.maps.Geocoder();
-      const geocoder = new window.google.maps.Geocoder();
-      // let getLat = 0;
-      // let getLng = 0;
-      // 検索キーワードを使ってGeocodeでの位置検索
-      geocoder.geocode({ address: searchWord }, async (results, status) => {
-        if (status === "OK" && results) {
-          // getLat = results[0].geometry.location.lat();
-          // getLng = results[0].geometry.location.lng();
-          // const center = {
-          //       lat: results[0].geometry.location.lat(),
-          //       lng: results[0].geometry.location.lng()
-          //     };
-          //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
-          //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  // function getMapData() {
+  //   try {
+  //     setIsLoading(true);
+  //     // geocoderオブジェクトの取得
+  //     // const geocoder = new google.maps.Geocoder();
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     // let getLat = 0;
+  //     // let getLng = 0;
+  //     // 検索キーワードを使ってGeocodeでの位置検索
+  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
+  //       if (status === "OK" && results) {
+  //         // getLat = results[0].geometry.location.lat();
+  //         // getLng = results[0].geometry.location.lng();
+  //         // const center = {
+  //         //       lat: results[0].geometry.location.lat(),
+  //         //       lng: results[0].geometry.location.lng()
+  //         //     };
+  //         //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  //         //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
 
-          const searchWordPosition = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
+  //         const searchWordPosition = {
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         };
 
-          // setMarkerPoint({...markerPoint, lat: 52.6117109,})
-          setMarkerPoint(searchWordPosition);
-          // setMarkers([
-          //   ...markers,
-          //   {
-          //     id: markers.length + 1,
-          //     name: searchWord,
-          //     position: {
-          //       lat: searchWordPosition.lat,
-          //       lng: searchWordPosition.lng,
-          //     },
-          //   },
-          // ]);
-          setSearchWord("");
-        }
-      });
+  //         // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+  //         setMarkerPoint(searchWordPosition);
+  //         // setMarkers([
+  //         //   ...markers,
+  //         //   {
+  //         //     id: markers.length + 1,
+  //         //     name: searchWord,
+  //         //     position: {
+  //         //       lat: searchWordPosition.lat,
+  //         //       lng: searchWordPosition.lng,
+  //         //     },
+  //         //   },
+  //         // ]);
+  //         setSearchWord("");
+  //       }
+  //     });
 
-      setIsLoading(false);
-    } catch (error) {
-      alert("検索処理でエラーが発生しました！");
-      setIsLoading(false);
-      throw error;
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     alert("検索処理でエラーが発生しました！");
+  //     setIsLoading(false);
+  //     throw error;
+  //   }
+  // }
+
+  const inputRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const [location, setLocation] = useState();
+
+  const onPlaceChanged = (place) => {
+    if (place) {
+      setInputValue(place.formatted_address || place.name);
     }
-  }
+    // Keep focus on input element
+    inputRef.current && inputRef.current.focus();
+  };
 
-  
-  // console.log(useGeocoding())
+  const autocompleteInstance = useAutocomplete({
+    inputField: inputRef && inputRef.current,
+    onPlaceChanged,
+  });
 
+  useEffect(() => {
+    if (autocompleteInstance?.getPlace()) {
+      const { formatted_address, name } = autocompleteInstance.getPlace();
+
+      setLocation((prev) => {
+        return {
+          ...prev,
+          place: formatted_address || name,
+        };
+      });
+    }
+  }, [inputValue]);
+
+  // console.log(inputValue)
+  // console.log(location)
 
   return (
     <>
@@ -183,14 +218,40 @@ export default function AddProfile() {
 
           {/* 3. Location */}
           <div className="input-container">
-            <label htmlFor="location">Your location? Type the zipcode or your address</label>
+            <label htmlFor="location">
+              Your location? Type the zipcode or your address
+            </label>
             <input
               type="text"
               id="location"
-              {...register("location", { required: "Type your location" })}
+              value={inputValue}
+              onChange={(e)=>handleInputChange(e)}
+              ref={inputRef}
+              // {...register("location")}
+              // {...register("location", {
+              //   required: "Type your location",
+              //   onChange: (e)=>{handleInputChange(e)},
+                
+                // onChange: (e) => {
+                //   handleInputChange(e);
+                // },
+              // value: {inputValue}
+                // onChange: {handleInputChange}
+              // })}
             />
+            {/* <input
+              type="text"
+              id="location"
+              // ref={inputRef}
+              // value={inputValue}
+              // onChange={handleInputChange}
+              // onChange={(e) => handleInputChange(e)}
+              {...register("location", { required: "Type your location" })}
+            /> */}
+
             {errors.location && <p>{errors.location.message}</p>}
           </div>
+
           {/* <select {...register("Title", )}>
           <option value="Mr">Mr</option>
           <option value="Mrs">Mrs</option>
@@ -419,11 +480,8 @@ export default function AddProfile() {
           <div>{markerPoint}</div>
         </div> */}
       </div>
-      {/* <script
-        async
-        src={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`}
-        // src="https://maps.googleapis.com/maps/api/js?key={API_KEY}&libraries=places&callback=initMap"
-      ></script> */}
+      {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
+
     </>
   );
 }
