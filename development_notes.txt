@@ -46,3 +46,25 @@ const todoItems = todos.map((todo) =>
   the data from firebase will be shown on the main page.
 
   4. Github can be searched by the code!
+
+  5. AddProfile.jsx
+  It cannot combine React hook form and google maps auto complete function.
+  ex) X 
+  <input
+    type="text"
+    id="location"
+    ref={inputRef}
+    value={inputValue}
+    onChange={handleInputChange}
+    onChange={(e) => handleInputChange(e)}
+    {...register("location", { required: "Type your location" })} // this doesnt work
+  />
+
+  Solution>>
+  Use the input tag without React hook form. and the data that wants to store is added by manual in the code
+  addDoc(collection(db, "users"), {
+      ...data,
+      id: nanoid(),
+      datetime: new Date(),
+      location: location.place
+    });
