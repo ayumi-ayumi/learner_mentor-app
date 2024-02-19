@@ -145,12 +145,9 @@ export default function AddProfile() {
   const [location, setLocation] = useState([]);
 
   const onPlaceChanged = (place) => {
+    console.log(place)
     if (place) {
-      const postalCode = place.address_components.find((component) => {
-        return component.types.includes("postal_code");
-      });
       setInputValue(place.formatted_address || place.name);
-      // setInputValue({formatted_address: place.formatted_address, name: place.name, postal_code: postalCode});
     }
     // Keep focus on input element
     inputRef.current && inputRef.current.focus();
@@ -161,30 +158,30 @@ export default function AddProfile() {
     onPlaceChanged,
   });
 
+  // autocompleteInstance.setFields()
+  if(autocompleteInstance)
+ { autocompleteInstance.setFields(["formatted_address", "geometry", "address_components"]);
+  autocompleteInstance.setComponentRestrictions({country: ["de"],});
+  autocompleteInstance.setTypes(['address']);}
+  
+
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, name, address_components } = autocompleteInstance.getPlace();
+      const loc = autocompleteInstance.getPlace();
+      console.log(loc)
+      const { formatted_address, geometry, address_components } = autocompleteInstance.getPlace();
       const postalCode = address_components.find((component) => {
         return component.types.includes("postal_code");
-        // const postal_code_component = component.types.includes("postal_code");
-        // return postal_code_component.long_name
       });
-      // console.log(address_components)
       setLocation((prev) => {
         return {
           ...prev,
-          // place: {formatted_address: formatted_address, name: name, postal_code: postalCode},
-          // place: formatted_address || name,
           address: formatted_address,
-          // name: name,
           postal_code: postalCode.long_name
         };
       });
     }
   }, [inputValue]);
-
-  // console.log(inputValue)
-  console.log(location)
 
   return (
     <>
