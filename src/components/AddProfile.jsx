@@ -49,7 +49,11 @@ export default function AddProfile() {
       ...data,
       id: nanoid(),
       datetime: new Date(),
-      location: location.place
+      // location: location.place
+      // location: location
+      address: location.address,
+      postal_code: location.postal_code,
+
     });
     // updateDoc(collection(db, "users"), {
     //   position: useGeocoding(location),
@@ -138,11 +142,15 @@ export default function AddProfile() {
     setInputValue(event.target.value);
   };
 
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState([]);
 
   const onPlaceChanged = (place) => {
     if (place) {
+      const postalCode = place.address_components.find((component) => {
+        return component.types.includes("postal_code");
+      });
       setInputValue(place.formatted_address || place.name);
+      // setInputValue({formatted_address: place.formatted_address, name: place.name, postal_code: postalCode});
     }
     // Keep focus on input element
     inputRef.current && inputRef.current.focus();
@@ -155,19 +163,28 @@ export default function AddProfile() {
 
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, name } = autocompleteInstance.getPlace();
-
+      const { formatted_address, name, address_components } = autocompleteInstance.getPlace();
+      const postalCode = address_components.find((component) => {
+        return component.types.includes("postal_code");
+        // const postal_code_component = component.types.includes("postal_code");
+        // return postal_code_component.long_name
+      });
+      // console.log(address_components)
       setLocation((prev) => {
         return {
           ...prev,
-          place: formatted_address || name,
+          // place: {formatted_address: formatted_address, name: name, postal_code: postalCode},
+          // place: formatted_address || name,
+          address: formatted_address,
+          // name: name,
+          postal_code: postalCode.long_name
         };
       });
     }
   }, [inputValue]);
 
   // console.log(inputValue)
-  // console.log(location)
+  console.log(location)
 
   return (
     <>
@@ -176,6 +193,11 @@ export default function AddProfile() {
           <div key={user.id}>{user.name}</div>
         ))}
       </div> */}
+      <div>
+        {users.map((user) => (
+          <div key={user.id}>{user.location} </div>
+        ))}
+      </div>
       <div className="form-container">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 1. Learner or Mentor */}
