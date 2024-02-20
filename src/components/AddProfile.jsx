@@ -25,6 +25,8 @@ import {
   APILoadingStatus,
   useApiLoadingStatus,
   useAutocomplete,
+  useMapsLibrary,
+
 } from "@vis.gl/react-google-maps";
 // import { useGeocoding } from "./hooks/useGeocoding";
 
@@ -49,16 +51,15 @@ export default function AddProfile() {
       ...data,
       id: nanoid(),
       datetime: new Date(),
-      // location: location.place
-      // location: location
       address: location.address,
       postal_code: location.postal_code,
-
+      position: location.position
     });
     // updateDoc(collection(db, "users"), {
     //   position: useGeocoding(location),
     // });
     reset(); //送信後の入力フォーム欄を初期値に戻す
+    setInputValue("")
   };
   // console.log(watch());//入力の値を常時監視する
 
@@ -81,9 +82,9 @@ export default function AddProfile() {
   }, []);
   // console.log(users);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState("");
-  const [markerPoint, setMarkerPoint] = useState();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [searchWord, setSearchWord] = useState("");
+  // const [markerPoint, setMarkerPoint] = useState();
 
   // function getMapData() {
   //   try {
@@ -135,6 +136,31 @@ export default function AddProfile() {
   //   }
   // }
 
+  //Geocoding function
+  const apiIsLoaded = useApiIsLoaded();
+  const [latLng, setLatLng] = useState([]);
+  const [geocodingService, setGeocodingService] = useState();
+  const geocodingLibrary = useMapsLibrary("geocoding");
+
+  useEffect(() => {
+    if (!geocodingLibrary) return;
+    setGeocodingService(new window.google.maps.Geocoder());
+  }, [geocodingLibrary]);
+  console.log(apiIsLoaded, geocodingLibrary, geocodingService)
+
+  if(geocodingService){
+    geocodingService.geocode({address: '13357', componentRestrictions: {country: 'DE'}}, (results, status) => {
+      if (results && status === "OK") {
+        // const a = results[0].geometry.location.lat()
+        // return results[0].geometry.location.lat()
+      // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+      setLatLng({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+        // return a
+      }})
+    }
+
+
+  //Autocomplete function
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -145,7 +171,6 @@ export default function AddProfile() {
   const [location, setLocation] = useState([]);
 
   const onPlaceChanged = (place) => {
-    console.log(place)
     if (place) {
       setInputValue(place.formatted_address || place.name);
     }
@@ -158,26 +183,30 @@ export default function AddProfile() {
     onPlaceChanged,
   });
 
-  // autocompleteInstance.setFields()
-  if(autocompleteInstance)
- { autocompleteInstance.setFields(["formatted_address", "geometry", "address_components"]);
-  autocompleteInstance.setComponentRestrictions({country: ["de"],});
-  autocompleteInstance.setTypes(['address']);}
-  
+  if (autocompleteInstance) {
+    autocompleteInstance.setFields([
+      "formatted_address",
+      "geometry",
+      "address_components",
+    ]);
+    autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+    // autocompleteInstance.setTypes(["address"]);
+  }
 
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const loc = autocompleteInstance.getPlace();
-      console.log(loc)
-      const { formatted_address, geometry, address_components } = autocompleteInstance.getPlace();
+      const { formatted_address, geometry, address_components } =
+        autocompleteInstance.getPlace();
       const postalCode = address_components.find((component) => {
         return component.types.includes("postal_code");
       });
+      console.log(address_components)
       setLocation((prev) => {
         return {
           ...prev,
           address: formatted_address,
-          postal_code: postalCode.long_name
+          postal_code: postalCode.long_name,
+          position: {lat: geometry.location.lat(), lng:  geometry.location.lng()}
         };
       });
     }
@@ -187,14 +216,12 @@ export default function AddProfile() {
     <>
       {/* <div>
         {users.map((user) => (
-          <div key={user.id}>{user.name}</div>
+          <>
+          <div key={user.id}></div>
+          <div key={user.id}>{user.name}{user.position.lat} {user.position.lng}{user.address}{user.postal_code}</div>
+          </>
         ))}
       </div> */}
-      <div>
-        {users.map((user) => (
-          <div key={user.id}>{user.location} </div>
-        ))}
-      </div>
       <div className="form-container">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 1. Learner or Mentor */}
@@ -244,18 +271,18 @@ export default function AddProfile() {
               type="text"
               id="location"
               value={inputValue}
-              onChange={(e)=>handleInputChange(e)}
+              onChange={(e) => handleInputChange(e)}
               ref={inputRef}
               // {...register("location")}
               // {...register("location", {
               //   required: "Type your location",
               //   onChange: (e)=>{handleInputChange(e)},
-                
-                // onChange: (e) => {
-                //   handleInputChange(e);
-                // },
+
+              // onChange: (e) => {
+              //   handleInputChange(e);
+              // },
               // value: {inputValue}
-                // onChange: {handleInputChange}
+              // onChange: {handleInputChange}
               // })}
             />
             {/* <input
@@ -268,7 +295,7 @@ export default function AddProfile() {
               {...register("location", { required: "Type your location" })}
             /> */}
 
-            {errors.location && <p>{errors.location.message}</p>}
+            {/* {errors.location && <p>{errors.location.message}</p>} */}
           </div>
 
           {/* <select {...register("Title", )}>
@@ -500,7 +527,6 @@ export default function AddProfile() {
         </div> */}
       </div>
       {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
-
     </>
   );
 }

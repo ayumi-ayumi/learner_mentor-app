@@ -86,22 +86,22 @@ function Geocoding() {
   //   setArr(newArr);
   // }, [users]);
 
-  // useEffect(() => {
-  //   if (!geocodingLibrary) return;
-  //   setGeocodingService(new window.google.maps.Geocoder());
-  // }, [geocodingLibrary]);
-  // console.log(apiIsLoaded, geocodingLibrary, geocodingService)
+  useEffect(() => {
+    if (!geocodingLibrary) return;
+    setGeocodingService(new window.google.maps.Geocoder());
+  }, [geocodingLibrary]);
+  console.log(apiIsLoaded, geocodingLibrary, geocodingService)
 
-  // if(geocodingService){
-  //   geocodingService.geocode({address: "berlin"}, (results, status) => {
-  //     if (results && status === "OK") {
-  //       // const a = results[0].geometry.location.lat()
-  //       // return results[0].geometry.location.lat()
-  //     // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
-  //     setLatLng({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
-  //       // return a
-  //     }})
-  //   }
+  if(geocodingService){
+    geocodingService.geocode({address: "berlin"}, (results, status) => {
+      if (results && status === "OK") {
+        // const a = results[0].geometry.location.lat()
+        // return results[0].geometry.location.lat()
+      // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+      setLatLng({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+        // return a
+      }})
+    }
 
   // const [newarrr, setNewarrr] = useState([]);
   // useEffect(() => {
@@ -372,44 +372,44 @@ function Geocoding() {
   //   inputField: inputRef && inputRef.current,
   //   onPlaceChanged,
   // });
-  const inputRef = useRef(null);
-  const [inputValue, setInputValue] = useState('');
+  // const inputRef = useRef(null);
+  // const [inputValue, setInputValue] = useState('');
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+  // const handleInputChange = (event) => {
+  //   setInputValue(event.target.value);
+  // };
 
-  console.log(inputValue)
+  // console.log(inputValue)
 
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
 
-  const onPlaceChanged = (place) => {
-    if (place) {
-      setInputValue(place.formatted_address || place.name);
-    }
+  // const onPlaceChanged = (place) => {
+  //   if (place) {
+  //     setInputValue(place.formatted_address || place.name);
+  //   }
 
-    // Keep focus on input element
-    inputRef.current && inputRef.current.focus();
-  };
+  //   // Keep focus on input element
+  //   inputRef.current && inputRef.current.focus();
+  // };
 
-  const autocompleteInstance = useAutocomplete({
-    inputField: inputRef && inputRef.current,
-    onPlaceChanged,
-  });
+  // const autocompleteInstance = useAutocomplete({
+  //   inputField: inputRef && inputRef.current,
+  //   onPlaceChanged,
+  // });
 
-  useEffect(() => {
-    if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, name } = autocompleteInstance.getPlace();
-      console.log(123)
+  // useEffect(() => {
+  //   if (autocompleteInstance?.getPlace()) {
+  //     const { formatted_address, name } = autocompleteInstance.getPlace();
+  //     console.log(123)
 
-      setData((prev) => {
-        return {
-          ...prev,
-          place: formatted_address || name,
-        };
-      });
-    }
-  }, [inputValue]);
+  //     setData((prev) => {
+  //       return {
+  //         ...prev,
+  //         place: formatted_address || name,
+  //       };
+  //     });
+  //   }
+  // }, [inputValue]);
 
   // const [isLoading, setIsLoading] = useState(false);
   // const [searchWord, setSearchWord] = useState("");
@@ -426,7 +426,7 @@ function Geocoding() {
     <>
       <div>
         {users.map((user) => (
-          <div key={user.id}>{user.location} </div>
+          <div key={user.id}>{user.location.lat} {user.location.lng}</div>
         ))}
       </div>
       {/* <div> aaa{berlinLoc.lat}</div> */}
@@ -441,7 +441,17 @@ function Geocoding() {
         // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         // onClick={() => setActiveMarker(null)}
       >
-        {markers.map((marker) => (
+        {users.map((user) => (
+          //{markers.map(({ id, name, position }) => (
+          <Marker
+            key={user.id}
+            // position = {useGeocoding('Berlin')}
+            position={user.position}
+            // onClick={() => setOpen(true)}
+            onClick={() => onMarkerClick(user)}
+          />
+        ))}
+        {/* {markers.map((marker) => (
           //{markers.map(({ id, name, position }) => (
           <Marker
             key={marker.id}
@@ -450,7 +460,7 @@ function Geocoding() {
             // onClick={() => setOpen(true)}
             onClick={() => onMarkerClick(marker)}
           />
-        ))}
+        ))} */}
 
         {/* {selectPlace &&  ( */}
         {open && (
