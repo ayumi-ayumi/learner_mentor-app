@@ -65,6 +65,7 @@ function Geocoding() {
     // users.then((snap) =>
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })))
     // );
+    
     //Order by the date
     const postData = collection(db, "users");
     const queryRef = query(postData, orderBy("datetime", "asc"));
@@ -90,7 +91,7 @@ function Geocoding() {
     if (!geocodingLibrary) return;
     setGeocodingService(new window.google.maps.Geocoder());
   }, [geocodingLibrary]);
-  console.log(apiIsLoaded, geocodingLibrary, geocodingService)
+  // console.log(apiIsLoaded, geocodingLibrary, geocodingService)
 
   if(geocodingService){
     geocodingService.geocode({address: "berlin"}, (results, status) => {
@@ -233,9 +234,18 @@ function Geocoding() {
 
   // console.log(arr)
 
-  const onClose = () => {
+  // const onClose = () => {
+  //   setOpen(false)
+  //   setSelectPlace(null);
+  //   console.log(123)
+  // };
+  
+  function onClose () {
+    setOpen(false)
     setSelectPlace(null);
-  };
+    console.log(123)
+    
+  }
 
   const sampleMarkers = [
     {
@@ -426,12 +436,9 @@ function Geocoding() {
     <>
       <div>
         {users.map((user) => (
-          <div key={user.id}>{user.location.lat} {user.location.lng}</div>
+          <div key={user.id}>{user.position_vague.lat} {user.position_vague.lng}</div>
         ))}
       </div>
-      {/* <div> aaa{berlinLoc.lat}</div> */}
-      {/* <div> aaa{geo.lat}</div> */}
-      {/* <Geocoding getLoc={getLoc}/> */}
       <Map
         zoom={11}
         center={center}
@@ -446,26 +453,17 @@ function Geocoding() {
           <Marker
             key={user.id}
             // position = {useGeocoding('Berlin')}
-            position={user.position}
+            position={user.position_vague}
             // onClick={() => setOpen(true)}
             onClick={() => onMarkerClick(user)}
           />
         ))}
-        {/* {markers.map((marker) => (
-          //{markers.map(({ id, name, position }) => (
-          <Marker
-            key={marker.id}
-            // position = {useGeocoding('Berlin')}
-            position={marker.position}
-            // onClick={() => setOpen(true)}
-            onClick={() => onMarkerClick(marker)}
-          />
-        ))} */}
 
         {/* {selectPlace &&  ( */}
         {open && (
           <InfoWindow
-            position={selectPlace.position}
+            position={selectPlace.position_vague}
+            // onCloseClick={()=>onClose()} 
             onCloseClick={() => setOpen(false)} // なくても動く
           >
             <p style={{ backgroundColor: "yellow" }}>
@@ -474,7 +472,7 @@ function Geocoding() {
           </InfoWindow>
         )}
       </Map>
-      <input ref={inputRef} value={inputValue} onChange={handleInputChange} />
+      {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
       {/* <button
             type="button"
             onClick={() => getMapData("Gropiusstr.6")}

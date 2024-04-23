@@ -16,15 +16,16 @@ import {
   useAutocomplete,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+// const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 
 export default function App() {
   return (
     <BrowserRouter>
-      <APIProvider apiKey={API_KEY} libraries={["places"]}>
+      <APIProvider >
+      {/* <APIProvider apiKey={API_KEY} libraries={["places"]}> */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/" element={<ShowMap />} /> */}
           <Route path="addprofile" element={<AddProfile />} />
         </Routes>

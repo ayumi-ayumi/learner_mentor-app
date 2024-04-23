@@ -68,3 +68,12 @@ const todoItems = todos.map((todo) =>
       datetime: new Date(),
       location: location.place
     });
+
+
+6. Let's use useForm and MUI
+
+          <FormInputText
+            name="textValue"
+            control={control}
+            label="Text Input"
+          />
