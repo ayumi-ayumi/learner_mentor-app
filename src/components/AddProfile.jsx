@@ -30,6 +30,7 @@ import {
 import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
+import { FormInputSlider } from "../form-components/FormInputSlider";
 import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
 // import { useGeocoding } from "./hooks/useGeocoding";
 
@@ -46,7 +47,7 @@ export default function AddProfile() {
     checkboxValue: [],
     // dateValue: new Date(),
     // dropdownValue: "",
-    // sliderValue: 0,
+    sliderValue: 0,
   };
 
   const {
@@ -252,10 +253,16 @@ export default function AddProfile() {
           label={"I am a "}
         />
         <FormInputCheckbox
-        control={control}
-        setValue={setValue}
         name={"checkboxValue"}
+        control={control}
         label={"Checkbox Input"}
+        setValue={setValue}
+      />
+      <FormInputSlider
+        name={"sliderValue"}
+        control={control}
+        label={"Slider Input"}
+        setValue={setValue}
       />
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
