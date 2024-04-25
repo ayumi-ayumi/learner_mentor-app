@@ -31,6 +31,7 @@ import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputSlider } from "../form-components/FormInputSlider";
+import { FormInputDropdown } from "../form-components/FormInputDropdown";
 import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
 // import { useGeocoding } from "./hooks/useGeocoding";
 
@@ -153,96 +154,153 @@ export default function AddProfile() {
   //   }
   // }
 
-  const [postalCode, setPostalCode] = useState();
+  const options_learnerORmentor = [
+    {
+      label: "Learner",
+      value: "learner",
+    },
+    {
+      label: "Mentor",
+      value: "mentor",
+    },
+  ];
+  
+  const options_LearningDuration = [
+    {
+      label: "Beginner",
+      value: "beginner",
+    },
+    {
+      label: "3 to 6 months",
+      value: "3 to 6 m",
+    },
+    {
+      label: "6 to 12 months",
+      value: "6 to 12 m",
+    },
+    {
+      label: "1 to 2 years",
+      value: "1 to 2 y",
+    },
+    {
+      label: "More than 2 years",
+      value: "more than 2 y",
+    },
+  ];
+  
+  const options_WorkingDuration = [
+    {
+      label: "6 to 12 months",
+      value: "6 to 12 m",
+    },
+    {
+      label: "1 to 2 years",
+      value: "1 to 2 y",
+    },
+    {
+      label: "2 to 4 years",
+      value: "2 to 4 y",
+    },
+    {
+      label: "More than 4 years",
+      value: "more than 4 y",
+    },
+    {
+      label: "More than 10 years",
+      value: "more than 10 y",
+    },
+    
+  ];
+  // const [postalCode, setPostalCode] = useState();
 
-  //Geocoding function
-  const apiIsLoaded = useApiIsLoaded();
-  const [latLng, setLatLng] = useState([]);
-  const [geocodingService, setGeocodingService] = useState();
-  const geocodingLibrary = useMapsLibrary("geocoding");
+  // //Geocoding function
+  // const apiIsLoaded = useApiIsLoaded();
+  // const [latLng, setLatLng] = useState([]);
+  // const [geocodingService, setGeocodingService] = useState();
+  // const geocodingLibrary = useMapsLibrary("geocoding");
 
-  useEffect(() => {
-    if (!geocodingLibrary) return;
-    setGeocodingService(new window.google.maps.Geocoder());
-  }, [geocodingLibrary]);
+  // useEffect(() => {
+  //   if (!geocodingLibrary) return;
+  //   setGeocodingService(new window.google.maps.Geocoder());
+  // }, [geocodingLibrary]);
 
-  if (postalCode) {
-    // if(geocodingService){
-    geocodingService.geocode(
-      { address: postalCode, componentRestrictions: { country: "DE" } },
-      (results, status) => {
-        if (results && status === "OK") {
-          setLatLng({
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          });
-        }
-      }
-    );
-  }
+  // if (postalCode) {
+  //   // if(geocodingService){
+  //   geocodingService.geocode(
+  //     { address: postalCode, componentRestrictions: { country: "DE" } },
+  //     (results, status) => {
+  //       if (results && status === "OK") {
+  //         setLatLng({
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         });
+  //       }
+  //     }
+  //   );
+  // }
 
-  //Autocomplete function
-  const inputRef = useRef(null);
-  const [inputValue, setInputValue] = useState("");
-  const [location, setLocation] = useState([]);
+  // //Autocomplete function
+  // const inputRef = useRef(null);
+  // const [inputValue, setInputValue] = useState("");
+  // const [location, setLocation] = useState([]);
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+  // const handleInputChange = (event) => {
+  //   setInputValue(event.target.value);
+  // };
 
-  const onPlaceChanged = (place) => {
-    if (place) {
-      setInputValue(place.formatted_address || place.name);
-    }
-    // Keep focus on input element
-    inputRef.current && inputRef.current.focus();
-  };
+  // const onPlaceChanged = (place) => {
+  //   if (place) {
+  //     setInputValue(place.formatted_address || place.name);
+  //   }
+  //   // Keep focus on input element
+  //   inputRef.current && inputRef.current.focus();
+  // };
 
-  const autocompleteInstance = useAutocomplete({
-    inputField: inputRef && inputRef.current,
-    onPlaceChanged,
-  });
+  // const autocompleteInstance = useAutocomplete({
+  //   inputField: inputRef && inputRef.current,
+  //   onPlaceChanged,
+  // });
 
-  if (autocompleteInstance) {
-    autocompleteInstance.setFields([
-      "formatted_address",
-      "geometry",
-      "address_components",
-    ]);
-    autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-    // autocompleteInstance.setTypes(["address"]);
-  }
+  // if (autocompleteInstance) {
+  //   autocompleteInstance.setFields([
+  //     "formatted_address",
+  //     "geometry",
+  //     "address_components",
+  //   ]);
+  //   autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+  //   // autocompleteInstance.setTypes(["address"]);
+  // }
 
-  useEffect(() => {
-    if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, geometry, address_components } =
-        autocompleteInstance.getPlace();
-      const postalCode = address_components.find((component) => {
-        return component.types.includes("postal_code");
-      });
-      setLocation((prev) => {
-        return {
-          ...prev,
-          address: formatted_address,
-          postal_code: postalCode.long_name,
-          position: {
-            lat: geometry.location.lat(),
-            lng: geometry.location.lng(),
-          },
-        };
-      });
-      setPostalCode(postalCode.long_name);
-    }
-  }, [inputValue]);
+  // useEffect(() => {
+  //   if (autocompleteInstance?.getPlace()) {
+  //     const { formatted_address, geometry, address_components } =
+  //       autocompleteInstance.getPlace();
+  //     const postalCode = address_components.find((component) => {
+  //       return component.types.includes("postal_code");
+  //     });
+  //     setLocation((prev) => {
+  //       return {
+  //         ...prev,
+  //         address: formatted_address,
+  //         postal_code: postalCode.long_name,
+  //         position: {
+  //           lat: geometry.location.lat(),
+  //           lng: geometry.location.lng(),
+  //         },
+  //       };
+  //     });
+  //     setPostalCode(postalCode.long_name);
+  //   }
+  // }, [inputValue]);
 
   return (
     <>
       <Paper
         style={{
           display: "grid",
-          gridRowGap: "20px",
-          padding: "20px",
-          margin: "10px 300px",
+          // gridRowGap: "20px",
+          // padding: "20px",
+          // margin: "10px 300px",
         }}
       >
         <Typography variant="h4"> Form Demo</Typography>
@@ -251,6 +309,19 @@ export default function AddProfile() {
           name={"learnerORmentor"}
           control={control}
           label={"I am a "}
+          options={options_learnerORmentor}
+        />
+        <FormInputRadio
+          name={"learnerORmentor"}
+          control={control}
+          label={"I have been learning for "}
+          options={options_LearningDuration}
+        />
+        <FormInputRadio
+          name={"learnerORmentor"}
+          control={control}
+          label={"I have been working for "}
+          options={options_WorkingDuration}
         />
         <FormInputCheckbox
         name={"checkboxValue"}
@@ -263,6 +334,13 @@ export default function AddProfile() {
         control={control}
         label={"Slider Input"}
         setValue={setValue}
+      />
+      <FormInputDropdown
+        name="dropdownValue"
+        control={control}
+        label="Dropdown Input"
+        setValue={setValue}
+
       />
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit

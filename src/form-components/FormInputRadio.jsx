@@ -8,21 +8,22 @@ import {
 import { Controller } from "react-hook-form";
 // import { FormInputProps } from "./FormInputProps";
 
-const options = [
-  {
-    label: "Learner",
-    value: "learner",
-  },
-  {
-    label: "Mentor",
-    value: "mentor",
-  },
-];
+// const options_learnerORmentor = [
+//   {
+//     label: "Learner",
+//     value: "learner",
+//   },
+//   {
+//     label: "Mentor",
+//     value: "mentor",
+//   },
+// ];
 
 export const FormInputRadio = ({
   name,
   control,
   label,
+  options
 }) => {
   const generateRadioOptions = () => {
     return options.map((singleOption) => (

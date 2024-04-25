@@ -8,10 +8,13 @@ export const FormInputSlider = ({
   label,
 }) => {
   const [sliderValue, setSliderValue] = React.useState(30);
+
   useEffect(() => {
     if (sliderValue) setValue(name, sliderValue);
   }, [name, setValue, sliderValue]);
+
   const handleChange = (event, newValue) => {
+    console.log(newValue)
     setSliderValue(newValue);
   };
   return (

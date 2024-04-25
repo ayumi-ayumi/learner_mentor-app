@@ -42,7 +42,7 @@ const options = [
     value: "c++",
   },
   {
-    label: "java",
+    label: "Java",
     value: "java",
   },
 ];

@@ -22,14 +22,14 @@ import {
 export default function App() {
   return (
     <BrowserRouter>
-      <APIProvider >
+      {/* <APIProvider > */}
       {/* <APIProvider apiKey={API_KEY} libraries={["places"]}> */}
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/" element={<ShowMap />} /> */}
           <Route path="addprofile" element={<AddProfile />} />
         </Routes>
-      </APIProvider>
+      {/* </APIProvider> */}
     </BrowserRouter>
   );
 }
