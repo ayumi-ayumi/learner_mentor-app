@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -23,8 +24,19 @@ export const FormInputRadio = ({
   name,
   control,
   label,
-  options
+  options,
+  setValue,
 }) => {
+  const [radioValue, setRadioValue] = React.useState("");
+
+  useEffect(() => {
+    if (radioValue) setValue(name, radioValue);
+  }, [name, setValue, radioValue]);
+
+  const handleChange = (event) => {
+    setRadioValue(event.target.value);
+  };
+
   const generateRadioOptions = () => {
     return options.map((singleOption) => (
       <FormControlLabel
@@ -41,12 +53,13 @@ export const FormInputRadio = ({
       <Controller
         name={name}
         control={control}
+        label={label}
         render={({
           field: { onChange, value },
           fieldState: { error },
           formState,
         }) => (
-          <RadioGroup value={value} onChange={onChange}>
+          <RadioGroup value={radioValue} onChange={handleChange} row>
             {generateRadioOptions()}
           </RadioGroup>
         )}

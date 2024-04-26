@@ -164,7 +164,7 @@ export default function AddProfile() {
       value: "mentor",
     },
   ];
-  
+
   const options_LearningDuration = [
     {
       label: "Beginner",
@@ -187,7 +187,7 @@ export default function AddProfile() {
       value: "more than 2 y",
     },
   ];
-  
+
   const options_WorkingDuration = [
     {
       label: "6 to 12 months",
@@ -209,7 +209,6 @@ export default function AddProfile() {
       label: "More than 10 years",
       value: "more than 10 y",
     },
-    
   ];
   // const [postalCode, setPostalCode] = useState();
 
@@ -310,38 +309,40 @@ export default function AddProfile() {
           control={control}
           label={"I am a "}
           options={options_learnerORmentor}
+          setValue={setValue}
         />
         <FormInputRadio
-          name={"learnerORmentor"}
+          name={"LearningDuration"}
           control={control}
           label={"I have been learning for "}
           options={options_LearningDuration}
+          setValue={setValue}
         />
         <FormInputRadio
-          name={"learnerORmentor"}
+          name={"WorkingDuration"}
           control={control}
           label={"I have been working for "}
           options={options_WorkingDuration}
+          setValue={setValue}
         />
         <FormInputCheckbox
-        name={"checkboxValue"}
-        control={control}
-        label={"Checkbox Input"}
-        setValue={setValue}
-      />
-      <FormInputSlider
-        name={"sliderValue"}
-        control={control}
-        label={"Slider Input"}
-        setValue={setValue}
-      />
-      <FormInputDropdown
-        name="dropdownValue"
-        control={control}
-        label="Dropdown Input"
-        setValue={setValue}
-
-      />
+          name={"checkboxValue"}
+          control={control}
+          label={"Checkbox Input"}
+          setValue={setValue}
+        />
+        <FormInputSlider
+          name={"sliderValue"}
+          control={control}
+          label={"Slider Input"}
+          setValue={setValue}
+        />
+        <FormInputDropdown
+          name="dropdownValue"
+          control={control}
+          label="Languages"
+          setValue={setValue}
+        />
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
         </Button>

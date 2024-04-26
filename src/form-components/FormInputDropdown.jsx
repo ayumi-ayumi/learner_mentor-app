@@ -29,6 +29,7 @@ export const FormInputDropdown = ({
     setLanguages(event.target.value);
   };
 
+  console.log(languages)
   // const handleClose = () => {
   //   setOpen(false);
   // };
@@ -47,6 +48,7 @@ export const FormInputDropdown = ({
       );
     });
   };
+  
   return (
     <FormControl size={"small"}>
       <InputLabel>{label}</InputLabel>
