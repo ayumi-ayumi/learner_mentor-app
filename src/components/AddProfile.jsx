@@ -34,6 +34,7 @@ import { FormInputSlider } from "../form-components/FormInputSlider";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
 import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
 // import { useGeocoding } from "./hooks/useGeocoding";
+import { useData } from "../../hooks/useData"
 
 // const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -61,6 +62,8 @@ export default function AddProfile() {
     formState: { errors },
   } = useForm({ defaultValues: defaultValues });
 
+  const languagesAPI = useData("https://restcountries.com/v3.1/all");
+  console.log(languagesAPI)
   //Store the user data when clicking the submit button
   // const onSubmit = (data) => {
   //   addDoc(collection(db, "users"), {
