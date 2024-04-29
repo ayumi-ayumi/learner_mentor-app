@@ -62,7 +62,7 @@ export default function AddProfile() {
     formState: { errors },
   } = useForm({ defaultValues: defaultValues });
 
-  const languagesAPI = useData("https://restcountries.com/v3.1/all");
+  const languagesAPI = useData("");
   console.log(languagesAPI)
   //Store the user data when clicking the submit button
   // const onSubmit = (data) => {
@@ -157,7 +157,7 @@ export default function AddProfile() {
   //   }
   // }
 
-  const options_learnerORmentor = [
+  const options_earnerORmentor = [
     {
       label: "Learner",
       value: "learner",
@@ -213,6 +213,54 @@ export default function AddProfile() {
       value: "more than 10 y",
     },
   ];
+
+  const options_Langugages = [
+    {
+      label: "German",
+      value: "German",
+    },
+    {
+      label: "English",
+      value: "English",
+    },
+    {
+      label: "Spanish",
+      value: "Spanish",
+    },
+    {
+      label: "French",
+      value: "French",
+    },
+    {
+      label: "Italian",
+      value: "Italian",
+    },
+    {
+      label: "Dutch",
+      value: "Dutch",
+    },
+    {
+      label: "Portuguese",
+      value: "Portuguese",
+    },
+    {
+      label: "Russian",
+      value: "Russian",
+    },
+    {
+      label: "Chinese",
+      value: "Chinese",
+    },
+    {
+      label: "Japanese",
+      value: "Japanese",
+    },
+    {
+      label: "Korean",
+      value: "Korean",
+    },
+  ];
+
   // const [postalCode, setPostalCode] = useState();
 
   // //Geocoding function
@@ -311,7 +359,7 @@ export default function AddProfile() {
           name={"learnerORmentor"}
           control={control}
           label={"I am a "}
-          options={options_learnerORmentor}
+          options={options_earnerORmentor}
           setValue={setValue}
         />
         <FormInputRadio
@@ -344,6 +392,7 @@ export default function AddProfile() {
           name="dropdownValue"
           control={control}
           label="Languages"
+          options={options_Langugages}
           setValue={setValue}
         />
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
