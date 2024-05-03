@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Controller } from "react-hook-form";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
 // import { FormInputProps } from "./FormInputProps";
 // const options = [
 //   {
@@ -19,7 +22,7 @@ export const FormInputDropdown = ({
   options,
   setValue,
 }) => {
-  const [languages, setLanguages] = React.useState('');
+  const [languages, setLanguages] = React.useState([]);
   // const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
@@ -44,7 +47,9 @@ export const FormInputDropdown = ({
     return options.map((option) => {
       return (
         <MenuItem key={option.value} value={option.value}>
-          {option.label}
+           <Checkbox checked={languages.indexOf(option.value) > -1} />
+              <ListItemText primary={option.value} />
+          {/* {option.label} */}
         </MenuItem>
       );
     });
@@ -62,7 +67,18 @@ export const FormInputDropdown = ({
           label="Languages"
           // onClose={handleClose}
           // onOpen={handleOpen}
+          multiple
+          input={<OutlinedInput label="Tag" />}
+          renderValue={(selected) => selected.join(', ')}
           >
+          {/* <Select 
+          onChange={handleChange} 
+          value={languages}
+          // open={open}
+          label="Languages"
+          // onClose={handleClose}
+          // onOpen={handleOpen}
+          > */}
             {generateSingleOptions()}
           </Select>
         )}
