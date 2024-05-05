@@ -29,7 +29,7 @@ import {
 import { useGeocoding } from "./hooks/useGeocoding";
 // import Geocoding from "./Geocoding";
 
-// const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function MapWindow() {
   return (
@@ -65,7 +65,7 @@ function Geocoding() {
     // users.then((snap) =>
     //   setUsers(snap.docs.map((doc) => ({ ...doc.data() })))
     // );
-    
+
     //Order by the date
     const postData = collection(db, "users");
     const queryRef = query(postData, orderBy("datetime", "asc"));

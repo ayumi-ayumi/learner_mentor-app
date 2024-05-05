@@ -33,7 +33,6 @@ export const FormInputDropdown = ({
     setLanguages(event.target.value);
   };
 
-  console.log(languages)
   // const handleClose = () => {
   //   setOpen(false);
   // };

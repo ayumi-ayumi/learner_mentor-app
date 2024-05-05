@@ -35,8 +35,10 @@ import { FormInputDropdown } from "../form-components/FormInputDropdown";
 import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
 // import { useGeocoding } from "./hooks/useGeocoding";
 import { useData } from "../../hooks/useData"
+import MapWindow from "./MapWindow";
+import { options_learnerORmentor } from "../props"
 
-// const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function AddProfile() {
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
@@ -103,70 +105,18 @@ export default function AddProfile() {
   // }, []);
   // console.log(users);
 
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [searchWord, setSearchWord] = useState("");
-  // const [markerPoint, setMarkerPoint] = useState();
 
-  // function getMapData() {
-  //   try {
-  //     setIsLoading(true);
-  //     // geocoderオブジェクトの取得
-  //     // const geocoder = new google.maps.Geocoder();
-  //     const geocoder = new window.google.maps.Geocoder();
-  //     // let getLat = 0;
-  //     // let getLng = 0;
-  //     // 検索キーワードを使ってGeocodeでの位置検索
-  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
-  //       if (status === "OK" && results) {
-  //         // getLat = results[0].geometry.location.lat();
-  //         // getLng = results[0].geometry.location.lng();
-  //         // const center = {
-  //         //       lat: results[0].geometry.location.lat(),
-  //         //       lng: results[0].geometry.location.lng()
-  //         //     };
-  //         //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
-  //         //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
 
-  //         const searchWordPosition = {
-  //           lat: results[0].geometry.location.lat(),
-  //           lng: results[0].geometry.location.lng(),
-  //         };
-
-  //         // setMarkerPoint({...markerPoint, lat: 52.6117109,})
-  //         setMarkerPoint(searchWordPosition);
-  //         // setMarkers([
-  //         //   ...markers,
-  //         //   {
-  //         //     id: markers.length + 1,
-  //         //     name: searchWord,
-  //         //     position: {
-  //         //       lat: searchWordPosition.lat,
-  //         //       lng: searchWordPosition.lng,
-  //         //     },
-  //         //   },
-  //         // ]);
-  //         setSearchWord("");
-  //       }
-  //     });
-
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     alert("検索処理でエラーが発生しました！");
-  //     setIsLoading(false);
-  //     throw error;
-  //   }
-  // }
-
-  const options_earnerORmentor = [
-    {
-      label: "Learner",
-      value: "learner",
-    },
-    {
-      label: "Mentor",
-      value: "mentor",
-    },
-  ];
+  // const options_learnerORmentor = [
+  //   {
+  //     label: "Learner",
+  //     value: "learner",
+  //   },
+  //   {
+  //     label: "Mentor",
+  //     value: "mentor",
+  //   },
+  // ];
 
   const options_LearningDuration = [
     {
@@ -261,7 +211,7 @@ export default function AddProfile() {
     },
   ];
 
-  // const [postalCode, setPostalCode] = useState();
+  const [postalCode, setPostalCode] = useState();
 
   // //Geocoding function
   // const apiIsLoaded = useApiIsLoaded();
@@ -289,59 +239,162 @@ export default function AddProfile() {
   //   );
   // }
 
-  // //Autocomplete function
-  // const inputRef = useRef(null);
-  // const [inputValue, setInputValue] = useState("");
-  // const [location, setLocation] = useState([]);
+  //Autocomplete function
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
+  const [markerPoint, setMarkerPoint] = useState();
 
-  // const handleInputChange = (event) => {
-  //   setInputValue(event.target.value);
-  // };
+  function getMapData() {
+    try {
+      setIsLoading(true);
+      // geocoderオブジェクトの取得
+      // const geocoder = new google.maps.Geocoder();
+      const geocoder = new window.google.maps.Geocoder();
+      // let getLat = 0;
+      // let getLng = 0;
+      // 検索キーワードを使ってGeocodeでの位置検索
+      geocoder.geocode({ address: searchWord }, async (results, status) => {
+        if (status === "OK" && results) {
+          // getLat = results[0].geometry.location.lat();
+          // getLng = results[0].geometry.location.lng();
+          // const center = {
+          //       lat: results[0].geometry.location.lat(),
+          //       lng: results[0].geometry.location.lng()
+          //     };
+          //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+          //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
 
-  // const onPlaceChanged = (place) => {
-  //   if (place) {
-  //     setInputValue(place.formatted_address || place.name);
+          const searchWordPosition = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+
+          // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+          setMarkerPoint(searchWordPosition);
+          // setMarkers([
+          //   ...markers,
+          //   {
+          //     id: markers.length + 1,
+          //     name: searchWord,
+          //     position: {
+          //       lat: searchWordPosition.lat,
+          //       lng: searchWordPosition.lng,
+          //     },
+          //   },
+          // ]);
+          setSearchWord("");
+        }
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      alert("検索処理でエラーが発生しました！");
+      setIsLoading(false);
+      throw error;
+    }
+  }
+  // function getMapData() {
+  //   try {
+  //     setIsLoading(true);
+  //     // geocoderオブジェクトの取得
+  //     // const geocoder = new google.maps.Geocoder();
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     // let getLat = 0;
+  //     // let getLng = 0;
+  //     // 検索キーワードを使ってGeocodeでの位置検索
+  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
+  //       if (status === "OK" && results) {
+  //         // getLat = results[0].geometry.location.lat();
+  //         // getLng = results[0].geometry.location.lng();
+  //         // const center = {
+  //         //       lat: results[0].geometry.location.lat(),
+  //         //       lng: results[0].geometry.location.lng()
+  //         //     };
+  //         //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  //         //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+
+  //         const searchWordPosition = {
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         };
+
+  //         // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+  //         setMarkerPoint(searchWordPosition);
+  //         // setMarkers([
+  //         //   ...markers,
+  //         //   {
+  //         //     id: markers.length + 1,
+  //         //     name: searchWord,
+  //         //     position: {
+  //         //       lat: searchWordPosition.lat,
+  //         //       lng: searchWordPosition.lng,
+  //         //     },
+  //         //   },
+  //         // ]);
+  //         setSearchWord("");
+  //       }
+  //     });
+
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     alert("検索処理でエラーが発生しました！");
+  //     setIsLoading(false);
+  //     throw error;
   //   }
-  //   // Keep focus on input element
-  //   inputRef.current && inputRef.current.focus();
-  // };
-
-  // const autocompleteInstance = useAutocomplete({
-  //   inputField: inputRef && inputRef.current,
-  //   onPlaceChanged,
-  // });
-
-  // if (autocompleteInstance) {
-  //   autocompleteInstance.setFields([
-  //     "formatted_address",
-  //     "geometry",
-  //     "address_components",
-  //   ]);
-  //   autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-  //   // autocompleteInstance.setTypes(["address"]);
   // }
 
-  // useEffect(() => {
-  //   if (autocompleteInstance?.getPlace()) {
-  //     const { formatted_address, geometry, address_components } =
-  //       autocompleteInstance.getPlace();
-  //     const postalCode = address_components.find((component) => {
-  //       return component.types.includes("postal_code");
-  //     });
-  //     setLocation((prev) => {
-  //       return {
-  //         ...prev,
-  //         address: formatted_address,
-  //         postal_code: postalCode.long_name,
-  //         position: {
-  //           lat: geometry.location.lat(),
-  //           lng: geometry.location.lng(),
-  //         },
-  //       };
-  //     });
-  //     setPostalCode(postalCode.long_name);
-  //   }
-  // }, [inputValue]);
+  const inputRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
+  const [location, setLocation] = useState([]);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const onPlaceChanged = (place) => {
+    if (place) {
+      setInputValue(place.formatted_address || place.name);
+    }
+    // Keep focus on input element
+    inputRef.current && inputRef.current.focus();
+  };
+
+  const autocompleteInstance = useAutocomplete({
+    inputField: inputRef && inputRef.current,
+    onPlaceChanged,
+  });
+
+  if (autocompleteInstance) {
+    autocompleteInstance.setFields([
+      "formatted_address",
+      "geometry",
+      "address_components",
+    ]);
+    autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+    // autocompleteInstance.setTypes(["address"]);
+  }
+
+  useEffect(() => {
+    if (autocompleteInstance?.getPlace()) {
+      const { formatted_address, geometry, address_components } =
+        autocompleteInstance.getPlace();
+      const postalCode = address_components.find((component) => {
+        return component.types.includes("postal_code");
+      });
+      setLocation((prev) => {
+        return {
+          ...prev,
+          address: formatted_address,
+          postal_code: postalCode.long_name,
+          position: {
+            lat: geometry.location.lat(),
+            lng: geometry.location.lng(),
+          },
+        };
+      });
+      setPostalCode(postalCode.long_name);
+    }
+  }, [inputValue]);
 
   return (
     <>
@@ -354,12 +407,47 @@ export default function AddProfile() {
         }}
       >
         <Typography variant="h4"> Form Demo</Typography>
+        <MapWindow />
+        <div className="input-container">
+             <label htmlFor="location">
+               Your location? Type the zipcode or your address
+             </label>
+             <input
+              type="text"
+              id="location"
+              value={inputValue}
+              onChange={(e) => handleInputChange(e)}
+              ref={inputRef}
+              // {...register("location")}
+              // {...register("location", {
+              //   required: "Type your location",
+              //   onChange: (e)=>{handleInputChange(e)},
+
+              // onChange: (e) => {
+              //   handleInputChange(e);
+              // },
+              // value: {inputValue}
+              // onChange: {handleInputChange}
+              // })}
+            />
+            {/* <input
+              type="text"
+              id="location"
+              // ref={inputRef}
+              // value={inputValue}
+              // onChange={handleInputChange}
+              // onChange={(e) => handleInputChange(e)}
+              {...register("location", { required: "Type your location" })}
+            /> */}
+
+            {/* {errors.location && <p>{errors.location.message}</p>} */}
+          </div>
         <FormInputText name="name" control={control} label="Name" />
         <FormInputRadio
           name={"learnerORmentor"}
           control={control}
           label={"I am a "}
-          options={options_earnerORmentor}
+          options={options_learnerORmentor}
           setValue={setValue}
         />
         <FormInputRadio
