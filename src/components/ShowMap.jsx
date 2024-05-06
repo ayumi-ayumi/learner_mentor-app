@@ -13,7 +13,7 @@ import {
   useApiLoadingStatus,
   useAutocomplete,
 } from "@vis.gl/react-google-maps";
-import { db } from "../firebase";
+import { db } from "../firebase/BaseConfig";
 import {
   collection,
   addDoc,

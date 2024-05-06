@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import "../styles/AddProfile.scss";
-import { db } from "../firebase";
+import { db } from "../firebase/BaseConfig";
 import {
   collection,
   addDoc,
@@ -34,9 +34,14 @@ import { FormInputSlider } from "../form-components/FormInputSlider";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
 import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
 // import { useGeocoding } from "./hooks/useGeocoding";
-import { useData } from "../../hooks/useData"
+import { useData } from "../../hooks/useData";
 import MapWindow from "./MapWindow";
-import { options_learnerORmentor } from "../props"
+import {
+  options_learnerORmentor,
+  options_LearningDuration,
+  options_WorkingDuration,
+  options_Langugages,
+} from "../props";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -47,6 +52,7 @@ export default function AddProfile() {
 
   const defaultValues = {
     name: "",
+    // location: "",
     learnerORmentor: "",
     checkboxValue: [],
     // dateValue: new Date(),
@@ -64,27 +70,28 @@ export default function AddProfile() {
     formState: { errors },
   } = useForm({ defaultValues: defaultValues });
 
-  const languagesAPI = useData("");
-  console.log(languagesAPI)
-  //Store the user data when clicking the submit button
-  // const onSubmit = (data) => {
-  //   addDoc(collection(db, "users"), {
-  //     ...data,
-  //     id: nanoid(),
-  //     datetime: new Date(),
-  //     address: location.address,
-  //     postal_code: location.postal_code,
-  //     position: location.position,
-  //     position_vague: latLng
-  //   });
-  //   // updateDoc(collection(db, "users"), {
-  //   //   position: useGeocoding(location),
-  //   // });
-  //   reset(); //送信後の入力フォーム欄を初期値に戻す
-  //   setInputValue("")
-  // };
+  // const languagesAPI = useData("");
+  // console.log(languagesAPI)
+
+  // Store the user data when clicking the submit button
+  const onSubmit = (data) => {
+    addDoc(collection(db, "users"), {
+      ...data,
+      id: nanoid(),
+      datetime: new Date(),
+      address: location.address,
+      // postal_code: location.postal_code,
+      position: location.position,
+      // position_vague: latLng
+    });
+    // updateDoc(collection(db, "users"), {
+    //   position: useGeocoding(location),
+    // });
+    reset(); //送信後の入力フォーム欄を初期値に戻す
+    setInputValue("");
+  };
   // console.log(watch());//入力の値を常時監視する
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data);
 
   //Obtain data from firebase
   // React.useEffect(() => {
@@ -105,113 +112,7 @@ export default function AddProfile() {
   // }, []);
   // console.log(users);
 
-
-
-  // const options_learnerORmentor = [
-  //   {
-  //     label: "Learner",
-  //     value: "learner",
-  //   },
-  //   {
-  //     label: "Mentor",
-  //     value: "mentor",
-  //   },
-  // ];
-
-  const options_LearningDuration = [
-    {
-      label: "Beginner",
-      value: "beginner",
-    },
-    {
-      label: "3 to 6 months",
-      value: "3 to 6 m",
-    },
-    {
-      label: "6 to 12 months",
-      value: "6 to 12 m",
-    },
-    {
-      label: "1 to 2 years",
-      value: "1 to 2 y",
-    },
-    {
-      label: "More than 2 years",
-      value: "more than 2 y",
-    },
-  ];
-
-  const options_WorkingDuration = [
-    {
-      label: "6 to 12 months",
-      value: "6 to 12 m",
-    },
-    {
-      label: "1 to 2 years",
-      value: "1 to 2 y",
-    },
-    {
-      label: "2 to 4 years",
-      value: "2 to 4 y",
-    },
-    {
-      label: "More than 4 years",
-      value: "more than 4 y",
-    },
-    {
-      label: "More than 10 years",
-      value: "more than 10 y",
-    },
-  ];
-
-  const options_Langugages = [
-    {
-      label: "German",
-      value: "German",
-    },
-    {
-      label: "English",
-      value: "English",
-    },
-    {
-      label: "Spanish",
-      value: "Spanish",
-    },
-    {
-      label: "French",
-      value: "French",
-    },
-    {
-      label: "Italian",
-      value: "Italian",
-    },
-    {
-      label: "Dutch",
-      value: "Dutch",
-    },
-    {
-      label: "Portuguese",
-      value: "Portuguese",
-    },
-    {
-      label: "Russian",
-      value: "Russian",
-    },
-    {
-      label: "Chinese",
-      value: "Chinese",
-    },
-    {
-      label: "Japanese",
-      value: "Japanese",
-    },
-    {
-      label: "Korean",
-      value: "Korean",
-    },
-  ];
-
-  const [postalCode, setPostalCode] = useState();
+  // const [postalCode, setPostalCode] = useState();
 
   // //Geocoding function
   // const apiIsLoaded = useApiIsLoaded();
@@ -240,59 +141,60 @@ export default function AddProfile() {
   // }
 
   //Autocomplete function
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState("");
-  const [markerPoint, setMarkerPoint] = useState();
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [searchWord, setSearchWord] = useState("");
+  // const [markerPoint, setMarkerPoint] = useState();
 
-  function getMapData() {
-    try {
-      setIsLoading(true);
-      // geocoderオブジェクトの取得
-      // const geocoder = new google.maps.Geocoder();
-      const geocoder = new window.google.maps.Geocoder();
-      // let getLat = 0;
-      // let getLng = 0;
-      // 検索キーワードを使ってGeocodeでの位置検索
-      geocoder.geocode({ address: searchWord }, async (results, status) => {
-        if (status === "OK" && results) {
-          // getLat = results[0].geometry.location.lat();
-          // getLng = results[0].geometry.location.lng();
-          // const center = {
-          //       lat: results[0].geometry.location.lat(),
-          //       lng: results[0].geometry.location.lng()
-          //     };
-          //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
-          //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  // function getMapData() {
+  //   try {
+  //     setIsLoading(true);
+  //     // geocoderオブジェクトの取得
+  //     // const geocoder = new google.maps.Geocoder();
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     // let getLat = 0;
+  //     // let getLng = 0;
+  //     // 検索キーワードを使ってGeocodeでの位置検索
+  //     geocoder.geocode({ address: searchWord }, async (results, status) => {
+  //       if (status === "OK" && results) {
+  //         // getLat = results[0].geometry.location.lat();
+  //         // getLng = results[0].geometry.location.lng();
+  //         // const center = {
+  //         //       lat: results[0].geometry.location.lat(),
+  //         //       lng: results[0].geometry.location.lng()
+  //         //     };
+  //         //   setMarkerPoint(center); // ここで検索対象の緯度軽度にマーカーの位置を変更
+  //         //   // setMarkerPoint({lat: getLat, lng: getLng}); // ここで検索対象の緯度軽度にマーカーの位置を変更
 
-          const searchWordPosition = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
+  //         const searchWordPosition = {
+  //           lat: results[0].geometry.location.lat(),
+  //           lng: results[0].geometry.location.lng(),
+  //         };
 
-          // setMarkerPoint({...markerPoint, lat: 52.6117109,})
-          setMarkerPoint(searchWordPosition);
-          // setMarkers([
-          //   ...markers,
-          //   {
-          //     id: markers.length + 1,
-          //     name: searchWord,
-          //     position: {
-          //       lat: searchWordPosition.lat,
-          //       lng: searchWordPosition.lng,
-          //     },
-          //   },
-          // ]);
-          setSearchWord("");
-        }
-      });
+  //         // setMarkerPoint({...markerPoint, lat: 52.6117109,})
+  //         setMarkerPoint(searchWordPosition);
+  //         // setMarkers([
+  //         //   ...markers,
+  //         //   {
+  //         //     id: markers.length + 1,
+  //         //     name: searchWord,
+  //         //     position: {
+  //         //       lat: searchWordPosition.lat,
+  //         //       lng: searchWordPosition.lng,
+  //         //     },
+  //         //   },
+  //         // ]);
+  //         setSearchWord("");
+  //       }
+  //     });
 
-      setIsLoading(false);
-    } catch (error) {
-      alert("検索処理でエラーが発生しました！");
-      setIsLoading(false);
-      throw error;
-    }
-  }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     alert("検索処理でエラーが発生しました！");
+  //     setIsLoading(false);
+  //     throw error;
+  //   }
+  // }
+
   // function getMapData() {
   //   try {
   //     setIsLoading(true);
@@ -368,7 +270,7 @@ export default function AddProfile() {
     autocompleteInstance.setFields([
       "formatted_address",
       "geometry",
-      "address_components",
+      // "address_components",
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
     // autocompleteInstance.setTypes(["address"]);
@@ -376,25 +278,28 @@ export default function AddProfile() {
 
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, geometry, address_components } =
+      const { formatted_address, geometry } =
+        // const { formatted_address, geometry, address_components } =
         autocompleteInstance.getPlace();
-      const postalCode = address_components.find((component) => {
-        return component.types.includes("postal_code");
-      });
+      // const postalCode = address_components.find((component) => {
+      //   return component.types.includes("postal_code");
+      // });
+      console.log(formatted_address, geometry);
       setLocation((prev) => {
         return {
           ...prev,
           address: formatted_address,
-          postal_code: postalCode.long_name,
+          // postal_code: postalCode.long_name,
           position: {
             lat: geometry.location.lat(),
             lng: geometry.location.lng(),
           },
         };
       });
-      setPostalCode(postalCode.long_name);
+      // setPostalCode(postalCode.long_name);
     }
   }, [inputValue]);
+  // console.log(location)
 
   return (
     <>
@@ -406,42 +311,43 @@ export default function AddProfile() {
           // margin: "10px 300px",
         }}
       >
-        <Typography variant="h4"> Form Demo</Typography>
-        <MapWindow />
+        <Typography variant="h4">Form Demo</Typography>
+        {/* <MapWindow /> */}
         <div className="input-container">
-             <label htmlFor="location">
-               Your location? Type the zipcode or your address
-             </label>
-             <input
-              type="text"
-              id="location"
-              value={inputValue}
-              onChange={(e) => handleInputChange(e)}
-              ref={inputRef}
-              // {...register("location")}
-              // {...register("location", {
-              //   required: "Type your location",
-              //   onChange: (e)=>{handleInputChange(e)},
-
-              // onChange: (e) => {
-              //   handleInputChange(e);
-              // },
-              // value: {inputValue}
-              // onChange: {handleInputChange}
-              // })}
-            />
-            {/* <input
-              type="text"
-              id="location"
-              // ref={inputRef}
-              // value={inputValue}
-              // onChange={handleInputChange}
-              // onChange={(e) => handleInputChange(e)}
-              {...register("location", { required: "Type your location" })}
-            /> */}
-
-            {/* {errors.location && <p>{errors.location.message}</p>} */}
-          </div>
+          <label htmlFor="location">Your location?</label>
+          <input
+            // name="location"
+            type="text"
+            id="location"
+            value={inputValue}
+            onChange={(e) => handleInputChange(e)}
+            ref={inputRef}
+          />
+        </div>
+        {/* <FormInputText name="location" onChange={(e) => handleInputChange(e)} control={control} label="Your location" /> */}
+        {/* <Controller
+      name="location"
+      control={control}
+      render={({
+        field: { handleInputChange, value },
+        fieldState: { error },
+        formState,
+      }) => (
+        <TextField
+          // helperText={error ? error.message : null}
+          size="small"
+          // error={!!error}
+          // onChange={()=>console.log(123)}
+          onChange={handleInputChange}
+          // onChange={(e) => handleInputChange(e)}
+          // onChange={onChange}
+          // value={inputValue}
+          fullWidth
+          label="your location"
+          variant="outlined"
+        />
+      )}
+    /> */}
         <FormInputText name="name" control={control} label="Name" />
         <FormInputRadio
           name={"learnerORmentor"}

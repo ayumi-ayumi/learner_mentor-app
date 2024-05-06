@@ -13,7 +13,7 @@ import {
   useAutocomplete,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import { db } from "../firebase";
+import { db } from "../firebase/BaseConfig";
 import {
   collection,
   addDoc,
@@ -34,7 +34,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export default function MapWindow() {
   return (
     // <APIProvider apiKey={API_KEY} libraries={["places"]}>
-      <Geocoding />
+    <Geocoding />
     // </APIProvider>
   );
 }
@@ -93,16 +93,20 @@ function Geocoding() {
   }, [geocodingLibrary]);
   // console.log(apiIsLoaded, geocodingLibrary, geocodingService)
 
-  if(geocodingService){
-    geocodingService.geocode({address: "berlin"}, (results, status) => {
+  if (geocodingService) {
+    geocodingService.geocode({ address: "berlin" }, (results, status) => {
       if (results && status === "OK") {
         // const a = results[0].geometry.location.lat()
         // return results[0].geometry.location.lat()
-      // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
-      setLatLng({lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()})
+        // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+        setLatLng({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        });
         // return a
-      }})
-    }
+      }
+    });
+  }
 
   // const [newarrr, setNewarrr] = useState([]);
   // useEffect(() => {
@@ -126,7 +130,7 @@ function Geocoding() {
   //   });
   //   console.log(a)
   //   setNewarrr([...newarrr, a]);
-  //   // } 
+  //   // }
   // }, [geocodingLibrary]);
 
   // console.log(newarrr);
@@ -230,8 +234,6 @@ function Geocoding() {
   //   setActiveMarker(marker); //id:3
   // };
 
-  
-
   // console.log(arr)
 
   // const onClose = () => {
@@ -239,12 +241,11 @@ function Geocoding() {
   //   setSelectPlace(null);
   //   console.log(123)
   // };
-  
-  function onClose () {
-    setOpen(false)
+
+  function onClose() {
+    setOpen(false);
     setSelectPlace(null);
-    console.log(123)
-    
+    console.log(123);
   }
 
   const sampleMarkers = [
@@ -436,7 +437,9 @@ function Geocoding() {
     <>
       <div>
         {users.map((user) => (
-          <div key={user.id}>{user.position_vague.lat} {user.position_vague.lng}</div>
+          <div key={user.id}>
+            {user.position_vague.lat} {user.position_vague.lng}
+          </div>
         ))}
       </div>
       <Map
@@ -463,7 +466,7 @@ function Geocoding() {
         {open && (
           <InfoWindow
             position={selectPlace.position_vague}
-            // onCloseClick={()=>onClose()} 
+            // onCloseClick={()=>onClose()}
             onCloseClick={() => setOpen(false)} // なくても動く
           >
             <p style={{ backgroundColor: "yellow" }}>
