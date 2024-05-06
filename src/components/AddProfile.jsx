@@ -54,10 +54,12 @@ export default function AddProfile() {
     name: "",
     // location: "",
     learnerORmentor: "",
-    checkboxValue: [],
+    programmingLanguages: [],
+    languages: [],
+    // checkboxValue: [],
     // dateValue: new Date(),
     // dropdownValue: "",
-    sliderValue: 0,
+    // sliderValue: 0,
   };
 
   const {
@@ -371,19 +373,19 @@ export default function AddProfile() {
           setValue={setValue}
         />
         <FormInputCheckbox
-          name={"checkboxValue"}
+          name={"programmingLanguages"}
           control={control}
           label={"Checkbox Input"}
           setValue={setValue}
         />
-        <FormInputSlider
+        {/* <FormInputSlider
           name={"sliderValue"}
           control={control}
           label={"Slider Input"}
           setValue={setValue}
-        />
+        /> */}
         <FormInputDropdown
-          name="dropdownValue"
+          name="languages"
           control={control}
           label="Languages"
           options={options_Langugages}

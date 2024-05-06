@@ -8,7 +8,7 @@ import {
 import { Controller } from "react-hook-form";
 // import { FormInputProps } from "./FormInputProps";
 
-const options = [
+const options_ProgrammingLanguages = [
   {
     label: "HTML&CSS",
     value: "htmlANDcss",
@@ -73,7 +73,7 @@ export const FormInputCheckbox = ({
     <FormControl size={"small"} variant={"outlined"}>
       <FormLabel component="legend">{label}</FormLabel>
       <div>
-        {options.map((option) => {
+        {options_ProgrammingLanguages.map((option) => {
           return (
             <FormControlLabel
               control={
