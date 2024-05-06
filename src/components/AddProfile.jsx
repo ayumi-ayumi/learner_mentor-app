@@ -46,14 +46,16 @@ import {
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function AddProfile() {
-  const center = { lat: 52.52, lng: 13.41 }; //Berlin
+  // const center = { lat: 52.52, lng: 13.41 }; //Berlin
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   const defaultValues = {
     name: "",
     // location: "",
     learnerORmentor: "",
+    LearningDuration: "",
+    WorkingDuration: "",
     programmingLanguages: [],
     languages: [],
     // checkboxValue: [],
@@ -89,7 +91,7 @@ export default function AddProfile() {
     // updateDoc(collection(db, "users"), {
     //   position: useGeocoding(location),
     // });
-    reset(); //送信後の入力フォーム欄を初期値に戻す
+    reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
   };
   // console.log(watch());//入力の値を常時監視する
@@ -314,11 +316,9 @@ export default function AddProfile() {
         }}
       >
         <Typography variant="h4">Form Demo</Typography>
-        {/* <MapWindow /> */}
         <div className="input-container">
           <label htmlFor="location">Your location?</label>
           <input
-            // name="location"
             type="text"
             id="location"
             value={inputValue}
@@ -394,7 +394,7 @@ export default function AddProfile() {
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
         </Button>
-        <Button onClick={() => reset()} variant={"outlined"}>
+        <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
           Reset
         </Button>
       </Paper>
