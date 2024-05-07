@@ -83,13 +83,13 @@ export default function AddProfile() {
       ...data,
       id: nanoid(),
       datetime: new Date(),
-      address: location.address,
-      // postal_code: location.postal_code,
-      position: location.position,
+      address: place.address,
+      // postal_code: place.postal_code,
+      position: place.position,
       // position_vague: latLng
     });
     // updateDoc(collection(db, "users"), {
-    //   position: useGeocoding(location),
+    //   position: useGeocoding(place),
     // });
     reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
@@ -251,7 +251,7 @@ export default function AddProfile() {
 
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
-  const [location, setLocation] = useState([]);
+  const [place, setPlace] = useState([]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -279,7 +279,6 @@ export default function AddProfile() {
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
     // autocompleteInstance.setTypes(["address"]);
   }
-
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
       const { formatted_address, geometry } =
@@ -288,12 +287,12 @@ export default function AddProfile() {
       // const postalCode = address_components.find((component) => {
       //   return component.types.includes("postal_code");
       // });
-      console.log(formatted_address, geometry);
-      setLocation((prev) => {
+      setPlace((prev) => {
         return {
           ...prev,
           address: formatted_address,
           // postal_code: postalCode.long_name,
+          // position: geometry.location
           position: {
             lat: geometry.location.lat(),
             lng: geometry.location.lng(),

@@ -445,11 +445,11 @@ function Geocoding() {
         ))}
       </div> */}
       <Map
-        zoom={11}
+        zoom={13}
         center={center}
         gestureHandling={"greedy"}
         disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-        style={{ minWidth: 500, minHeight: 500 }}
+        style={{ minWidth: 800, minHeight: 800 }}
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         // onClick={() => setActiveMarker(null)}
       >
