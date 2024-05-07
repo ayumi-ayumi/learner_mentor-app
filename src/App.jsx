@@ -25,7 +25,7 @@ export default function App() {
       {/* <APIProvider > */}
       <APIProvider apiKey={API_KEY} libraries={["places"]}>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Home />} />
           {/* <Route path="/" element={<ShowMap />} /> */}
           <Route path="addprofile" element={<AddProfile />} />
         </Routes>

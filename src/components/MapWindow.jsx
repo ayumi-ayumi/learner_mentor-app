@@ -11,6 +11,7 @@ import {
   APILoadingStatus,
   useApiLoadingStatus,
   useAutocomplete,
+  useAdvancedMarkerRef,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { db } from "../firebase/BaseConfig";
@@ -44,7 +45,7 @@ function Geocoding() {
   const [users, setUsers] = useState([]);
 
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
-  const [open, setOpen] = useState(false);
+  const [infowindowOpen, setInfowindowOpen] = useState(false);
   // const [selected, setSelected] = useState({});
   const [selectPlace, setSelectPlace] = useState({});
   // const [geo, setGeo] = useState([]);
@@ -87,26 +88,26 @@ function Geocoding() {
   //   setArr(newArr);
   // }, [users]);
 
-  useEffect(() => {
-    if (!geocodingLibrary) return;
-    setGeocodingService(new window.google.maps.Geocoder());
-  }, [geocodingLibrary]);
+  // useEffect(() => {
+  //   if (!geocodingLibrary) return;
+  //   setGeocodingService(new window.google.maps.Geocoder());
+  // }, [geocodingLibrary]);
   // console.log(apiIsLoaded, geocodingLibrary, geocodingService)
 
-  if (geocodingService) {
-    geocodingService.geocode({ address: "berlin" }, (results, status) => {
-      if (results && status === "OK") {
-        // const a = results[0].geometry.location.lat()
-        // return results[0].geometry.location.lat()
-        // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
-        setLatLng({
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng(),
-        });
-        // return a
-      }
-    });
-  }
+  // if (geocodingService) {
+  //   geocodingService.geocode({ address: "berlin" }, (results, status) => {
+  //     if (results && status === "OK") {
+  //       // const a = results[0].geometry.location.lat()
+  //       // return results[0].geometry.location.lat()
+  //       // return {lat:results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+  //       setLatLng({
+  //         lat: results[0].geometry.location.lat(),
+  //         lng: results[0].geometry.location.lng(),
+  //       });
+  //       // return a
+  //     }
+  //   });
+  // }
 
   // const [newarrr, setNewarrr] = useState([]);
   // useEffect(() => {
@@ -222,7 +223,7 @@ function Geocoding() {
   // console.log(locArr)
 
   function onMarkerClick(marker) {
-    setOpen(true);
+    setInfowindowOpen(true);
     setSelectPlace(marker);
   }
 
@@ -237,13 +238,13 @@ function Geocoding() {
   // console.log(arr)
 
   // const onClose = () => {
-  //   setOpen(false)
+  //   setInfowindowOpen(false)
   //   setSelectPlace(null);
   //   console.log(123)
   // };
 
   function onClose() {
-    setOpen(false);
+    setInfowindowOpen(false);
     setSelectPlace(null);
     console.log(123);
   }
@@ -432,46 +433,67 @@ function Geocoding() {
   // console.log(center)
   // const locArr = useGeocoding(arr)
   // console.log(locArr)
-
+  // const [markerRef, marker] = useAdvancedMarkerRef();
+  // console.log(markerRef, marker)
   return (
     <>
-      <div>
+      {/* <div>
         {users.map((user) => (
           <div key={user.id}>
             {user.position_vague.lat} {user.position_vague.lng}
           </div>
         ))}
-      </div>
+      </div> */}
       <Map
         zoom={11}
         center={center}
         gestureHandling={"greedy"}
         disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
         style={{ minWidth: 500, minHeight: 500 }}
-        // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
+        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         // onClick={() => setActiveMarker(null)}
       >
         {users.map((user) => (
           //{markers.map(({ id, name, position }) => (
-          <Marker
+          <AdvancedMarker
             key={user.id}
-            // position = {useGeocoding('Berlin')}
-            position={user.position_vague}
-            // onClick={() => setOpen(true)}
+            // ref={markerRef}
+            // onClick={() => setInfowindowOpen(true)}
             onClick={() => onMarkerClick(user)}
-          />
+            position={user.position}
+            title={"AdvancedMarker that opens an Infowindow when clicked."}
+          >
+            <Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={1}>
+              👩‍💻
+            </Pin>
+          </AdvancedMarker>
+          // <AdvancedMarker
+          //   key={user.id}
+          //   // position = {useGeocoding('Berlin')}
+          //   position={user.position}
+          //   // onClick={() => setInfowindowOpen(true)}
+          //   onClick={() => onMarkerClick(user)}
+
+          // />
         ))}
 
         {/* {selectPlace &&  ( */}
-        {open && (
+        {infowindowOpen && (
           <InfoWindow
-            position={selectPlace.position_vague}
-            // onCloseClick={()=>onClose()}
-            onCloseClick={() => setOpen(false)} // なくても動く
+            // anchor={marker}
+            position={selectPlace.position}
+            maxWidth={200}
+            onCloseClick={() => setInfowindowOpen(false)}
           >
-            <p style={{ backgroundColor: "yellow" }}>
+            {/* <InfoWindow
+            position={selectPlace.position}
+            // onCloseClick={()=>onClose()}
+            onCloseClick={() => setInfowindowOpen(false)} // なくても動く
+          > */}
+            I'm in {selectPlace.name}!
+            {/* <p style={{ backgroundColor: "yellow" }}>
               I'm ! I'm in {selectPlace.name}!
-            </p>
+            </p> */}
           </InfoWindow>
         )}
       </Map>
