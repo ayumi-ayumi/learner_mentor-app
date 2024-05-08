@@ -434,7 +434,7 @@ function Geocoding() {
   // const locArr = useGeocoding(arr)
   // console.log(locArr)
   // const [markerRef, marker] = useAdvancedMarkerRef();
-  // console.log(markerRef, marker)
+  console.log(selectPlace)
   return (
     <>
       {/* <div>
@@ -463,8 +463,14 @@ function Geocoding() {
             position={user.position}
             title={"AdvancedMarker that opens an Infowindow when clicked."}
           >
-            <Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={1}>
-              👩‍💻
+            <Pin
+              background={
+                user.learnerORmentor === "learner" ? "#22ccff" : "yellow"
+              }
+              borderColor={"#1e89a1"}
+              scale={1}
+            >
+              🧑‍💻
             </Pin>
           </AdvancedMarker>
           // <AdvancedMarker
