@@ -273,10 +273,11 @@ export default function AddProfile() {
   if (autocompleteInstance) {
     autocompleteInstance.setFields([
       "formatted_address",
-      "geometry",
+      "geometry.location",
       // "address_components",
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+    console.log(autocompleteInstance)
     // autocompleteInstance.setTypes(["address"]);
   }
   useEffect(() => {

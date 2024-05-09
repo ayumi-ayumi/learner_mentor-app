@@ -370,6 +370,8 @@ function Geocoding() {
   // console.log(locationFromAddProfile)
 
   const [markers, setMarkers] = useState(sampleMarkers);
+  const [markerRef, markerss] = useAdvancedMarkerRef();
+  console.log(markerss)
 
   // const onPlaceChanged = (place) => {
   //   if (place) {
@@ -434,7 +436,6 @@ function Geocoding() {
   // const locArr = useGeocoding(arr)
   // console.log(locArr)
   // const [markerRef, marker] = useAdvancedMarkerRef();
-  console.log(selectPlace)
   return (
     <>
       {/* <div>
@@ -462,13 +463,14 @@ function Geocoding() {
             onClick={() => onMarkerClick(user)}
             position={user.position}
             title={"AdvancedMarker that opens an Infowindow when clicked."}
+            ref={markerRef}
           >
             <Pin
               background={
                 user.learnerORmentor === "learner" ? "#22ccff" : "yellow"
               }
               borderColor={"#1e89a1"}
-              scale={1}
+              scale={1.3}
             >
               🧑‍💻
             </Pin>
@@ -486,7 +488,7 @@ function Geocoding() {
         {/* {selectPlace &&  ( */}
         {infowindowOpen && (
           <InfoWindow
-            // anchor={marker}
+            anchor={markerss}
             position={selectPlace.position}
             maxWidth={200}
             onCloseClick={() => setInfowindowOpen(false)}
