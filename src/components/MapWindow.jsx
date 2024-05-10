@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../styles/MapWindow.scss";
 import {
   APIProvider,
@@ -227,6 +227,10 @@ function Geocoding() {
     setSelectPlace(marker);
   }
 
+  // const handleMarkerClick = useCallback(() =>
+  //   setInfowindowOpen(infowindowOpen => !infowindowOpen)
+  // );
+
   // const [activeMarker, setActiveMarker] = React.useState(null);
   // const handleActiveMarker = (marker) => {
   //   if (marker === activeMarker) {
@@ -248,6 +252,8 @@ function Geocoding() {
     setSelectPlace(null);
     console.log(123);
   }
+
+  const handleClose = useCallback(() => setInfowindowOpen(false));
 
   const sampleMarkers = [
     {
@@ -371,8 +377,17 @@ function Geocoding() {
 
   const [markers, setMarkers] = useState(sampleMarkers);
   const [markerRef, markerss] = useAdvancedMarkerRef();
-  console.log(markerss)
 
+  const [openInfoWindows, setOpenInfoWindows] = React.useState({
+    lat: 34.055016798964886,
+    lng: -118.25501276602215,
+  });
+const handleMarkerClick = (storeId) => {
+  setOpenInfoWindows((prevState) => ({
+    ...prevState,
+    [storeId]: !prevState[storeId],
+  }));
+};
   // const onPlaceChanged = (place) => {
   //   if (place) {
   //     setInputValue(place.formatted_address || place.name);
@@ -456,11 +471,14 @@ function Geocoding() {
       >
         {users.map((user) => (
           //{markers.map(({ id, name, position }) => (
+            <>
           <AdvancedMarker
             key={user.id}
             // ref={markerRef}
             // onClick={() => setInfowindowOpen(true)}
             onClick={() => onMarkerClick(user)}
+            // onClick={handleMarkerClick}
+            // onClick={() => handleMarkerClick(user.id)}
             position={user.position}
             title={"AdvancedMarker that opens an Infowindow when clicked."}
             ref={markerRef}
@@ -475,22 +493,25 @@ function Geocoding() {
               🧑‍💻
             </Pin>
           </AdvancedMarker>
-          // <AdvancedMarker
+          {/* // <AdvancedMarker
           //   key={user.id}
           //   // position = {useGeocoding('Berlin')}
           //   position={user.position}
           //   // onClick={() => setInfowindowOpen(true)}
           //   onClick={() => onMarkerClick(user)}
 
-          // />
-        ))}
+          // /> */}
+        
 
         {/* {selectPlace &&  ( */}
+        {/* {openInfoWindows[user.id] && ( */}
         {infowindowOpen && (
           <InfoWindow
             anchor={markerss}
-            position={selectPlace.position}
+            // position={selectPlace.position}
             maxWidth={200}
+            onClose={handleClose}
+            // onCloseClick={() => handleMarkerClick(user.id)}
             onCloseClick={() => setInfowindowOpen(false)}
           >
             {/* <InfoWindow
@@ -498,12 +519,15 @@ function Geocoding() {
             // onCloseClick={()=>onClose()}
             onCloseClick={() => setInfowindowOpen(false)} // なくても動く
           > */}
+            {/* I'm in {markerss.name}! */}
             I'm in {selectPlace.name}!
             {/* <p style={{ backgroundColor: "yellow" }}>
               I'm ! I'm in {selectPlace.name}!
             </p> */}
           </InfoWindow>
         )}
+        </>
+      ))}
       </Map>
       {/* <input ref={inputRef} value={inputValue} onChange={handleInputChange} /> */}
       {/* <button
