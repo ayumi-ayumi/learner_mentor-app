@@ -17,6 +17,7 @@ import {
   orderBy,
   updateDoc,
 } from "firebase/firestore";
+import PlaceMarker from "./PlaceMarker";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -25,40 +26,6 @@ export default function MapWindow() {
     // <APIProvider apiKey={API_KEY} libraries={["places"]}>
     <Geocoding />
     // </APIProvider>
-  );
-}
-
-function PlaceMarker({ user, isOpen, setMarkerPlaceId }) {
-  const [markerRef, marker] = useAdvancedMarkerRef();
-  return (
-    <>
-      <AdvancedMarker
-        ref={markerRef}
-        onClick={() => setMarkerPlaceId(isOpen ? null : user.id)}
-        position={user.position}
-        key={user.id}
-        title={"AdvancedMarker that opens an Infowindow when clicked."}
-      >
-        <Pin
-          background={user.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
-          borderColor={"#1e89a1"}
-          scale={1.3}
-        >
-          🧑‍💻
-        </Pin>
-
-        {isOpen && (
-          <InfoWindow
-            // position={user.position}
-            anchor={marker}
-            maxWidth={200}
-            onCloseClick={() => setMarkerPlaceId(null)}
-          >
-            I'm in {user.name}!
-          </InfoWindow>
-        )}
-      </AdvancedMarker>
-    </>
   );
 }
 
@@ -151,11 +118,11 @@ function Geocoding() {
   return (
     <>
       <Map
-        zoom={14}
+        zoom={12}
         center={center}
         gestureHandling={"greedy"}
         disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-        style={{ minWidth: 800, minHeight: 800 }}
+        style={{ minWidth: 800, minHeight: "100vh" }}
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         // onClick={() => setActiveMarker(null)}
       >
