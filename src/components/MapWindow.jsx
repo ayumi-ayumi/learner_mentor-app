@@ -47,23 +47,22 @@ function PlaceMarker({ user, isOpen, setMarkerPlaceId }) {
           🧑‍💻
         </Pin>
 
-      {isOpen && (
-        <InfoWindow
-        // position={user.position}
-        anchor={marker}
-        maxWidth={200}
-        onCloseClick={() => setMarkerPlaceId(null)}
-        >
-          I'm in {user.name}!
-        </InfoWindow>
-      )}
+        {isOpen && (
+          <InfoWindow
+            // position={user.position}
+            anchor={marker}
+            maxWidth={200}
+            onCloseClick={() => setMarkerPlaceId(null)}
+          >
+            I'm in {user.name}!
+          </InfoWindow>
+        )}
       </AdvancedMarker>
     </>
   );
 }
 
 function Geocoding() {
-  const apiIsLoaded = useApiIsLoaded();
   const [users, setUsers] = useState([]);
 
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
@@ -135,7 +134,7 @@ function Geocoding() {
   ];
 
   // const [markers, setMarkers] = useState(sampleMarkers);
-  // const [markerRef, markerss] = useAdvancedMarkerRef();
+  const [markerRef, markerss] = useAdvancedMarkerRef();
 
   const [openInfoWindows, setOpenInfoWindows] = React.useState({
     lat: 34.055016798964886,
@@ -152,7 +151,7 @@ function Geocoding() {
   return (
     <>
       <Map
-        zoom={13}
+        zoom={14}
         center={center}
         gestureHandling={"greedy"}
         disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
@@ -174,52 +173,3 @@ function Geocoding() {
     </>
   );
 }
-
-// {users.map((user) => (
-//   //{markers.map(({ id, name, position }) => (
-//   <>
-//     <AdvancedMarker
-//       key={user.id}
-//       // ref={markerRef}
-//       // onClick={() => setInfowindowOpen(true)}
-//       // onClick={() => onMarkerClick(user)}
-//       // onClick={handleMarkerClick}
-//       onClick={() => handleMarkerClick(user.id)}
-//       position={user.position}
-//       title={"AdvancedMarker that opens an Infowindow when clicked."}
-//       ref={markerRef}
-//     >
-//       <Pin
-//         background={
-//           user.learnerORmentor === "learner" ? "#22ccff" : "yellow"
-//         }
-//         borderColor={"#1e89a1"}
-//         scale={1.3}
-//       >
-//         🧑‍💻
-//       </Pin>
-//     </AdvancedMarker>
-
-//     {/* {selectPlace &&  ( */}
-//     {/* {infowindowOpen && ( */}
-//     {openInfoWindows[user.id] && (
-//       <InfoWindow
-//         // anchor={markerss}
-//         // anchor={user.position}
-//         position={user.position}
-//         maxWidth={200}
-//         // onClose={handleClose}
-//         onCloseClick={() => handleMarkerClick(user.id)}
-//         // onCloseClick={() => setInfowindowOpen(false)}
-//         // onClose={() => setInfowindowOpen(false)}
-//       >
-//         {/* <InfoWindow
-//     position={selectPlace.position}
-//     // onCloseClick={()=>onClose()}
-//     onCloseClick={() => setInfowindowOpen(false)} // なくても動く
-//   > */}
-//         I'm in {user.name}!
-//       </InfoWindow>
-//     )}
-//   </>
-// ))}
