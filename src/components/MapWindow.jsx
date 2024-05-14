@@ -122,7 +122,7 @@ function Geocoding() {
         center={center}
         gestureHandling={"greedy"}
         disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-        style={{ minWidth: 800, minHeight: "100vh" }}
+        style={{ minWidth: 800, minHeight: "80vh" }}
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         // onClick={() => setActiveMarker(null)}
       >
