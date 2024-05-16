@@ -1,4 +1,4 @@
-body {
+.form-container {
   font-family: "Arial", sans-serif;
   background-color: #ebebeb !important;
   display: flex;
@@ -8,14 +8,14 @@ body {
   margin: 0;
 }
 
-.form-container {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  // max-width: 400px;
-}
+// .form-container {
+//   background-color: white;
+//   padding: 30px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   width: 100%;
+//   // max-width: 400px;
+// }
 
 label, legend {
   font-size: 18px;

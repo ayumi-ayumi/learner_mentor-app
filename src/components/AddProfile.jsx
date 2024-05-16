@@ -314,6 +314,7 @@ export default function AddProfile() {
           // padding: "20px",
           // margin: "10px 300px",
         }}
+        className="form-container"
       >
         <Typography variant="h4">Form Demo</Typography>
         <div className="input-container">
