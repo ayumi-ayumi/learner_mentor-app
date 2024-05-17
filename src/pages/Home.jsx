@@ -8,18 +8,19 @@ import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
   const [users, setUsers] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   //Obtain data from firebase
   useEffect(() => {
     const users = getDocs(collection(db, "users"));
     users.then((snap) => setUsers(snap.docs.map((doc) => ({ ...doc.data() }))));
   }, []);
-  console.log(users)
+
   return (
     <>
       <Navbar />
-      <MarkerFilter users={users}/>
-      {/* <MapWindow users={users}/> */}
+      <MarkerFilter setFilter={setFilter}  />
+      <MapWindow users={users} filter={filter} />
     </>
   );
 }
