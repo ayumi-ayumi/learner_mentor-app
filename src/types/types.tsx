@@ -1,0 +1,5 @@
+export type LearnerORmentor = 'learner' | 'mentor'
+export type Options_LearningDuration = 'beginner' | '3 to 6 m' | '6 to 12 m' | '1 to 2 y' | 'more than 2 y'
+export type Options_WorkingDuration = '6 to 12 m' | '1 to 2 y' | '2 to 4 y' | 'more than 4 y' | 'more than 10 y'
+export type Options_Langugages = 'German' | 'English' | 'Spanish' | 'French' | 'Italian' | 'Dutch' | 'Portuguese' | 'Russian' | 'Chinese' | 'Japanese' | 'Korean'
+export type Options_ProgrammingLanguages = 'htmlANDcss' | 'javascript' | 'react' | 'typescript' | 'python' | 'php' | 'c' | 'c++' | 'java' 
