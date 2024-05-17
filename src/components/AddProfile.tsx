@@ -1,41 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import "../styles/AddProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import {
   collection,
   addDoc,
-  getDoc,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  orderBy,
-  updateDoc,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  InfoWindow,
-  Marker,
-  useApiIsLoaded,
-  APILoadingStatus,
-  useApiLoadingStatus,
   useAutocomplete,
-  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
-import { FormInputSlider } from "../form-components/FormInputSlider";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import { Stack, TextField, Button, Paper, Typography } from "@mui/material";
-// import { useGeocoding } from "./hooks/useGeocoding";
-import { useData } from "./hooks/useData";
-import MapWindow from "./MapWindow";
+import { Button, Paper, Typography } from "@mui/material";
 import {
   options_learnerORmentor,
   options_LearningDuration,
@@ -43,25 +22,14 @@ import {
   options_Langugages,
 } from "../props";
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
 export default function AddProfile() {
-  // const center = { lat: 52.52, lng: 13.41 }; //Berlin
-
-  // const [users, setUsers] = useState([]);
-
   const defaultValues = {
     name: "",
-    // location: "",
     learnerORmentor: "",
     LearningDuration: "",
     WorkingDuration: "",
     programmingLanguages: [],
     languages: [],
-    // checkboxValue: [],
-    // dateValue: new Date(),
-    // dropdownValue: "",
-    // sliderValue: 0,
   };
 
   const {

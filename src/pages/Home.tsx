@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import MapWindow from "../components/MapWindow";
 import Navbar from "../components/Navbar";
 import MarkerFilter from "../components/MarkerFilter";
@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar users={users} />
       <MarkerFilter setFilter={setFilter}  />
       <MapWindow users={users} filter={filter} />
     </>

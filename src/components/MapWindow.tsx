@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import "../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
-import { collection, getDocs } from "firebase/firestore";
 import PlaceMarker from "./PlaceMarker";
 
 export default function MapWindow( {users, filter} ) {
