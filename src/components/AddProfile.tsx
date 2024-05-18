@@ -21,10 +21,11 @@ import {
   options_WorkingDuration,
   options_Langugages,
 } from "../props";
-import { UserProfile } from "../interfaces/interfaces";
+import { Place, UserProfile } from "../interfaces/interfaces";
 
 export default function AddProfile() {
-  const defaultValues = {
+  
+  const defaultValues: UserProfile = {
     name: "",
     learnerORmentor: "",
     LearningDuration: "",
@@ -32,6 +33,10 @@ export default function AddProfile() {
     programmingLanguages: [],
     languages: [],
   };
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [place, setPlace] = useState<Place | null>(null);
 
   const {
     register,
@@ -45,22 +50,21 @@ export default function AddProfile() {
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
+    console.log(place)
     addDoc(collection(db, "users"), {
       ...data,
       id: nanoid(),
       datetime: new Date(),
-      address: place.address,
-      position: place.position,
+      place: place
+      // address: place.address,
+      // position: place.position,
     });
     reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
   };
 
-  const inputRef = useRef(null);
-  const [inputValue, setInputValue] = useState("");
-  const [place, setPlace] = useState([]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
@@ -70,6 +74,7 @@ export default function AddProfile() {
     }
     // Keep focus on input element
     inputRef.current && inputRef.current.focus();
+    console.log(inputRef.current)
   };
 
   const autocompleteInstance = useAutocomplete({
@@ -84,13 +89,12 @@ export default function AddProfile() {
       // "address_components",
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-    console.log(autocompleteInstance)
     // autocompleteInstance.setTypes(["address"]);
   }
+
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, geometry } =
-        autocompleteInstance.getPlace();
+      const { formatted_address, geometry } = autocompleteInstance.getPlace();
       setPlace((prev) => {
         return {
           ...prev,
@@ -103,7 +107,7 @@ export default function AddProfile() {
       });
     }
   }, [inputValue]);
-
+// console.log(typeof(place.position))
   return (
     <>
       <Paper
