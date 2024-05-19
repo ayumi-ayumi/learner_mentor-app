@@ -8,6 +8,7 @@ import { Place, UserProfile } from "../interfaces/interfaces";
 export default function MapWindow( {users, filter}: {users:UserProfile[], filter: string} ) {
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
   const [markerPlaceId, setMarkerPlaceId] = useState(null);
+  console.log(users)
 
   function filterTodos(users:UserProfile[], filter: string) {
     return users.filter((user: { learnerORmentor: string; }) => {

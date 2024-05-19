@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import {
-  Map,
   AdvancedMarker,
   Pin,
   InfoWindow,
-  useApiIsLoaded,
   useAdvancedMarkerRef,
-  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
+// import {CardContent} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
