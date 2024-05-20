@@ -314,7 +314,7 @@ let berlinLoc;
           {/* {selectPlace &&  ( */}
           {open && (
             <InfoWindow
-              position={selectPlace.position}
+              position={selectPlace.place.position}
               onCloseClick={() => setOpen(false)} // なくても動く
             >
               <p style={{ backgroundColor: "yellow" }}>

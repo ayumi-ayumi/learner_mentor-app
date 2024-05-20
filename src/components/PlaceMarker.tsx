@@ -13,24 +13,29 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { UserProfile } from "../interfaces/interfaces";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean
+}
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other }= props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
 }));
 
-export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }) {
+export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfile, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
 
@@ -43,7 +48,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }) {
       <AdvancedMarker
         ref={markerRef}
         onClick={() => setMarkerPlaceId(isOpen ? null : user.id)}
-        position={user.position}
+        position={user.place.position}
         key={user.id}
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
