@@ -2,9 +2,9 @@ import { LearnerORmentor, Options_LearningDuration, Options_WorkingDuration, Opt
 
 
 export interface UserProfile {
-  id: number,
-  dateTime: Date,
-  place: Place,
+  // id: number,
+  // dateTime: Date,
+  // place: Place,
   name: string,
   learnerORmentor: string,
   LearningDuration: string,
@@ -22,6 +22,6 @@ export interface UserProfile {
 // }
 
 export interface Place {
-  address?: string | undefined,
-  position?: {lat: number, lng: number} | undefined
+  address: string | undefined,
+  position: {lat: number | undefined, lng: number | undefined} 
 }

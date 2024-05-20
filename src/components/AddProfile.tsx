@@ -36,21 +36,19 @@ export default function AddProfile() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
-  const [place, setPlace] = useState<Place | null>(null);
+  const [place, setPlace] = useState<Place>({address: "", position: {lat: 0, lng: 0}});
 
   const {
-    register,
     handleSubmit,
     reset,
     control,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<UserProfile>({ defaultValues: defaultValues });
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
-    console.log(place)
+    console.log(data)
     addDoc(collection(db, "users"), {
       ...data,
       id: nanoid(),
@@ -59,7 +57,7 @@ export default function AddProfile() {
       // address: place.address,
       // position: place.position,
     });
-    reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
+    // reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
   };
 
@@ -68,13 +66,12 @@ export default function AddProfile() {
     setInputValue(event.target.value);
   };
 
-  const onPlaceChanged = (place) => {
+  const onPlaceChanged = (place:any) => {
     if (place) {
       setInputValue(place.formatted_address || place.name);
     }
     // Keep focus on input element
     inputRef.current && inputRef.current.focus();
-    console.log(inputRef.current)
   };
 
   const autocompleteInstance = useAutocomplete({
@@ -95,19 +92,36 @@ export default function AddProfile() {
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
       const { formatted_address, geometry } = autocompleteInstance.getPlace();
-      setPlace((prev) => {
-        return {
-          ...prev,
-          address: formatted_address,
-          position: {
-            lat: geometry.location.lat(),
-            lng: geometry.location.lng(),
-          },
-        };
-      });
+      const lat = geometry?.location
+      const lng = geometry?.location
+
+        setPlace((prev) => {
+          return {
+            ...prev,
+            address: formatted_address,
+            // geometry: geometry
+            position: {
+              lat: lat?.lat(),
+              lng: lng?.lng()
+            },
+          };
+        });
+        // setPlace((prev) => {
+        //   return {
+        //     ...prev,
+        //     address: formatted_address,
+        //     // geometry: geometry
+        //     position: {
+        //       lat: lat?.lat(),
+        //       lng: lng?.lng()
+        //     },
+        //   };
+        // });
+
+
     }
   }, [inputValue]);
-// console.log(typeof(place.position))
+  
   return (
     <>
       <Paper
@@ -168,9 +182,9 @@ export default function AddProfile() {
         <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
         </Button>
-        <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
+        {/* <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
           Reset
-        </Button>
+        </Button> */}
       </Paper>
     </>
   );
