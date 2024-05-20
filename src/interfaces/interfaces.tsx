@@ -2,9 +2,9 @@ import { LearnerORmentor, Options_LearningDuration, Options_WorkingDuration, Opt
 
 
 export interface UserProfile {
-  // id: number,
-  // dateTime: Date,
-  // place: Place,
+  id: number,
+  dateTime: Date,
+  place: Place,
   name: string,
   learnerORmentor: string,
   LearningDuration: string,
@@ -12,14 +12,7 @@ export interface UserProfile {
   programmingLanguages: string[],
   languages: string[],
 }
-// export interface UserProfile {
-//   name: string,
-//   learnerORmentor: LearnerORmentor,
-//   LearningDuration: Options_LearningDuration,
-//   WorkingDuration: Options_WorkingDuration,
-//   programmingLanguages: Options_ProgrammingLanguages[],
-//   languages: Options_Langugages[],
-// }
+
 
 export interface Place {
   address: string | undefined,

@@ -24,8 +24,17 @@ import {
 import { Place, UserProfile } from "../interfaces/interfaces";
 
 export default function AddProfile() {
-  
+
   const defaultValues: UserProfile = {
+    id: 0,
+    dateTime: new Date(),
+    place: {
+      address: "",
+      position: {
+        lat: 0,
+        lng: 0
+      },
+    },
     name: "",
     learnerORmentor: "",
     LearningDuration: "",
@@ -36,7 +45,7 @@ export default function AddProfile() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
-  const [place, setPlace] = useState<Place>({address: "", position: {lat: 0, lng: 0}});
+  const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
   const {
     handleSubmit,
@@ -66,7 +75,7 @@ export default function AddProfile() {
     setInputValue(event.target.value);
   };
 
-  const onPlaceChanged = (place:any) => {
+  const onPlaceChanged = (place: any) => {
     if (place) {
       setInputValue(place.formatted_address || place.name);
     }
@@ -95,33 +104,33 @@ export default function AddProfile() {
       const lat = geometry?.location
       const lng = geometry?.location
 
-        setPlace((prev) => {
-          return {
-            ...prev,
-            address: formatted_address,
-            // geometry: geometry
-            position: {
-              lat: lat?.lat(),
-              lng: lng?.lng()
-            },
-          };
-        });
-        // setPlace((prev) => {
-        //   return {
-        //     ...prev,
-        //     address: formatted_address,
-        //     // geometry: geometry
-        //     position: {
-        //       lat: lat?.lat(),
-        //       lng: lng?.lng()
-        //     },
-        //   };
-        // });
+      setPlace((prev) => {
+        return {
+          ...prev,
+          address: formatted_address,
+          // geometry: geometry
+          position: {
+            lat: lat?.lat(),
+            lng: lng?.lng()
+          },
+        };
+      });
+      // setPlace((prev) => {
+      //   return {
+      //     ...prev,
+      //     address: formatted_address,
+      //     // geometry: geometry
+      //     position: {
+      //       lat: lat?.lat(),
+      //       lng: lng?.lng()
+      //     },
+      //   };
+      // });
 
 
     }
   }, [inputValue]);
-  
+
   return (
     <>
       <Paper
