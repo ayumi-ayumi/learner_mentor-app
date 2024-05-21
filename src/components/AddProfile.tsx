@@ -2,14 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../styles/AddProfile.scss";
 import { db } from "../firebase/BaseConfig";
-import {
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import { collection, addDoc, } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import {
-  useAutocomplete,
-} from "@vis.gl/react-google-maps";
+import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
@@ -58,7 +53,6 @@ export default function AddProfile() {
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
-    console.log(data)
     addDoc(collection(db, "users"), {
       ...data,
       id: nanoid(),
@@ -76,6 +70,7 @@ export default function AddProfile() {
     setInputValue(event.target.value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onPlaceChanged = (place: any) => {
     if (place) {
       setInputValue(place.formatted_address || place.name);
@@ -109,26 +104,12 @@ export default function AddProfile() {
         return {
           ...prev,
           address: formatted_address,
-          // geometry: geometry
           position: {
             lat: lat?.lat(),
             lng: lng?.lng()
           },
         };
       });
-      // setPlace((prev) => {
-      //   return {
-      //     ...prev,
-      //     address: formatted_address,
-      //     // geometry: geometry
-      //     position: {
-      //       lat: lat?.lat(),
-      //       lng: lng?.lng()
-      //     },
-      //   };
-      // });
-
-
     }
   }, [inputValue]);
 

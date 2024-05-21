@@ -41,7 +41,7 @@ export const FormInputCheckbox= ({
               control={
                 <Controller
                   name={name}
-                  render={({ field }) => {
+                  render={() => {
                     return (
                       <Checkbox
                         checked={selectedItems.includes(option.value)}
