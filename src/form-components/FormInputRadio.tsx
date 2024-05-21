@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -7,18 +7,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-// import { FormInputProps } from "./FormInputProps";
-
-// const options_learnerORmentor = [
-//   {
-//     label: "Learner",
-//     value: "learner",
-//   },
-//   {
-//     label: "Mentor",
-//     value: "mentor",
-//   },
-// ];
+import { FormInputProps } from "../interfaces/interfaces";
 
 export const FormInputRadio = ({
   name,
@@ -27,17 +16,18 @@ export const FormInputRadio = ({
   options,
   setValue,
 }: FormInputProps) => {
-  const [radioValue, setRadioValue] = React.useState("");
+  const [radioValue, setRadioValue] = useState("");
 
   useEffect(() => {
     if (radioValue) setValue(name, radioValue);
   }, [name, setValue, radioValue]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setRadioValue(event.target.value);
   };
 
   const generateRadioOptions = () => {
+    if (typeof options !== "undefined")
     return options.map((singleOption) => (
       <FormControlLabel
         value={singleOption.value}
@@ -47,18 +37,15 @@ export const FormInputRadio = ({
       />
     ));
   };
+
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">{label}</FormLabel>
       <Controller
         name={name}
         control={control}
-        label={label}
-        render={({
-          field: { onChange, value },
-          fieldState: { error },
-          formState,
-        }) => (
+        // label={label}
+        render={() => (
           <RadioGroup value={radioValue} onChange={handleChange} row>
             {generateRadioOptions()}
           </RadioGroup>
