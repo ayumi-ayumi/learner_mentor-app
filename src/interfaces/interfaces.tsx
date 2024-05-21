@@ -16,5 +16,13 @@ export interface UserProfile {
 
 export interface Place {
   address: string | undefined,
-  position: {lat: number | undefined, lng: number | undefined} 
+  position: { lat: number | undefined, lng: number | undefined }
+}
+
+export interface FormInputProps {
+  name: string;
+  control: any;
+  label: string;
+  setValue: any;
+  options: {label:string, value:string}[];
 }

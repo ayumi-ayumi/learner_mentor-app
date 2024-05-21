@@ -1,35 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Controller } from "react-hook-form";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-// import { FormInputProps } from "./FormInputProps";
-// const options = [
-//   {
-//     label: "Dropdown Option 1",
-//     value: "1",
-//   },
-//   {
-//     label: "Dropdown Option 2",
-//     value: "2",
-//   },
-// ];
+import { FormInputProps } from "../interfaces/interfaces";
+
 export const FormInputDropdown = ({
   name,
   control,
   label,
   options,
   setValue,
-}) => {
-  const [languages, setLanguages] = React.useState([]);
-  // const [open, setOpen] = React.useState(false);
+}: FormInputProps) => {
+  const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
     if (languages) setValue(name, languages);
   }, [name, setValue, languages]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<never[]>; }; }) => {
     setLanguages(event.target.value);
   };
 
@@ -43,6 +33,7 @@ export const FormInputDropdown = ({
 
 
   const generateSingleOptions = () => {
+    if (typeof options !== "undefined") 
     return options.map((option) => {
       return (
         <MenuItem key={option.value} value={option.value}>

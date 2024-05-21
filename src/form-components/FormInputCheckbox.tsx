@@ -6,56 +6,18 @@ import {
   FormLabel,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-// import { FormInputProps } from "./FormInputProps";
+import { FormInputProps } from "../interfaces/interfaces";
 
-const options_ProgrammingLanguages = [
-  {
-    label: "HTML&CSS",
-    value: "htmlANDcss",
-  },
-  {
-    label: "JavaScript",
-    value: "javascript",
-  },
-  {
-    label: "React",
-    value: "react",
-  },
-  {
-    label: "TypeScript",
-    value: "typescript",
-  },
-  {
-    label: "Python",
-    value: "python",
-  },
-  {
-    label: "PHP",
-    value: "php",
-  },
-  {
-    label: "C",
-    value: "c",
-  },
-  {
-    label: "C++",
-    value: "c++",
-  },
-  {
-    label: "Java",
-    value: "java",
-  },
-];
-
-export const FormInputCheckbox = ({
+export const FormInputCheckbox= ({
   name,
   control,
-  setValue,
   label,
-}) => {
-  const [selectedItems, setSelectedItems] = useState([]);
+  options,
+  setValue,
+} : FormInputProps) => {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   // we are handling the selection manually here
-  const handleSelect = (value) => {
+  const handleSelect = (value: string) => {
     const isPresent = selectedItems.indexOf(value);
     if (isPresent !== -1) {
       const remaining = selectedItems.filter((item) => item !== value);
@@ -73,7 +35,7 @@ export const FormInputCheckbox = ({
     <FormControl size={"small"} variant={"outlined"}>
       <FormLabel component="legend">{label}</FormLabel>
       <div>
-        {options_ProgrammingLanguages.map((option) => {
+        {typeof(options)!== "undefined" && (options.map((option) => {
           return (
             <FormControlLabel
               control={
@@ -94,7 +56,7 @@ export const FormInputCheckbox = ({
               key={option.value}
             />
           );
-        })}
+        }))}
       </div>
     </FormControl>
   );

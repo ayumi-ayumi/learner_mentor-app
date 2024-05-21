@@ -26,7 +26,7 @@ export const FormInputRadio = ({
   label,
   options,
   setValue,
-}) => {
+}: FormInputProps) => {
   const [radioValue, setRadioValue] = React.useState("");
 
   useEffect(() => {

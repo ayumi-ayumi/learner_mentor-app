@@ -20,6 +20,7 @@ import {
   options_LearningDuration,
   options_WorkingDuration,
   options_Langugages,
+  options_ProgrammingLanguages
 } from "../props";
 import { Place, UserProfile } from "../interfaces/interfaces";
 
@@ -179,6 +180,8 @@ export default function AddProfile() {
           name={"programmingLanguages"}
           control={control}
           label={"Checkbox Input"}
+          options={options_ProgrammingLanguages}
+
           setValue={setValue}
         />
         <FormInputDropdown

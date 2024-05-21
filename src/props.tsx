@@ -101,3 +101,42 @@ export const options_Langugages = [
     value: "Korean",
   },
 ];
+
+export const options_ProgrammingLanguages = [
+  {
+    label: "HTML&CSS",
+    value: "htmlANDcss",
+  },
+  {
+    label: "JavaScript",
+    value: "javascript",
+  },
+  {
+    label: "React",
+    value: "react",
+  },
+  {
+    label: "TypeScript",
+    value: "typescript",
+  },
+  {
+    label: "Python",
+    value: "python",
+  },
+  {
+    label: "PHP",
+    value: "php",
+  },
+  {
+    label: "C",
+    value: "c",
+  },
+  {
+    label: "C++",
+    value: "c++",
+  },
+  {
+    label: "Java",
+    value: "java",
+  },
+];
