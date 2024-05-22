@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import MarkerFilter from "../components/MarkerFilter";
 import "../styles/Home.scss";
 import { db } from "../firebase/BaseConfig";
-import { collection, DocumentData, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import React from "react";
 import { UserProfile } from "../interfaces/interfaces";
 

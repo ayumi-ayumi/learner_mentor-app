@@ -26,7 +26,7 @@ export const FormInputDropdown = ({
       return options.map((option) => {
         return (
           <MenuItem key={option.value} value={option.value}>
-            <Checkbox checked={languages.indexOf(option.value) > -1} />
+            <Checkbox checked={languages.indexOf(option.value as never) > -1} />
             <ListItemText primary={option.value} />
           </MenuItem>
         );

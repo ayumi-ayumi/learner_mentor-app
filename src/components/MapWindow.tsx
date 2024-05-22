@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
 import PlaceMarker from "./PlaceMarker";
-import { Place, UserProfile } from "../interfaces/interfaces";
-
+import { UserProfile } from "../interfaces/interfaces";
 
 export default function MapWindow( {users, filter}: {users:UserProfile[], filter: string} ) {
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
