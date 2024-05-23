@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import "../styles/AddProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, } from "firebase/firestore";
@@ -9,7 +9,7 @@ import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography, Container, Stack } from "@mui/material";
 import {
   options_learnerORmentor,
   options_LearningDuration,
@@ -43,16 +43,19 @@ export default function AddProfile() {
   const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
-  const {
-    handleSubmit,
-    reset,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm<UserProfile>({ defaultValues: defaultValues });
+  // const {
+  //   handleSubmit,
+  //   reset,
+  //   control,
+  //   setValue,
+  //   formState: { errors },
+  // } = useForm<UserProfile>({ defaultValues: defaultValues });
+
+  const methods = useForm<UserProfile>({ defaultValues });
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
+    console.log(data)
     addDoc(collection(db, "users"), {
       ...data,
       id: nanoid(),
@@ -64,6 +67,10 @@ export default function AddProfile() {
     // reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
   };
+
+  const handleReset = () => {
+		methods.reset(defaultValues);
+	};
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,27 +122,30 @@ export default function AddProfile() {
 
   return (
     <>
-      <Paper
-        style={{
-          display: "grid",
-          // gridRowGap: "20px",
-          // padding: "20px",
-          // margin: "10px 300px",
-        }}
-        className="form-container"
-      >
-        <Typography variant="h4">Form Demo</Typography>
-        <div className="input-container">
-          <label htmlFor="location">Your location?</label>
-          <input
-            type="text"
-            id="location"
-            value={inputValue}
-            onChange={(e) => handleInputChange(e)}
-            ref={inputRef}
-          />
-        </div>
-        <FormInputText name="name" control={control} label="Name" />
+      <FormProvider {...methods}>
+        <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
+
+          <Stack
+            style={{
+              display: "grid",
+              // gridRowGap: "20px",
+              // padding: "20px",
+              // margin: "10px 300px",
+            }}
+            className="form-container"
+          >
+            <Typography variant="h4">Form Demo</Typography>
+            <div className="input-container">
+              <label htmlFor="location">Your location?</label>
+              <input
+                type="text"
+                id="location"
+                value={inputValue}
+                onChange={(e) => handleInputChange(e)}
+                ref={inputRef}
+              />
+            </div>
+            {/* <FormInputText name="name" control={control} label="Name" />
         <FormInputRadio
           name={"learnerORmentor"}
           control={control}
@@ -156,29 +166,38 @@ export default function AddProfile() {
           label={"I have been working for "}
           options={options_WorkingDuration}
           setValue={setValue}
-        />
-        <FormInputCheckbox
-          name={"programmingLanguages"}
-          control={control}
-          label={"Checkbox Input"}
-          options={options_ProgrammingLanguages}
-
-          setValue={setValue}
-        />
-        <FormInputDropdown
+        /> */}
+            <FormInputCheckbox
+              name={"programmingLanguages"}
+              // control={control}
+              label={"Checkbox Input"}
+              options={options_ProgrammingLanguages}
+            // setValue={setValue}
+            />
+            {/* <FormInputDropdown
           name="languages"
           control={control}
           label="Languages"
           options={options_Langugages}
           setValue={setValue}
-        />
-        <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
+        /> */}
+            {/* <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
-        </Button>
-        {/* <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
+        </Button> */}
+            {/* <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
           Reset
         </Button> */}
-      </Paper>
+            <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Button variant="contained" type="submit">
+                Save
+              </Button>
+              <Button onClick={handleReset}>Reset</Button>
+            </Stack>
+          </Stack>
+        </Container>
+
+      </FormProvider>
+
     </>
   );
 }

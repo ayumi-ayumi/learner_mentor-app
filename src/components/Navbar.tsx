@@ -23,7 +23,7 @@ export default function Navbar() {
           padding: "0 20px",
           justifyContent: "space-between",
         }}
-        
+
       >
         <h1>Learner or Mentor</h1>
         <div>
@@ -33,11 +33,11 @@ export default function Navbar() {
             Dashboard
           </Button> */}
           <IconButton
-              id="basic-button"
-              size="large"
-              aria-label="account of current user"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
+            id="basic-button"
+            size="large"
+            aria-label="account of current user"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
             // aria-controls="menu-appbar"
             aria-haspopup="true"
