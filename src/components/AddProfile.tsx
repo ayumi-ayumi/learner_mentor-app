@@ -69,8 +69,8 @@ export default function AddProfile() {
   };
 
   const handleReset = () => {
-		methods.reset(defaultValues);
-	};
+    methods.reset(defaultValues);
+  };
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +134,7 @@ export default function AddProfile() {
             }}
             className="form-container"
           >
-            <Typography variant="h4">Form Demo</Typography>
+            {/* <Typography variant="h4">Form Demo</Typography> */}
             <div className="input-container">
               <label htmlFor="location">Your location?</label>
               <input
@@ -145,28 +145,28 @@ export default function AddProfile() {
                 ref={inputRef}
               />
             </div>
-            {/* <FormInputText name="name" control={control} label="Name" />
-        <FormInputRadio
-          name={"learnerORmentor"}
-          control={control}
-          label={"I am a "}
-          options={options_learnerORmentor}
-          setValue={setValue}
-        />
-        <FormInputRadio
-          name={"LearningDuration"}
-          control={control}
-          label={"I have been learning for "}
-          options={options_LearningDuration}
-          setValue={setValue}
-        />
-        <FormInputRadio
-          name={"WorkingDuration"}
-          control={control}
-          label={"I have been working for "}
-          options={options_WorkingDuration}
-          setValue={setValue}
-        /> */}
+            <FormInputText name="name" label="Name" />
+            {/* <FormInputRadio
+              name={"learnerORmentor"}
+              control={control}
+              label={"I am a "}
+              options={options_learnerORmentor}
+              setValue={setValue}
+            />
+            <FormInputRadio
+              name={"LearningDuration"}
+              control={control}
+              label={"I have been learning for "}
+              options={options_LearningDuration}
+              setValue={setValue}
+            />
+            <FormInputRadio
+              name={"WorkingDuration"}
+              control={control}
+              label={"I have been working for "}
+              options={options_WorkingDuration}
+              setValue={setValue}
+            /> */}
             <FormInputCheckbox
               name={"programmingLanguages"}
               // control={control}
