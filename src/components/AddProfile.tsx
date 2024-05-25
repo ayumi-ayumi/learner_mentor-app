@@ -146,27 +146,27 @@ export default function AddProfile() {
               />
             </div>
             <FormInputText name="name" label="Name" />
-            {/* <FormInputRadio
+            <FormInputRadio
               name={"learnerORmentor"}
-              control={control}
+              // control={control}
               label={"I am a "}
               options={options_learnerORmentor}
-              setValue={setValue}
+              // setValue={setValue}
             />
             <FormInputRadio
               name={"LearningDuration"}
-              control={control}
+              // // control={control}
               label={"I have been learning for "}
               options={options_LearningDuration}
-              setValue={setValue}
+              // // setValue={setValue}
             />
             <FormInputRadio
               name={"WorkingDuration"}
-              control={control}
+              // // control={control}
               label={"I have been working for "}
               options={options_WorkingDuration}
-              setValue={setValue}
-            /> */}
+              // // setValue={setValue}
+            />
             <FormInputCheckbox
               name={"programmingLanguages"}
               // control={control}

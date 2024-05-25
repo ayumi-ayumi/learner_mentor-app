@@ -6,51 +6,74 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { FormInputProps } from "../interfaces/interfaces";
 
 export const FormInputRadio = ({
   name,
-  control,
+  // control,
   label,
   options,
-  setValue,
+  // setValue,
 }: FormInputProps) => {
-  const [radioValue, setRadioValue] = useState("");
+  const { control } = useFormContext();
 
-  useEffect(() => {
-    if (radioValue) setValue(name, radioValue);
-  }, [name, setValue, radioValue]);
+  // const [radioValue, setRadioValue] = useState("");
 
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setRadioValue(event.target.value);
-  };
+  // useEffect(() => {
+  //   if (radioValue) setValue(name, radioValue);
+  // }, [name, setValue, radioValue]);
 
-  const generateRadioOptions = () => {
-    if (typeof options !== "undefined")
-    return options.map((singleOption) => (
-      <FormControlLabel
-        value={singleOption.value}
-        label={singleOption.label}
-        control={<Radio />}
-        key={singleOption.value}
-      />
-    ));
-  };
+  // const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  //   setRadioValue(event.target.value);
+  // };
+
+  // const generateRadioOptions = () => {
+  //   if (typeof options !== "undefined")
+  //   return options.map((singleOption) => (
+  //     <FormControlLabel
+  //       value={singleOption.value}
+  //       label={singleOption.label}
+  //       control={<Radio />}
+  //       key={singleOption.value}
+  //     />
+  //   ));
+  // };
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel component="legend">{label}</FormLabel>
-      <Controller
-        name={name}
-        control={control}
-        // label={label}
-        render={() => (
-          <RadioGroup value={radioValue} onChange={handleChange} row>
-            {generateRadioOptions()}
-          </RadioGroup>
-        )}
-      />
-    </FormControl>
+    <Controller
+			control={control}
+			name={name}
+			render={({ field, fieldState: { error } }) => (
+				<FormControl {...field} error={!!error}>
+					<FormLabel>{label}</FormLabel>
+					<RadioGroup>
+						{options?.map((option) => (
+							<FormControlLabel
+								value={option.value}
+								control={<Radio checked={field.value === option.value} />}
+								label={option.label}
+								key={option.value}
+							/>
+						))}
+					</RadioGroup>
+				</FormControl>
+			)}
+		></Controller>
   );
+  // return (
+  //   <FormControl component="fieldset">
+  //     <FormLabel component="legend">{label}</FormLabel>
+  //     <Controller
+  //       name={name}
+  //       control={control}
+  //       // label={label}
+  //       render={() => (
+  //         <RadioGroup value={radioValue} onChange={handleChange} row>
+  //           {generateRadioOptions()}
+  //         </RadioGroup>
+  //       )}
+  //     />
+  //   </FormControl>
+  // );
 };
