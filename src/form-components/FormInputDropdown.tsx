@@ -5,11 +5,13 @@ import { FormInputProps } from "../interfaces/interfaces";
 
 export const FormInputDropdown = ({
   name,
-  control,
+  // control,
   label,
   options,
-  setValue,
+  // setValue,
 }: FormInputProps) => {
+  const { control } = useFormContext();
+
   const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
@@ -54,6 +56,27 @@ export const FormInputDropdown = ({
       />
     </FormControl>
   );
+  // return (
+  //   <FormControl size={"small"}>
+  //     <InputLabel>{label}</InputLabel>
+  //     <Controller
+  //       render={() => (
+  //         <Select
+  //           onChange={handleChange}
+  //           value={languages}
+  //           label="Languages"
+  //           multiple
+  //           input={<OutlinedInput label="Tag" />}
+  //           renderValue={(selected) => selected.join(', ')}
+  //         >
+  //           {generateSingleOptions()}
+  //         </Select>
+  //       )}
+  //       control={control}
+  //       name={name}
+  //     />
+  //   </FormControl>
+  // );
 };
 // export const FormInputDropdown = ({
 //   name,
