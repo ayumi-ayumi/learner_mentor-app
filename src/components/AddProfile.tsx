@@ -174,13 +174,13 @@ export default function AddProfile() {
               options={options_ProgrammingLanguages}
             // setValue={setValue}
             />
-            {/* <FormInputDropdown
+            <FormInputDropdown
           name="languages"
-          control={control}
+          // control={control}
           label="Languages"
           options={options_Langugages}
-          setValue={setValue}
-        /> */}
+          // setValue={setValue}
+        />
             {/* <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
           Submit
         </Button> */}
