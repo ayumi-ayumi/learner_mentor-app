@@ -5,24 +5,12 @@ import { FormInputProps } from "../interfaces/interfaces";
 
 export const FormInputDropdown = ({
   name,
-  // control,
   label,
   options,
-  // setValue,
 }: FormInputProps) => {
   const { control } = useFormContext();
 
   const [languages, setLanguages] = useState([]);
-
-  // useEffect(() => {
-  //   if (languages) setValue(name, languages);
-  // }, [name, setValue, languages]);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const handleChange = (event: any) => {
-  //   setLanguages(event.target.value);
-  //   console.log(event)
-  // };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: { target: { value: any; }; }) => {
@@ -31,18 +19,6 @@ export const FormInputDropdown = ({
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-  };
-
-  const generateSingleOptions = () => {
-    if (typeof options !== "undefined")
-      return options.map((option) => {
-        return (
-          <MenuItem key={option.value} value={option.value}>
-            <Checkbox checked={languages.indexOf(option.value as never) > -1} />
-            <ListItemText primary={option.value} />
-          </MenuItem>
-        );
-      });
   };
 
   return (
@@ -60,7 +36,7 @@ export const FormInputDropdown = ({
         <FormControl error={!!error} >
           <FormLabel>{label}</FormLabel>
           <Select
-            onChange={handleChange}
+            // onChange={handleChange}
             value={value}
             label="Languages"
             multiple
