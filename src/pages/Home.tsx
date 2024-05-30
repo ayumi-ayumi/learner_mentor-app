@@ -1,16 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MapWindow from "../components/MapWindow";
 import Navbar from "../components/Navbar";
 import MarkerFilter from "../components/MarkerFilter";
 import "../styles/Home.scss";
-import { db } from "../firebase/BaseConfig";
+import { db, auth } from "../firebase/BaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import React from "react";
 import { UserProfile } from "../interfaces/interfaces";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 export default function Home() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [filter, setFilter] = useState<string>("all");
+
+  const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+
+  console.log(currentUser)
+
+  // Sign Out
+  async function userSignOut() {
+    console.log(123)
+    await signOut(auth);
+    setCurrentUser(null);
+    console.log("Signed out", currentUser);
+    navigate("/", { replace: true });
+  }
 
   //Obtain data from firebase
   useEffect(() => {
@@ -51,7 +68,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar users={users} />
+      <Navbar users={users} userSignOut={userSignOut} />
       <MarkerFilter setFilter={setFilter} />
       <MapWindow users={users} filter={filter} />
     </>

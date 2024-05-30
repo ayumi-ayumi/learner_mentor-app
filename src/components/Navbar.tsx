@@ -1,19 +1,37 @@
-import React from "react";
-import Paper from "@mui/material/Paper";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from '@mui/material/IconButton';
+import React, { useContext } from "react";
+import { Paper, Menu, MenuItem, IconButton, } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { auth } from "../firebase/BaseConfig";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
-export default function Navbar() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function Navbar({ userSignOut }: any) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  // const navigate = useNavigate();
+  // const { currentUser, setCurrentUser } = useContext(AuthContext);
+
+  // console.log(currentUser)
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  //  // Sign Out
+  // async function userSignOut() {
+  //   await signOut(auth);
+  //   setCurrentUser(null);
+  //   console.log("Signed out", currentUser);
+  //   navigate("/", { replace: true });
+  // }
+
   return (
     <>
       <Paper
@@ -57,7 +75,7 @@ export default function Navbar() {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={userSignOut}>Logout</MenuItem>
           </Menu>
         </div>
       </Paper>

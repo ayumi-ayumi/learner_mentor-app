@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, TextField, Link, Paper, Grid, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../AuthContext";
 
 export default function Auth() {
   const [email, setEmail] = useState<string>("");

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { auth } from "../firebase/BaseConfig";
+import { auth } from "./firebase/BaseConfig";
 import { User, onAuthStateChanged } from "firebase/auth";
 
 type UserType = User | null;
@@ -10,10 +10,10 @@ interface Props {
 
 export const AuthContext = createContext({
   currentUser: {} as User | null,
-  setCurrentUser: () => {},
+  setCurrentUser: () => { },
   loading: {} as boolean,
   // setCurrentUser: (user: User) => { },
-  setLoading: () => {},
+  setLoading: () => { },
 });
 
 export default function AuthProvider({ children }: Props) {

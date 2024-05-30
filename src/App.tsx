@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, } from "react-router-dom";
 import React, { useContext, useEffect } from "react";
 import Home from "./pages/Home";
 import AddProfile from "./components/AddProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import AuthProvider, { AuthContext } from "./Auth/AuthContext";
+import AuthProvider, { AuthContext } from "./AuthContext";
 import ErrorPage from "./Error";
 import Auth from "./Auth/Auth";
 
