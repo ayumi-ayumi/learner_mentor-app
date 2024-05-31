@@ -9,14 +9,15 @@ import React from "react";
 import { UserProfile } from "../interfaces/interfaces";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
+import { useAuth } from "../AuthProvider";
 
 export default function Home() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [filter, setFilter] = useState<string>("all");
 
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useAuth();
+  // const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   console.log(currentUser)
 

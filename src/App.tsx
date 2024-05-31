@@ -3,23 +3,28 @@ import React, { useContext, useEffect } from "react";
 import Home from "./pages/Home";
 import AddProfile from "./components/AddProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import AuthProvider, { AuthContext } from "./AuthContext";
+import {AuthProvider,  useAuth } from "./AuthProvider";
 import ErrorPage from "./Error";
 import Auth from "./Auth/Auth";
+import RequireAuth from "./Auth/RequireAuth";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+  const auth = useAuth();
+  
+  
+  // const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  console.log(currentUser)
 
   useEffect(() => {
-    if (currentUser) {
+    console.log(auth)
+    if (auth?.currentUser) {
       navigate("/home");
     }
-  }, []);
+  }, [auth]);
 
   // return (
   //   <BrowserRouter>
@@ -33,20 +38,28 @@ export default function App() {
   // );
   return (
     // <BrowserRouter>
-      <AuthProvider>
-        <APIProvider apiKey={API_KEY} libraries={["places"]}>
-          <Routes>
-            <Route path="*" element={<ErrorPage />} />
-            <Route path={`/`} element={<Auth />} />
-            <Route
+    <AuthProvider>
+      <APIProvider apiKey={API_KEY} libraries={["places"]}>
+        <Routes>
+          {/* <Route path="*" element={<ErrorPage />} /> */}
+          <Route path={`/login`} element={<Auth />} />
+          {/* <Route
             path={`/home`}
-            element={currentUser ? <Home /> : <Auth />}
+            element={auth?.currentUser ? <Home /> : <Auth />}
+          /> */}
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
           />
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="addprofile" element={<AddProfile />} />
-          </Routes>
-        </APIProvider>
-     </AuthProvider>
-     // </BrowserRouter> 
+          <Route path="addprofile" element={<AddProfile />} />
+        </Routes>
+      </APIProvider>
+    </AuthProvider>
+    // </BrowserRouter> 
   );
 }

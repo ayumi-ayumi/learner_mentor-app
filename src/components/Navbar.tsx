@@ -4,7 +4,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { auth } from "../firebase/BaseConfig";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../AuthProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Navbar({ userSignOut }: any) {

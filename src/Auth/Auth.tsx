@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, TextField, Link, Paper, Grid, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { AuthContext } from "../AuthContext";
+import { useAuth } from "../AuthProvider";
 
 export default function Auth() {
   const [email, setEmail] = useState<string>("");
@@ -15,7 +15,8 @@ export default function Auth() {
   const [haveAccount, setHaveAccount] = useState(false);
   const [error, setError] = useState("");
   const [clickedButton, setClickedButton] = useState(false);
-  const { setLoading } = useContext(AuthContext);
+  // const { setLoading } = useContext(AuthContext);
+  const { setLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
