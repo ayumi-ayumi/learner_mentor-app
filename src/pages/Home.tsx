@@ -17,9 +17,10 @@ export default function Home() {
 
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useAuth();
+  console.log(currentUser)
   // const { currentUser, setCurrentUser } = useContext(AuthContext);
 
-  console.log(currentUser)
+  // console.log(currentUser)
 
   // Sign Out
   async function userSignOut() {

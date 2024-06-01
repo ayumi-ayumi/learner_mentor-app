@@ -20,7 +20,7 @@ export default function App() {
 
 
   useEffect(() => {
-    console.log(auth)
+    // console.log(auth)
     if (auth?.currentUser) {
       navigate("/home");
     }
