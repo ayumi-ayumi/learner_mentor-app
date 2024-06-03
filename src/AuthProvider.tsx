@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import { auth } from "./firebase/BaseConfig";
-import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, } from "firebase/auth";
+import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, } from "firebase/auth";
 
 // type UserType = User | null;
 
@@ -67,29 +67,31 @@ interface Props {
 
 
 interface AuthContextType {
-  signin: (user: string, callback: VoidFunction) => void;
-  signout: (callback: VoidFunction) => void;
+  // signin: (user: string, callback: VoidFunction) => void;
+  // signout: (callback: VoidFunction) => void;
+  createUser: (email: string, password: string) => Promise<UserCredential>,
+  loginUser: (email: string, password: string) => Promise<UserCredential>,
+
+  // loginUser: (email: string, password: string) => void,
+  // logOut: (email: string, password: string) => void,
   currentUser: User | null,
   setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// eslint-disable-next-line prefer-const
-// let AuthContext = createContext<AuthContextType>(null!);
 const AuthContext = createContext<AuthContextType>(null!);
-
 
 export function AuthProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<UserType>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const createUser = (email, password) => {
+  const createUser = (email: string, password: string) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const loginUser = (email, password) => {
+  const loginUser = (email: string, password: string) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -103,7 +105,6 @@ export function AuthProvider({ children }: Props) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
 
       if (user) {
-        // console.log(user)
         setCurrentUser(user);
         setLoading(false);
       } else {
@@ -112,8 +113,6 @@ export function AuthProvider({ children }: Props) {
     });
     return unsubscribe;
   }, []);
-
-  console.log(currentUser);
 
   const authValue = {
     currentUser,
@@ -125,7 +124,6 @@ export function AuthProvider({ children }: Props) {
     logOut,
   };
 
-  // console.log(authValue);
   return (
     <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   );
