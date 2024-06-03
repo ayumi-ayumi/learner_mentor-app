@@ -1,20 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Paper, Menu, MenuItem, IconButton, } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { auth } from "../firebase/BaseConfig";
-import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthProvider";
+import { useAuth } from "../AuthProvider";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Navbar({ userSignOut }: any) {
+export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const { currentUser, setCurrentUser, logOut } = useAuth();
+  const navigate = useNavigate();
 
-  // const navigate = useNavigate();
-  // const { currentUser, setCurrentUser } = useContext(AuthContext);
-
-  // console.log(currentUser)
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {
+        console.log("User logged out successfully");
+        navigate("/signin"); // Redirect to the login page after logout
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,14 +26,6 @@ export default function Navbar({ userSignOut }: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  //  // Sign Out
-  // async function userSignOut() {
-  //   await signOut(auth);
-  //   setCurrentUser(null);
-  //   console.log("Signed out", currentUser);
-  //   navigate("/", { replace: true });
-  // }
 
   return (
     <>
@@ -45,11 +40,6 @@ export default function Navbar({ userSignOut }: any) {
       >
         <h1>Learner or Mentor</h1>
         <div>
-          {/* <Button
-            aria-haspopup="true"
-            >
-            Dashboard
-          </Button> */}
           <IconButton
             id="basic-button"
             size="large"
@@ -57,9 +47,7 @@ export default function Navbar({ userSignOut }: any) {
             aria-controls={open ? "basic-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
-            // aria-controls="menu-appbar"
             aria-haspopup="true"
-            // onClick={handleMenu}
             color="inherit"
           >
             <AccountCircle />
@@ -75,7 +63,7 @@ export default function Navbar({ userSignOut }: any) {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={userSignOut}>Logout</MenuItem>
+            <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </div>
       </Paper>

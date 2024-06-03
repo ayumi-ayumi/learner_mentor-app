@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Home from "./pages/Home";
 import AddProfile from "./components/AddProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import {AuthProvider,  useAuth } from "./AuthProvider";
+import { AuthProvider, useAuth } from "./AuthProvider";
 import ErrorPage from "./Error";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import MapWindow from "../components/MapWindow";
 import Navbar from "../components/Navbar";
 import MarkerFilter from "../components/MarkerFilter";
@@ -16,11 +16,8 @@ export default function Home() {
   const [filter, setFilter] = useState<string>("all");
 
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useAuth();
+  const { currentUser, setCurrentUser, logOut } = useAuth();
   console.log(currentUser)
-  // const { currentUser, setCurrentUser } = useContext(AuthContext);
-
-  // console.log(currentUser)
 
   // Sign Out
   async function userSignOut() {
@@ -70,7 +67,8 @@ export default function Home() {
 
   return (
     <>
-      <Navbar users={users} userSignOut={userSignOut} />
+      <Navbar/>
+      {/* <Navbar users={users} userSignOut={userSignOut} /> */}
       <MarkerFilter setFilter={setFilter} />
       <MapWindow users={users} filter={filter} />
     </>
