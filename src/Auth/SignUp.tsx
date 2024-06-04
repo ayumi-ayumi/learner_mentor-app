@@ -34,7 +34,7 @@ export default function SignUp() {
     createUser(email, password)
       .then((result) => {
         console.log("Signed up with:", result);
-        navigate("/");
+        navigate("/signin");
       })
       .catch((error) => {
         console.log(error.message)

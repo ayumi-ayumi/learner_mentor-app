@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -21,9 +21,11 @@ export default function SignIn() {
   const btnstyle = { margin: "8px 0" };
 
   // If the user is already authenticated, redirect to the home page
-  if (currentUser) {
-    navigate("/");
-  }
+  useEffect(()=>{
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

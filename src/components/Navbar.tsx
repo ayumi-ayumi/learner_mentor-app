@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Menu, MenuItem, IconButton, } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 
 export default function Navbar() {
@@ -61,7 +61,10 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            {/* <MenuItem onClick={handleClose}>My Profile</MenuItem> */}
+            <MenuItem>
+              <Link to="/addprofile">My Profile</Link>
+            </MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>

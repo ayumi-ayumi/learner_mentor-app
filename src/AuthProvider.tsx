@@ -52,6 +52,8 @@ export function AuthProvider({ children }: Props) {
     return unsubscribe;
   }, []);
 
+  console.log(loading)
+
   const authValue = {
     currentUser,
     setCurrentUser,
