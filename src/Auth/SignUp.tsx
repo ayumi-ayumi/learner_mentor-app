@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -18,11 +18,15 @@ export default function SignUp() {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  console.log(currentUser)
+
 
   // If the user is already authenticated, redirect to the home page
-  if (currentUser) {
-    navigate("/");
-  }
+  useEffect(()=>{
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

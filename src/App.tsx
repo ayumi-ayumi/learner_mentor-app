@@ -14,18 +14,18 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export default function App() {
   const auth = useAuth();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (auth?.currentUser) {
       navigate("/");
     }
-  }, [auth]);
+  }, []);
+  console.log(auth)
 
   return (
     <AuthProvider>
       <APIProvider apiKey={API_KEY} libraries={["places"]}>
         <Routes>
-          <Route path="*" element={<ErrorPage />} />
           <Route path={`/signup`} element={<SignUp />} />
           <Route path={`/signin`} element={<SignIn />} />
           <Route
@@ -37,6 +37,7 @@ export default function App() {
             }
           />
           <Route path="addprofile" element={<AddProfile />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </APIProvider>
     </AuthProvider>

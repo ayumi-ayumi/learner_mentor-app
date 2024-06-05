@@ -61,10 +61,7 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            {/* <MenuItem onClick={handleClose}>My Profile</MenuItem> */}
-            <MenuItem>
-              <Link to="/addprofile">My Profile</Link>
-            </MenuItem>
+            <MenuItem onClick={() => navigate('/addprofile')}>My Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>

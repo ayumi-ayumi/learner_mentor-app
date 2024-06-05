@@ -135,7 +135,7 @@ export default function AddProfile() {
             className="form-container"
           >
             {/* <Typography variant="h4">Form Demo</Typography> */}
-            {/* <div className="input-container">
+            <div className="input-container">
               <label htmlFor="location">Your location?</label>
               <input
                 type="text"
@@ -144,8 +144,8 @@ export default function AddProfile() {
                 onChange={(e) => handleInputChange(e)}
                 ref={inputRef}
               />
-            </div> */}
-            {/* <FormInputText name="name" label="Name" />
+            </div>
+            <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
               // control={control}
@@ -173,7 +173,7 @@ export default function AddProfile() {
               label={"Checkbox Input"}
               options={options_ProgrammingLanguages}
             // setValue={setValue}
-            /> */}
+            />
             <FormInputDropdown
           name="languages"
           // control={control}

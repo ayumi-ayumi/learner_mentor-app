@@ -5,8 +5,9 @@ import React from "react";
 export default function RequireAuth({ children }: { children: JSX.Element }) {
   const auth = useAuth();
   const location = useLocation();
-
+  
   if (!auth.currentUser) {
+    console.log(auth.currentUser)
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 

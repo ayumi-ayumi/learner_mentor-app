@@ -19,13 +19,15 @@ export default function SignIn() {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  // console.log(currentUser)
+
 
   // If the user is already authenticated, redirect to the home page
   useEffect(()=>{
     if (currentUser) {
       navigate("/");
     }
-  }, [])
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
