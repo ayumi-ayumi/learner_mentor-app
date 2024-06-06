@@ -4,7 +4,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 
-export default function Navbar() {
+export default function Navbar({logInUser}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const { currentUser, setCurrentUser, logOut } = useAuth();
@@ -39,6 +39,7 @@ export default function Navbar() {
 
       >
         <h1>Learner or Mentor</h1>
+        {logInUser && <div>Hello {logInUser?.name}</div>}
         <div>
           <IconButton
             id="basic-button"

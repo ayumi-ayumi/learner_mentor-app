@@ -37,7 +37,7 @@ export default function SignUp() {
     const password = e.target.password.value;
     createUser(email, password)
       .then((result) => {
-        console.log("Signed up with:", result);
+        console.log("Signed up with:", result.user.uid);
         navigate("/signin");
       })
       .catch((error) => {

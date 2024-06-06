@@ -18,9 +18,13 @@ import {
   options_ProgrammingLanguages
 } from "../props";
 import { Place, UserProfile } from "../interfaces/interfaces";
+import { useAuth } from "../AuthProvider";
 
 export default function AddProfile() {
 
+  const { currentUser } = useAuth();
+
+  console.log(currentUser.uid)
   const defaultValues: UserProfile = {
     id: 0,
     dateTime: new Date(),
@@ -58,6 +62,7 @@ export default function AddProfile() {
     console.log(data)
     addDoc(collection(db, "users"), {
       ...data,
+      uid: currentUser?.uid,
       id: nanoid(),
       datetime: new Date(),
       place: place

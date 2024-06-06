@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import MapWindow from "../components/MapWindow";
 import Navbar from "../components/Navbar";
 import MarkerFilter from "../components/MarkerFilter";
@@ -7,10 +7,17 @@ import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import React from "react";
 import { UserProfile } from "../interfaces/interfaces";
+import { useAuth } from "../AuthProvider";
 
 export default function Home() {
   const [users, setUsers] = useState<UserProfile[]>([]);
+  const [logInUser, setLogInUser] = useState<UserProfile>();
   const [filter, setFilter] = useState<string>("all");
+
+  const { currentUser } = useAuth();
+
+  console.log(users)
+
 
   //Obtain data from firebase
   useEffect(() => {
@@ -21,13 +28,22 @@ export default function Home() {
         ...(doc.data() as UserProfile),
       }));
       setUsers(usersData);
+      setLogInUser(usersData.find(user=>user.uid === currentUser?.uid))
+
     }
     getUsers();
   }, []);
 
+  // useEffect(()=>{
+  //   const LogInUser: UserProfile | undefined = users.find(user=>user.uid === currentUser?.uid)
+  //  setLogInUser(LogInUser)
+  // }, [users])
+
+  console.log(logInUser)
+
   return (
     <>
-      <Navbar/>
+      <Navbar logInUser={logInUser}/>
       <MarkerFilter setFilter={setFilter} />
       <MapWindow users={users} filter={filter} />
     </>

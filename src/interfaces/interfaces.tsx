@@ -2,6 +2,7 @@ import { LearnerORmentor, Options_LearningDuration, Options_WorkingDuration, Opt
 
 
 export interface UserProfile {
+  uid: string,
   id: number,
   dateTime: Date,
   place: Place,
