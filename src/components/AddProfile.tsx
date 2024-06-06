@@ -19,6 +19,8 @@ import {
 } from "../props";
 import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../AuthProvider";
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function AddProfile() {
 
@@ -45,16 +47,12 @@ export default function AddProfile() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
-  // const [selectedValue, setSelectedValue] = useState();
-  // const handleChange = (event) => {
-  //   setSelectedValue(event.target.value);
-  // };
-  // console.log(selectedValue)
+  const [saved, setSaved] = useState(false);
 
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
   const methods = useForm<UserProfile>({ defaultValues });
-const learnerORmentor = methods.watch("learnerORmentor")
+  const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
@@ -67,6 +65,7 @@ const learnerORmentor = methods.watch("learnerORmentor")
       place: place
     });
     setInputValue("");
+    setSaved(true)
   };
 
 
@@ -125,6 +124,9 @@ const learnerORmentor = methods.watch("learnerORmentor")
     <>
       <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
+        {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          Your profile is save successfully.
+        </Alert>}
           <Stack
             style={{
               display: "grid",
@@ -150,12 +152,12 @@ const learnerORmentor = methods.watch("learnerORmentor")
               label={"I am a "}
               options={options_learnerORmentor}
             />
-            {learnerORmentor === "learner" &&(<FormInputRadio
+            {learnerORmentor === "learner" && (<FormInputRadio
               name={"learningDuration"}
               label={"I have been learning for "}
               options={options_LearningDuration}
-            />)}  
-            {learnerORmentor === "mentor" &&(<FormInputRadio
+            />)}
+            {learnerORmentor === "mentor" && (<FormInputRadio
               name={"workingDuration"}
               label={"I have been working for "}
               options={options_WorkingDuration}

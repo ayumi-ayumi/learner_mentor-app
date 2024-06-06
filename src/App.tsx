@@ -8,13 +8,14 @@ import ErrorPage from "./Error";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
 import RequireAuth from "./Auth/RequireAuth";
+import Layout from "./Layout";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
   const auth = useAuth();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (auth?.currentUser) {
       navigate("/");
@@ -27,15 +28,18 @@ export default function App() {
         <Routes>
           <Route path={`/signup`} element={<SignUp />} />
           <Route path={`/signin`} element={<SignIn />} />
-          <Route
-            path="/"
-            element={
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            }
-          />
-          <Route path="addprofile" element={<AddProfile />} />
+          <Route path="/" element={<Layout />}>
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route path="addprofile" element={<AddProfile />} />
+
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </APIProvider>

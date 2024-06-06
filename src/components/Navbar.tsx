@@ -3,6 +3,8 @@ import { Paper, Menu, MenuItem, IconButton, } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
+import "../styles/Navbar.scss";
+
 
 export default function Navbar({ logInUser }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,9 +38,9 @@ export default function Navbar({ logInUser }) {
           padding: "0 20px",
           justifyContent: "space-between",
         }}
-
       >
-        <h1>Learner or Mentor</h1>
+        {/* <h1>Learner or Mentor</h1> */}
+        <Link className="site-logo" to="/">Learner or Mentor</Link>
         {logInUser && <div>Hello {logInUser?.name}</div>}
         <div>
           <IconButton
