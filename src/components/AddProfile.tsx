@@ -24,7 +24,6 @@ export default function AddProfile() {
 
   const { currentUser } = useAuth();
 
-  console.log(currentUser.uid)
   const defaultValues: UserProfile = {
     id: 0,
     dateTime: new Date(),
@@ -41,21 +40,21 @@ export default function AddProfile() {
     workingDuration: "",
     programmingLanguages: [],
     languages: [],
+    uid: ""
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
+  // const [selectedValue, setSelectedValue] = useState();
+  // const handleChange = (event) => {
+  //   setSelectedValue(event.target.value);
+  // };
+  // console.log(selectedValue)
+
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
-  // const {
-  //   handleSubmit,
-  //   reset,
-  //   control,
-  //   setValue,
-  //   formState: { errors },
-  // } = useForm<UserProfile>({ defaultValues: defaultValues });
-
   const methods = useForm<UserProfile>({ defaultValues });
+const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
@@ -66,18 +65,17 @@ export default function AddProfile() {
       id: nanoid(),
       datetime: new Date(),
       place: place
-      // address: place.address,
-      // position: place.position,
     });
-    // reset({ defaultValues: defaultValues }); //送信後の入力フォーム欄を初期値に戻す
     setInputValue("");
   };
 
+
   const handleReset = () => {
     methods.reset(defaultValues);
+    setInputValue("")
   };
 
-
+  // Place autocomplete function
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
@@ -100,10 +98,8 @@ export default function AddProfile() {
     autocompleteInstance.setFields([
       "formatted_address",
       "geometry.location",
-      // "address_components",
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-    // autocompleteInstance.setTypes(["address"]);
   }
 
   useEffect(() => {
@@ -129,7 +125,6 @@ export default function AddProfile() {
     <>
       <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-
           <Stack
             style={{
               display: "grid",
@@ -139,7 +134,6 @@ export default function AddProfile() {
             }}
             className="form-container"
           >
-            {/* <Typography variant="h4">Form Demo</Typography> */}
             <div className="input-container">
               <label htmlFor="location">Your location?</label>
               <input
@@ -153,45 +147,29 @@ export default function AddProfile() {
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
-              // control={control}
               label={"I am a "}
               options={options_learnerORmentor}
-              // setValue={setValue}
             />
-            <FormInputRadio
+            {learnerORmentor === "learner" &&(<FormInputRadio
               name={"learningDuration"}
-              // // control={control}
               label={"I have been learning for "}
               options={options_LearningDuration}
-              // // setValue={setValue}
-            />
-            <FormInputRadio
+            />)}  
+            {learnerORmentor === "mentor" &&(<FormInputRadio
               name={"workingDuration"}
-              // // control={control}
               label={"I have been working for "}
               options={options_WorkingDuration}
-              // // setValue={setValue}
-            />
+            />)}
             <FormInputCheckbox
               name={"programmingLanguages"}
-              // control={control}
               label={"I am learning "}
               options={options_ProgrammingLanguages}
-            // setValue={setValue}
             />
             <FormInputDropdown
-          name="languages"
-          // control={control}
-          label="Languages"
-          options={options_Langugages}
-          // setValue={setValue}
-        />
-            {/* <Button onClick={handleSubmit(onSubmit)} variant={"contained"}>
-          Submit
-        </Button> */}
-            {/* <Button onClick={() => reset({ defaultValues: defaultValues })} variant={"outlined"}>
-          Reset
-        </Button> */}
+              name="languages"
+              label="Languages"
+              options={options_Langugages}
+            />
             <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Button variant="contained" type="submit">
                 Save

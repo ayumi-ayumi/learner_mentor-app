@@ -34,13 +34,10 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
 
-  console.log(user)
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  console.log(isOpen)
   return (
     <>
       <AdvancedMarker
