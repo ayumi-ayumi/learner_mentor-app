@@ -17,6 +17,7 @@ export default function Home() {
   const { currentUser } = useAuth();
 
   console.log(users)
+  console.log(logInUser)
 
 
   //Obtain data from firebase
@@ -38,8 +39,6 @@ export default function Home() {
   //   const LogInUser: UserProfile | undefined = users.find(user=>user.uid === currentUser?.uid)
   //  setLogInUser(LogInUser)
   // }, [users])
-
-  console.log(logInUser)
 
   return (
     <>

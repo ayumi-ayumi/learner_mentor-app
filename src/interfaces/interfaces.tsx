@@ -8,8 +8,8 @@ export interface UserProfile {
   place: Place,
   name: string,
   learnerORmentor: string,
-  LearningDuration: string,
-  WorkingDuration: string,
+  learningDuration: string,
+  workingDuration: string,
   programmingLanguages: string[],
   languages: string[],
 }
@@ -19,6 +19,7 @@ export interface Place {
   address: string | undefined,
   position: { lat: number | undefined, lng: number | undefined }
 }
+
 
 export interface FormInputProps {
   name: string;

@@ -7,7 +7,6 @@ export default function RequireAuth({ children }: { children: JSX.Element }) {
   const location = useLocation();
   
   if (!auth.currentUser) {
-    console.log(auth.currentUser)
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 

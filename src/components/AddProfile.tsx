@@ -37,8 +37,8 @@ export default function AddProfile() {
     },
     name: "",
     learnerORmentor: "",
-    LearningDuration: "",
-    WorkingDuration: "",
+    learningDuration: "",
+    workingDuration: "",
     programmingLanguages: [],
     languages: [],
   };
@@ -159,14 +159,14 @@ export default function AddProfile() {
               // setValue={setValue}
             />
             <FormInputRadio
-              name={"LearningDuration"}
+              name={"learningDuration"}
               // // control={control}
               label={"I have been learning for "}
               options={options_LearningDuration}
               // // setValue={setValue}
             />
             <FormInputRadio
-              name={"WorkingDuration"}
+              name={"workingDuration"}
               // // control={control}
               label={"I have been working for "}
               options={options_WorkingDuration}
@@ -175,7 +175,7 @@ export default function AddProfile() {
             <FormInputCheckbox
               name={"programmingLanguages"}
               // control={control}
-              label={"Checkbox Input"}
+              label={"I am learning "}
               options={options_ProgrammingLanguages}
             // setValue={setValue}
             />

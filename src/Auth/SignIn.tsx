@@ -19,7 +19,7 @@ export default function SignIn() {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-  // console.log(currentUser)
+  console.log(currentUser)
 
 
   // If the user is already authenticated, redirect to the home page
