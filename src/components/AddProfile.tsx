@@ -9,7 +9,7 @@ import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import { Button, Paper, Typography, Container, Stack } from "@mui/material";
+import { Button, Paper, Typography, Container, Stack, Alert } from "@mui/material";
 import {
   options_learnerORmentor,
   options_LearningDuration,
@@ -19,7 +19,6 @@ import {
 } from "../props";
 import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
-import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 
 export default function AddProfile() {

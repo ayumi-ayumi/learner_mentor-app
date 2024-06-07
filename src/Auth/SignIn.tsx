@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
+import { Avatar, Button, TextField, Paper, Grid, Typography, Container, Alert } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
+import CheckIcon from '@mui/icons-material/Check';
 
-export default function SignIn() {
+
+export default function SignIn({ signupProps }) {
   const [error, setError] = useState("");
   const [clickedButton, setClickedButton] = useState(false);
   const { currentUser, loginUser } = useAuth();
@@ -22,7 +24,7 @@ export default function SignIn() {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && !signupProps.signedUp) {
       navigate("/");
     }
   }, [currentUser])
@@ -51,6 +53,9 @@ export default function SignIn() {
   return (
     <>
       <Container maxWidth="sm" component="form" onSubmit={handleFormSubmit}>
+        {signupProps.signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          You have successfully signed up and now sign in.
+        </Alert>}
         <Grid sx={{ pt: 3 }}>
           <Paper elevation={10} style={paperStyle}>
             <Grid

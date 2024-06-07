@@ -23,9 +23,6 @@ export function UsersDataProvider({ children }: Props) {
   const [logInUser, setLogInUser] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
-  // console.log(currentUser)
-
-
   //Obtain data from firebase
   useEffect(() => {
     async function getUsers() {
@@ -35,18 +32,15 @@ export function UsersDataProvider({ children }: Props) {
         ...(doc.data() as UserProfile),
       }));
       setUsers(usersData);
-      // const login = usersData.find(user => user.uid === currentUser?.uid)
-      // setLogInUser(login)
-      // setLogInUser(usersData.find(user => user.uid === currentUser?.uid))
     }
     getUsers();
-
   }, []);
 
+  const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  
   useEffect(() => {
-    const login: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
-    setLogInUser(login)
-  }, [users])
+    setLogInUser(currentLogInUser)
+  }, [currentLogInUser])
 
   const value = {
     logInUser,

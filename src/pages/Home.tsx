@@ -41,7 +41,7 @@ export default function Home() {
     <>
       {/* <Navbar logInUser={logInUser}/> */}
       <MarkerFilter setFilter={setFilter} />
-      <MapWindow filter={filter} />
+      <MapWindow filter={filter} /> 
       {/* <MapWindow users={users} filter={filter} /> */}
     </>
   );

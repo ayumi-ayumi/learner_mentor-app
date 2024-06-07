@@ -4,9 +4,9 @@ import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
 
-export default function SignUp() {
+export default function SignUp({ signupProps }) {
   const [error, setError] = useState("");
-  const [clickedButton, setClickedButton] = useState(false);
+  const [clickedButton, setClickedButton] = useState<boolean>(false);
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function SignUp() {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && !signupProps.signedUp) {
       navigate("/");
     }
   }, [currentUser])
@@ -36,6 +36,7 @@ export default function SignUp() {
     createUser(email, password)
       .then((result) => {
         console.log("Signed up with:", result.user.uid);
+        signupProps.setSignedUp(true)
         navigate("/signin");
       })
       .catch((error) => {
