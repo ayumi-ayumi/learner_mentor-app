@@ -1,9 +1,9 @@
-import { Routes, Route, useNavigate, } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
 import Home from "./pages/Home";
 import AddProfile from "./components/AddProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import { AuthProvider, useAuth } from "./context/AuthProvider";
+import { AuthProvider } from "./context/AuthProvider";
 import ErrorPage from "./Error";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
@@ -16,15 +16,6 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   const signup = {signedUp: signedUp, setSignedUp: setSignedUp}
-
-  // const auth = useAuth();
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (auth?.currentUser) {
-  //     navigate("/");
-  //   }
-  // }, []);
 
   return (
     <AuthProvider>

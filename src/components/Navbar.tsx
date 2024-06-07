@@ -23,7 +23,8 @@ export default function Navbar() {
       .catch((error) => console.error(error));
   };
 
-  const handleClick = (event) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -41,7 +42,6 @@ export default function Navbar() {
           justifyContent: "space-between",
         }}
       >
-        {/* <h1>Learner or Mentor</h1> */}
         <Link className="site-logo" to="/">Learner or Mentor</Link>
         {logInUser && <div>Hello {logInUser?.name}</div>}
         <div>

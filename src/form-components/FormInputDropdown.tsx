@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Select, OutlinedInput, ListItemText, Checkbox, FormHelperText, FormLabel, FormControlLabel, FormGroup } from "@mui/material";
+import React, { useState } from "react";
+import { FormControl, MenuItem, Select, OutlinedInput, Checkbox, FormHelperText, FormLabel, FormControlLabel, FormGroup } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputProps } from "../interfaces/interfaces";
 
@@ -10,16 +10,16 @@ export const FormInputDropdown = ({
 }: FormInputProps) => {
   const { control } = useFormContext();
 
-  const [languages, setLanguages] = useState([]);
+  // const [languages, setLanguages] = useState([]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (event: { target: { value: any; }; }) => {
-    const { target: { value }, } = event;
-    setLanguages(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const handleChange = (event: { target: { value: any; }; }) => {
+  //   const { target: { value }, } = event;
+  //   setLanguages(
+  //     // On autofill we get a stringified value.
+  //     typeof value === 'string' ? value.split(',') : value,
+  //   );
+  // };
 
   return (
     <Controller
@@ -36,7 +36,6 @@ export const FormInputDropdown = ({
         <FormControl error={!!error} >
           <FormLabel>{label}</FormLabel>
           <Select
-            // onChange={handleChange}
             value={value}
             label="Languages"
             multiple

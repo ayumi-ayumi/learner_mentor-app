@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -16,9 +16,9 @@ export const FormInputRadio = ({
 }: FormInputProps) => {
   const { control } = useFormContext();
   // const [selectedValue, setSelectedValue] = useState();
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setSelectedValue(event.target.value);
+  // };
 
   // const handleRadioChange = () => {
   //   handleChange()

@@ -4,7 +4,8 @@ import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
 
-export default function SignUp({ signupProps }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function SignUp({ signupProps }: any) {
   const [error, setError] = useState("");
   const [clickedButton, setClickedButton] = useState<boolean>(false);
   const { currentUser, createUser } = useAuth();
@@ -21,9 +22,7 @@ export default function SignUp({ signupProps }) {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser && !signupProps.signedUp) {
-      navigate("/");
-    }
+    if (currentUser && !signupProps.signedUp) navigate("/");
   }, [currentUser])
 
   // Handle form submission for user login
@@ -43,7 +42,6 @@ export default function SignUp({ signupProps }) {
         console.log(error.message)
         setError(error.message);
       });
-
     e.target.reset();
   };
 
@@ -77,7 +75,6 @@ export default function SignUp({ signupProps }) {
               fullWidth
               required
               name="password"
-
             />
             {error && (
               <Typography style={{ color: "red" }}>
@@ -112,7 +109,6 @@ export default function SignUp({ signupProps }) {
           </Paper>
         </Grid>
       </Container>
-
     </>
   );
 }

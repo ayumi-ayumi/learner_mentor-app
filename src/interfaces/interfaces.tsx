@@ -1,6 +1,3 @@
-import { LearnerORmentor, Options_LearningDuration, Options_WorkingDuration, Options_Langugages, Options_ProgrammingLanguages } from '../types/types'
-
-
 export interface UserProfile {
   uid: string,
   id: number,

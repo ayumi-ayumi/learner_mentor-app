@@ -4,21 +4,14 @@ import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import { UserProfile, Props } from "../interfaces/interfaces";
 
-// interface Props {
-//   children?: ReactNode;
-// }
-
 interface AuthDataContextType {
   logInUser: UserProfile | undefined,
-  // setLogInUser: React.Dispatch<React.SetStateAction<UserProfile | undefined>>,
   users: UserProfile[],
-  // setUsers: React.Dispatch<React.SetStateAction<UserProfile[]>>
 }
 
 const UsersDataContext = createContext<AuthDataContextType>(null!);
 
 export function UsersDataProvider({ children }: Props) {
-
   const { currentUser } = useAuth();
   const [logInUser, setLogInUser] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -44,9 +37,7 @@ export function UsersDataProvider({ children }: Props) {
 
   const value = {
     logInUser,
-    // setLogInUser,
     users,
-    // setUsers
   };
 
   return (

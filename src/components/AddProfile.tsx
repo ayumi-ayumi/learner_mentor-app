@@ -67,7 +67,6 @@ export default function AddProfile() {
     setSaved(true)
   };
 
-
   const handleReset = () => {
     methods.reset(defaultValues);
     setInputValue("")

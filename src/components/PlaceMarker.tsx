@@ -8,7 +8,6 @@ import {
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography} from "@mui/material";
-// import {CardContent} from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -31,6 +30,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfile, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
@@ -59,7 +59,6 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
 
         {isOpen && (
           <InfoWindow
-            // position={user.position}
             anchor={marker}
             maxWidth={400}
             // style={{
@@ -69,18 +68,6 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
             // }}
             onCloseClick={() => setMarkerPlaceId(null)}
           >
-            {/* <div style={{height:200, width:200, fontSize:"30px"}}>I'm in {user.name}!</div>
-            
-            <br></br>
-            <a
-            href=""
-              style={{
-                border: "1px solid black",
-                borderRadius: "5px",
-              }}
-            >
-              Profile
-            </a> */}
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={

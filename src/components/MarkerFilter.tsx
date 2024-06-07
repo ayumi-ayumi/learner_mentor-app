@@ -3,14 +3,12 @@ import Box from "@mui/material/Box";
 import '../styles/MarkerFilter.scss'
 
 export default function MarkerFilter(props: { setFilter: (arg0: string) => void; }) {
-// export default function MarkerFilter({ setFilter }: (arg0: string) => void) {
   return (
     <Box
       sx={{
         height: "80px",
         borderRadius: 1,
         margin: "20px"
-      
       }}
     >
       <div className="filter-tab">

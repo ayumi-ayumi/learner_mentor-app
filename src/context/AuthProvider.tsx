@@ -5,16 +5,11 @@ import { Props } from "../interfaces/interfaces";
 
 type UserType = User | null;
 
-// interface Props {
-//   children?: ReactNode;
-// }
-
 interface AuthContextType {
   createUser: (email: string, password: string) => Promise<UserCredential>,
   loginUser: (email: string, password: string) => Promise<UserCredential>,
   logOut: () => Promise<void>,
   currentUser: UserType,
-  // currentUser: User | null,
   setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -53,8 +48,6 @@ export function AuthProvider({ children }: Props) {
     });
     return unsubscribe;
   }, []);
-
-  // console.log(loading)
 
   const authValue = {
     currentUser,
