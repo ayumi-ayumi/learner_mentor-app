@@ -1,21 +1,21 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { useAuth } from "./AuthProvider";
 import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
-import { UserProfile } from "../interfaces/interfaces";
+import { UserProfile, Props } from "../interfaces/interfaces";
 
-interface Props {
-  children?: ReactNode;
-}
+// interface Props {
+//   children?: ReactNode;
+// }
 
 interface AuthDataContextType {
-  logInUser: UserProfile | null,
-  setLogInUser: React.Dispatch<React.SetStateAction<UserProfile | undefined>>,
+  logInUser: UserProfile | undefined,
+  // setLogInUser: React.Dispatch<React.SetStateAction<UserProfile | undefined>>,
   users: UserProfile[],
-  setUsers: React.Dispatch<React.SetStateAction<UserProfile[]>>
+  // setUsers: React.Dispatch<React.SetStateAction<UserProfile[]>>
 }
 
-const UsersDataContext = createContext<AuthDataContextType>();
+const UsersDataContext = createContext<AuthDataContextType>(null!);
 
 export function UsersDataProvider({ children }: Props) {
 
@@ -28,7 +28,6 @@ export function UsersDataProvider({ children }: Props) {
 
   //Obtain data from firebase
   useEffect(() => {
-    console.log(123)
     async function getUsers() {
       const q = query(collection(db, "users"));
       const querySnapshot = await getDocs(q);
@@ -41,13 +40,12 @@ export function UsersDataProvider({ children }: Props) {
       // setLogInUser(usersData.find(user => user.uid === currentUser?.uid))
     }
     getUsers();
-    
+
   }, []);
 
-    useEffect(()=>{
-      console.log(456)
-    const login: UserProfile | undefined = users.find(user=>user.uid === currentUser?.uid)
-   setLogInUser(login)
+  useEffect(() => {
+    const login: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+    setLogInUser(login)
   }, [users])
 
   const value = {
@@ -57,7 +55,6 @@ export function UsersDataProvider({ children }: Props) {
     // setUsers
   };
 
-  console.log(value)
   return (
     <UsersDataContext.Provider value={value}>{children}</UsersDataContext.Provider>
   );

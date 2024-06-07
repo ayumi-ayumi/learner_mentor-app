@@ -14,6 +14,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { UserProfile } from "../interfaces/interfaces";
+import { useUsersData } from "../context/UsersProvider"
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -33,6 +34,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfile, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
+  const {logInUser} = useUsersData();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -52,7 +54,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
           borderColor={"#1e89a1"}
           scale={1.3}
         >
-          🧑‍💻
+          {user.uid === logInUser?.uid ? "Me" : "🧑‍💻"}
         </Pin>
 
         {isOpen && (

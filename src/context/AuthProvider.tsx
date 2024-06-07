@@ -1,18 +1,20 @@
-import React, { createContext, useState, useEffect, ReactNode, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { auth } from "../firebase/BaseConfig";
 import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, } from "firebase/auth";
+import { Props } from "../interfaces/interfaces";
 
 type UserType = User | null;
 
-interface Props {
-  children?: ReactNode;
-}
+// interface Props {
+//   children?: ReactNode;
+// }
 
 interface AuthContextType {
   createUser: (email: string, password: string) => Promise<UserCredential>,
   loginUser: (email: string, password: string) => Promise<UserCredential>,
   logOut: () => Promise<void>,
-  currentUser: User | null,
+  currentUser: UserType,
+  // currentUser: User | null,
   setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>

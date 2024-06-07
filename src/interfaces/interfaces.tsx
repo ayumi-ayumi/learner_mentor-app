@@ -26,3 +26,7 @@ export interface FormInputProps {
   label: string;
   options?: {label:string, value:string}[];
 }
+
+export interface Props {
+  children?: ReactNode;
+}
