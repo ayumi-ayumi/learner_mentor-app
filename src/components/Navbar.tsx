@@ -2,15 +2,17 @@ import React from "react";
 import { Paper, Menu, MenuItem, IconButton, } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import "../styles/Navbar.scss";
+import { useUsersData } from '../context/UsersProvider'
 
 
-export default function Navbar({ logInUser }) {
+export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { currentUser, setCurrentUser, logOut } = useAuth();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
+  const { logInUser } = useUsersData();
 
   const handleSignOut = () => {
     logOut()

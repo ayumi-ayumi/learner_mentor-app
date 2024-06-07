@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useAuth, } from "../AuthProvider";
+import { useAuth, } from "../context/AuthProvider";
 
 export default function SignIn() {
   const [error, setError] = useState("");
@@ -19,11 +19,9 @@ export default function SignIn() {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-  console.log(currentUser)
-
 
   // If the user is already authenticated, redirect to the home page
-  useEffect(()=>{
+  useEffect(() => {
     if (currentUser) {
       navigate("/");
     }
@@ -31,7 +29,7 @@ export default function SignIn() {
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function handleFormSubmit (e: any) {
+  function handleFormSubmit(e: any) {
     e.preventDefault();
     setClickedButton(true);
     const email = e.target.email.value;

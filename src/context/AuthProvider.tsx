@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from "react";
-import { auth } from "./firebase/BaseConfig";
+import { auth } from "../firebase/BaseConfig";
 import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, } from "firebase/auth";
 
 type UserType = User | null;
@@ -40,6 +40,7 @@ export function AuthProvider({ children }: Props) {
   };
 
   useEffect(() => {
+    console.log(789)
     const unsubscribe = onAuthStateChanged(auth, (user) => {
 
       if (user) {

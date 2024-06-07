@@ -18,7 +18,7 @@ import {
   options_ProgrammingLanguages
 } from "../props";
 import { Place, UserProfile } from "../interfaces/interfaces";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -124,9 +124,9 @@ export default function AddProfile() {
     <>
       <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-        {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-          Your profile is save successfully.
-        </Alert>}
+          {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            Your profile is save successfully.
+          </Alert>}
           <Stack
             style={{
               display: "grid",
