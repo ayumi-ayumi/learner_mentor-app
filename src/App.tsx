@@ -10,6 +10,7 @@ import SignUp from "./Auth/SignUp";
 import RequireAuth from "./Auth/RequireAuth";
 import Layout from "./Layout";
 import { UsersDataProvider } from "./context/UsersProvider";
+import AddCafe from "./components/AddCafe";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -34,6 +35,7 @@ export default function App() {
                 }
               />
               <Route path="addprofile" element={<AddProfile />} />
+              <Route path="addcafe" element={<AddCafe />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />
           </Routes>
