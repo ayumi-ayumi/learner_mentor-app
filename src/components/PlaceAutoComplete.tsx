@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { Place } from "../interfaces/interfaces";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
+import React from "react";
 
-const inputRef = useRef<HTMLInputElement>(null);
-const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
-const [inputValue, setInputValue] = useState("");
+export function PlaceAutoComplete({setPlace }: {setPlace:React.Dispatch<React.SetStateAction<Place>>}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState("");
 
-
-const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Place autocomplete function
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log(event.target.value)
     setInputValue(event.target.value);
   };
 
@@ -50,3 +53,19 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       });
     }
   }, [inputValue]);
+
+  return (
+    <div className="input-container">
+      <label htmlFor="location">Your location?</label>
+      <input
+        type="text"
+        id="location"
+        value={inputValue}
+        onChange={(e) => handleInputChange(e)}
+        ref={inputRef}
+      />
+    </div>
+  )
+
+
+}

@@ -20,6 +20,7 @@ import {
 import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
+import { PlaceAutoComplete } from "./PlaceAutoComplete";
 
 export default function AddProfile() {
 
@@ -44,11 +45,11 @@ export default function AddProfile() {
     uid: ""
   };
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [saved, setSaved] = useState(false);
-
+  // const inputRef = useRef<HTMLInputElement>(null);
+  // const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
+  
+  const [saved, setSaved] = useState(false);
 
   const methods = useForm<UserProfile>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
@@ -56,6 +57,7 @@ export default function AddProfile() {
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
     console.log(data)
+    console.log(place)
     addDoc(collection(db, "users"), {
       ...data,
       uid: currentUser?.uid,
@@ -63,60 +65,60 @@ export default function AddProfile() {
       datetime: new Date(),
       place: place
     });
-    setInputValue("");
+    // setInputValue("");
     setSaved(true)
   };
 
   const handleReset = () => {
     methods.reset(defaultValues);
-    setInputValue("")
+    // setInputValue("")
   };
 
   // Place autocomplete function
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
+  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(event.target.value);
+  // };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPlaceChanged = (place: any) => {
-    if (place) {
-      setInputValue(place.formatted_address || place.name);
-    }
-    // Keep focus on input element
-    inputRef.current && inputRef.current.focus();
-  };
+  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const onPlaceChanged = (place: any) => {
+  //   if (place) {
+  //     setInputValue(place.formatted_address || place.name);
+  //   }
+  //   // Keep focus on input element
+  //   inputRef.current && inputRef.current.focus();
+  // };
 
-  const autocompleteInstance = useAutocomplete({
-    inputField: inputRef && inputRef.current,
-    onPlaceChanged,
-  });
+  // const autocompleteInstance = useAutocomplete({
+  //   inputField: inputRef && inputRef.current,
+  //   onPlaceChanged,
+  // });
 
-  if (autocompleteInstance) {
-    autocompleteInstance.setFields([
-      "formatted_address",
-      "geometry.location",
-    ]);
-    autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-  }
+  // if (autocompleteInstance) {
+  //   autocompleteInstance.setFields([
+  //     "formatted_address",
+  //     "geometry.location",
+  //   ]);
+  //   autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+  // }
 
-  useEffect(() => {
-    if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, geometry } = autocompleteInstance.getPlace();
-      const lat = geometry?.location
-      const lng = geometry?.location
+  // useEffect(() => {
+  //   if (autocompleteInstance?.getPlace()) {
+  //     const { formatted_address, geometry } = autocompleteInstance.getPlace();
+  //     const lat = geometry?.location
+  //     const lng = geometry?.location
 
-      setPlace((prev) => {
-        return {
-          ...prev,
-          address: formatted_address,
-          position: {
-            lat: lat?.lat(),
-            lng: lng?.lng()
-          },
-        };
-      });
-    }
-  }, [inputValue]);
+  //     setPlace((prev) => {
+  //       return {
+  //         ...prev,
+  //         address: formatted_address,
+  //         position: {
+  //           lat: lat?.lat(),
+  //           lng: lng?.lng()
+  //         },
+  //       };
+  //     });
+  //   }
+  // }, [inputValue]);
 
   return (
     <>
@@ -134,7 +136,7 @@ export default function AddProfile() {
             }}
             className="form-container"
           >
-            <div className="input-container">
+            {/* <div className="input-container">
               <label htmlFor="location">Your location?</label>
               <input
                 type="text"
@@ -143,7 +145,8 @@ export default function AddProfile() {
                 onChange={(e) => handleInputChange(e)}
                 ref={inputRef}
               />
-            </div>
+            </div> */}
+            <PlaceAutoComplete setPlace={setPlace}/>
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
