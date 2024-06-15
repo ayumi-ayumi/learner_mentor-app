@@ -16,7 +16,7 @@ import {
   options_WorkingDuration,
   options_Langugages,
   options_ProgrammingLanguages
-} from "../props";
+} from "../Props/props";
 import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
@@ -48,7 +48,7 @@ export default function AddProfile() {
   // const inputRef = useRef<HTMLInputElement>(null);
   // const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
-  
+
   const [saved, setSaved] = useState(false);
 
   const methods = useForm<UserProfile>({ defaultValues });
@@ -146,7 +146,7 @@ export default function AddProfile() {
                 ref={inputRef}
               />
             </div> */}
-            <PlaceAutoComplete setPlace={setPlace}/>
+            <PlaceAutoComplete setPlace={setPlace} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}

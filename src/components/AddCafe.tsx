@@ -16,7 +16,7 @@ import {
   options_WorkingDuration,
   options_Langugages,
   options_ProgrammingLanguages
-} from "../props";
+} from "../Props/props";
 import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
@@ -48,7 +48,7 @@ export default function AddCafe() {
   // const inputRef = useRef<HTMLInputElement>(null);
   // const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
-  
+
   const [saved, setSaved] = useState(false);
 
   const methods = useForm<UserProfile>({ defaultValues });
@@ -77,7 +77,7 @@ export default function AddCafe() {
 
   return (
     <>
-    <h1>Add Cafe</h1>
+      <h1>Add Cafe</h1>
       <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
@@ -92,17 +92,7 @@ export default function AddCafe() {
             }}
             className="form-container"
           >
-            {/* <div className="input-container">
-              <label htmlFor="location">Your location?</label>
-              <input
-                type="text"
-                id="location"
-                value={inputValue}
-                onChange={(e) => handleInputChange(e)}
-                ref={inputRef}
-              />
-            </div> */}
-            <PlaceAutoComplete setPlace={setPlace}/>
+            <PlaceAutoComplete setPlace={setPlace} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
