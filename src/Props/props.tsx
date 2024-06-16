@@ -140,3 +140,42 @@ export const options_ProgrammingLanguages = [
     value: "java",
   },
 ];
+
+export const options_cafeDetail = [
+  {
+    label: "Wifi",
+    value: "wifi",
+  },
+  {
+    label: "Power sockets",
+    value: "power sockets",
+  },
+  {
+    label: "Long stay",
+    value: "long stay",
+  },
+  {
+    label: "Work-friendly table/chair",
+    value: "work-friendly table/chair",
+  },
+  {
+    label: "Terrace",
+    value: "terrace",
+  },
+  {
+    label: "pet-friendly",
+    value: "pet-friendly",
+  },
+  {
+    label: "Quiet",
+    value: "quiet",
+  },
+  {
+    label: "Video/audio calls",
+    value: "video/audio calls",
+  },
+  {
+    label: "Bathroom",
+    value: "bathroom",
+  },
+]

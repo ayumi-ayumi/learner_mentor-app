@@ -29,21 +29,25 @@ export function PlaceAutoComplete({setPlace }: {setPlace:React.Dispatch<React.Se
 
   if (autocompleteInstance) {
     autocompleteInstance.setFields([
+      "name",
       "formatted_address",
       "geometry.location",
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
   }
 
+  // console.log(autocompleteInstance)
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { formatted_address, geometry } = autocompleteInstance.getPlace();
+      const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
+
       const lat = geometry?.location
       const lng = geometry?.location
 
       setPlace((prev) => {
         return {
           ...prev,
+          name: name,
           address: formatted_address,
           position: {
             lat: lat?.lat(),

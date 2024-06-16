@@ -13,8 +13,22 @@ export interface UserProfile {
   languages: string[],
 }
 
+export interface CafeDetail {
+  // uid: string,
+  id: number,
+  dateTime: Date,
+  place: Place,
+  // name: string,
+  // learnerORmentor: string,
+  // learningDuration: string,
+  // workingDuration: string,
+  cafe_detail: string[],
+  // languages: string[],
+}
+
 
 export interface Place {
+  name?: string,
   address: string | undefined,
   position: { lat: number | undefined, lng: number | undefined }
 }

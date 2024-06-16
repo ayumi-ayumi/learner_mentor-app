@@ -15,18 +15,19 @@ import {
   options_LearningDuration,
   options_WorkingDuration,
   options_Langugages,
-  options_ProgrammingLanguages
+  options_ProgrammingLanguages,
+  options_cafeDetail
 } from "../Props/props";
-import { Place, UserProfile } from "../interfaces/interfaces";
+import { Place, CafeDetail } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 
 export default function AddCafe() {
 
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
 
-  const defaultValues: UserProfile = {
+  const defaultValues: CafeDetail = {
     id: 0,
     dateTime: new Date(),
     place: {
@@ -36,13 +37,8 @@ export default function AddCafe() {
         lng: 0
       },
     },
-    name: "",
-    learnerORmentor: "",
-    learningDuration: "",
-    workingDuration: "",
-    programmingLanguages: [],
-    languages: [],
-    uid: ""
+    // name: "",
+    cafe_detail: [],
   };
 
   // const inputRef = useRef<HTMLInputElement>(null);
@@ -51,16 +47,16 @@ export default function AddCafe() {
 
   const [saved, setSaved] = useState(false);
 
-  const methods = useForm<UserProfile>({ defaultValues });
-  const learnerORmentor = methods.watch("learnerORmentor")
+  const methods = useForm<CafeDetail>({ defaultValues });
+  // const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
-  const onSubmit = (data: UserProfile) => {
-    console.log(data)
-    console.log(place)
-    addDoc(collection(db, "users"), {
+  const onSubmit = (data: CafeDetail) => {
+    // console.log(data)
+    // console.log(place)
+    addDoc(collection(db, "cafe"), {
       ...data,
-      uid: currentUser?.uid,
+      // uid: currentUser?.uid,
       id: nanoid(),
       datetime: new Date(),
       place: place
@@ -81,7 +77,7 @@ export default function AddCafe() {
       <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            Your profile is save successfully.
+            Added your selected cafe.
           </Alert>}
           <Stack
             style={{
@@ -93,31 +89,10 @@ export default function AddCafe() {
             className="form-container"
           >
             <PlaceAutoComplete setPlace={setPlace} />
-            <FormInputText name="name" label="Name" />
-            <FormInputRadio
-              name={"learnerORmentor"}
-              label={"I am a "}
-              options={options_learnerORmentor}
-            />
-            {learnerORmentor === "learner" && (<FormInputRadio
-              name={"learningDuration"}
-              label={"I have been learning for "}
-              options={options_LearningDuration}
-            />)}
-            {learnerORmentor === "mentor" && (<FormInputRadio
-              name={"workingDuration"}
-              label={"I have been working for "}
-              options={options_WorkingDuration}
-            />)}
             <FormInputCheckbox
-              name={"programmingLanguages"}
-              label={"I am learning "}
-              options={options_ProgrammingLanguages}
-            />
-            <FormInputDropdown
-              name="languages"
-              label="Languages"
-              options={options_Langugages}
+              name={"cafe_detail"}
+              label={"Cafe enviroment"}
+              options={options_cafeDetail}
             />
             <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Button variant="contained" type="submit">
