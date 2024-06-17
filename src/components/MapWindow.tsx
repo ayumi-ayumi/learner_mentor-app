@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
 import PlaceMarker from "./PlaceMarker";
 import { UserProfile } from "../interfaces/interfaces";
 import { useUsersData } from "../context/UsersProvider";
+import { db } from "../firebase/BaseConfig";
+import { collection, getDocs, query } from "firebase/firestore";
 
 export default function MapWindow( {filter}: {filter: string} ) {
   const { users } = useUsersData();
@@ -22,7 +24,26 @@ export default function MapWindow( {filter}: {filter: string} ) {
     });
   }
 
+
+  const [cafes, setCafes] = useState([]);
+
+  //Obtain cafes data from firebase
+  useEffect(() => {
+    async function fetCafes() {
+      const q = query(collection(db, "cafes"));
+      const querySnapshot = await getDocs(q);
+      const cafesData = querySnapshot.docs.map((doc) => ({
+        ...(doc.data()),
+      }));
+      setCafes(cafesData);
+    }
+    fetCafes();
+  }, []);
+
+
   const VisibleUsers = filterTodos(users, filter);
+  // const cafesPlace = (cafes, filter)=> {
+  //   return cafes.filter((cafe) => filter === "cafes")}
 
   return (
     <>
@@ -41,6 +62,16 @@ export default function MapWindow( {filter}: {filter: string} ) {
               setMarkerPlaceId={setMarkerPlaceId}
               key={user.id}
               user={user}
+            />
+          );
+        })}
+        {cafes.map((cafe) => {
+          return (
+            <PlaceMarker
+              isOpen={cafe.id == markerPlaceId}
+              setMarkerPlaceId={setMarkerPlaceId}
+              key={cafe.id}
+              user={cafe}
             />
           );
         })}

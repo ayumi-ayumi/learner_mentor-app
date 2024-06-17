@@ -7,7 +7,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography} from "@mui/material";
+import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -20,7 +20,7 @@ interface ExpandMoreProps extends IconButtonProps {
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other }= props;
+  const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
@@ -34,7 +34,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfile, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
-  const {logInUser} = useUsersData();
+  const { logInUser } = useUsersData();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -49,13 +49,19 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
         key={user.id}
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
-        <Pin
+        {user.uid ? <Pin
           background={user.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
           borderColor={"#1e89a1"}
           scale={1.3}
         >
           {user.uid === logInUser?.uid ? "Me" : "🧑‍💻"}
-        </Pin>
+        </Pin> : <Pin
+          background={"pink"}
+          borderColor={"#1e89a1"}
+          scale={1.3}
+        >
+          ☕
+        </Pin>}
 
         {isOpen && (
           <InfoWindow
@@ -81,7 +87,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                 //   </IconButton>
                 // }
                 title={user.name}
-                // subheader="September 14, 2016" 
+              // subheader="September 14, 2016" 
               />
               {/* <CardMedia
                 component="img"
@@ -114,13 +120,13 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                 <CardContent>
                   <Typography paragraph>I have been learning for </Typography>
                   <Typography paragraph>
-                  {user.learningDuration}
+                    {user.learningDuration}
                   </Typography>
                   <Typography paragraph>
-                  I am learning 
+                    I am learning
                   </Typography>
                   <Typography paragraph>
-                  {user.programmingLanguages}
+                    {user.programmingLanguages}
                   </Typography>
                   <Typography>
                     I speak {user.languages}

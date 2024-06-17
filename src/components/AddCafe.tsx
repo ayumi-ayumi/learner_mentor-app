@@ -54,7 +54,7 @@ export default function AddCafe() {
   const onSubmit = (data: CafeDetail) => {
     // console.log(data)
     // console.log(place)
-    addDoc(collection(db, "cafe"), {
+    addDoc(collection(db, "cafes"), {
       ...data,
       // uid: currentUser?.uid,
       id: nanoid(),
