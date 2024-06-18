@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import AddProfile from "./components/AddProfile";
+import MyProfile from "./components/MyProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AuthProvider } from "./context/AuthProvider";
 import ErrorPage from "./Error";
@@ -9,7 +10,7 @@ import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
 import RequireAuth from "./Auth/RequireAuth";
 import Layout from "./Layout";
-import { UsersDataProvider } from "./context/UsersProvider";
+import { UsersDataProvider, useUsersData } from "./context/UsersProvider";
 import AddCafe from "./components/AddCafe";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -17,6 +18,13 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   const signup = {signedUp: signedUp, setSignedUp: setSignedUp}
+  // useEffect(()=>{
+  //   console.log(logInUser)
+    
+  // })
+  // const { logInUser } = useUsersData();
+
+
 
   return (
     <AuthProvider>
@@ -34,7 +42,7 @@ export default function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="addprofile" element={<AddProfile />} />
+              <Route path="myprofile" element={<MyProfile />} />
               <Route path="addcafe" element={<AddCafe />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />
