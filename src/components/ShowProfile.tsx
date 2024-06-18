@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import "../styles/AddProfile.scss";
+import "../styles/ShowProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, } from "firebase/firestore";
 import { nanoid } from "nanoid";
@@ -21,18 +21,15 @@ import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
-import AddProfile from "./AddProfile";
-import { useUsersData } from "../context/UsersProvider";
-import ShowProfile from "./ShowProfile";
+import { useUsersData } from '../context/UsersProvider'
+import EditIcon from '@mui/icons-material/Edit';
 
-// import Button from '@mui/material/Button';
 
-export default function MyProfile() {
-
+export default function ShowProfile() {
   const { logInUser } = useUsersData();
+
+
   const { currentUser } = useAuth();
-  console.log(currentUser)
-  console.log(logInUser)
 
   const defaultValues: UserProfile = {
     id: 0,
@@ -57,7 +54,7 @@ export default function MyProfile() {
   // const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
-  const [addprofile, setAddprofile] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const methods = useForm<UserProfile>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
@@ -85,18 +82,48 @@ export default function MyProfile() {
 
   return (
     <>
-      {!logInUser ? (<><Button
-        variant="contained"
-        onClick={() => setAddprofile(true)}
-        style={{ display: addprofile ? "none" : "block" }}
-      >
-        + Add my profile
-      </Button>
+      <Container maxWidth="sm">
         <div>
-          {addprofile && <AddProfile />}
-        </div></>)
-        :
-        (<ShowProfile />)}
+          <Button onClick={() => navigate('/myprofile')} variant="contained" startIcon={<EditIcon />}>
+            Edit
+          </Button>
+        </div>
+        <Stack
+          style={{
+            display: "grid",
+            maxWidth: "500px"
+          }}
+        >
+          <div>
+            <div className="section-title">My name</div>
+            <div className="section-value">{logInUser.name}</div>
+          </div>
+          <div>
+            <div className="section-title">My place</div>
+            <div className="section-value">{logInUser.place.address}</div>
+          </div>
+          <div>
+            <div className="section-title">I am a</div>
+            <div className="section-value">{logInUser.learnerORmentor}</div>
+          </div>
+          <div>
+            <div className="section-title">I have been learning for </div>
+            <div className="section-value">{logInUser.learningDuration}</div>
+          </div>
+          <div>
+            <div className="section-title">I have been working for </div>
+            <div className="section-value">{logInUser.workingDuration}</div>
+          </div>
+          <div>
+            <div className="section-title">My skills</div>
+            <div className="section-value">{logInUser.programmingLanguages}</div>
+          </div>
+          <div>
+            <div className="section-title">Spoken langugages</div>
+            <div className="section-value">{logInUser.languages}</div>
+          </div>
+        </Stack>
+      </Container>
     </>
   );
 }

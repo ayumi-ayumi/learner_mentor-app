@@ -42,7 +42,8 @@ export default function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="myprofile" element={<MyProfile />} />
+              <Route path="myprofile" element={<AddProfile />} />
+              {/* <Route path="myprofile" element={<MyProfile />} /> */}
               <Route path="addcafe" element={<AddCafe />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />

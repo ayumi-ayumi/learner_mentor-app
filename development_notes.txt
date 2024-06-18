@@ -90,3 +90,11 @@ const [user, setUser] = useState("")
     url,
     pageId,
   };
+
+style={{ display: addprofile ? "none" : "block" }}
+
+{someCondition && (
+  <div>
+    {anotherCondition && <div></div>}
+  </div>
+)}

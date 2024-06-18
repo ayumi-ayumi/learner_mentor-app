@@ -165,7 +165,7 @@ export default function AddProfile() {
             />)}
             <FormInputCheckbox
               name={"programmingLanguages"}
-              label={"I am learning "}
+              label={"My skills"}
               options={options_ProgrammingLanguages}
             />
             <FormInputDropdown
