@@ -42,12 +42,12 @@ const todoItems = todos.map((todo) =>
 
 
   -----------
-  the data on AddProfile page will be stored on firebase.
+  the data on FormProfile page will be stored on firebase.
   the data from firebase will be shown on the main page.
 
   4. Github can be searched by the code!
 
-  5. AddProfile.jsx
+  5. FormProfile.jsx
   It cannot combine React hook form and google maps auto complete function.
   ex) X 
   <input
@@ -91,7 +91,7 @@ const [user, setUser] = useState("")
     pageId,
   };
 
-style={{ display: addprofile ? "none" : "block" }}
+style={{ display: FormProfile ? "none" : "block" }}
 
 {someCondition && (
   <div>

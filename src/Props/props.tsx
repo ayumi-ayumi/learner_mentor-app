@@ -1,3 +1,5 @@
+
+
 export const options_learnerORmentor = [
   {
     label: "Learner",
@@ -179,3 +181,22 @@ export const options_cafeDetail = [
     value: "bathroom",
   },
 ]
+
+export const defaultValues: UserProfile = {
+  id: 0,
+  dateTime: new Date(),
+  place: {
+    address: "",
+    position: {
+      lat: 0,
+      lng: 0
+    },
+  },
+  name: "",
+  learnerORmentor: "",
+  learningDuration: "",
+  workingDuration: "",
+  programmingLanguages: [],
+  languages: [],
+  uid: ""
+};

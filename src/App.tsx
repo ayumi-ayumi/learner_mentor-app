@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
-import AddProfile from "./components/AddProfile";
+import FormProfile from "./components/FormProfile";
 import MyProfile from "./components/MyProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AuthProvider } from "./context/AuthProvider";
@@ -12,15 +12,16 @@ import RequireAuth from "./Auth/RequireAuth";
 import Layout from "./Layout";
 import { UsersDataProvider, useUsersData } from "./context/UsersProvider";
 import AddCafe from "./components/AddCafe";
+import { defaultValues } from "./Props/props";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
-  const signup = {signedUp: signedUp, setSignedUp: setSignedUp}
+  const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
   // useEffect(()=>{
   //   console.log(logInUser)
-    
+
   // })
   // const { logInUser } = useUsersData();
 
@@ -31,8 +32,8 @@ export default function App() {
       <UsersDataProvider>
         <APIProvider apiKey={API_KEY} libraries={["places"]}>
           <Routes>
-            <Route path={`/signup`} element={<SignUp signupProps={signup}/>} />
-            <Route path={`/signin`} element={<SignIn signupProps={signup}/>} />
+            <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
+            <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
             <Route path="/" element={<Layout />}>
               <Route
                 index
@@ -42,7 +43,7 @@ export default function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="myprofile" element={<AddProfile />} />
+              <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} />
               {/* <Route path="myprofile" element={<MyProfile />} /> */}
               <Route path="addcafe" element={<AddCafe />} />
             </Route>

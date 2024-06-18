@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import "../styles/AddProfile.scss";
+import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, } from "firebase/firestore";
 import { nanoid } from "nanoid";
@@ -22,28 +22,28 @@ import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 
-export default function AddProfile() {
+export default function FormProfile({defaultValues}) {
 
   const { currentUser } = useAuth();
 
-  const defaultValues: UserProfile = {
-    id: 0,
-    dateTime: new Date(),
-    place: {
-      address: "",
-      position: {
-        lat: 0,
-        lng: 0
-      },
-    },
-    name: "",
-    learnerORmentor: "",
-    learningDuration: "",
-    workingDuration: "",
-    programmingLanguages: [],
-    languages: [],
-    uid: ""
-  };
+  // const defaultValues: UserProfile = {
+  //   id: 0,
+  //   dateTime: new Date(),
+  //   place: {
+  //     address: "",
+  //     position: {
+  //       lat: 0,
+  //       lng: 0
+  //     },
+  //   },
+  //   name: "",
+  //   learnerORmentor: "learner",
+  //   learningDuration: "",
+  //   workingDuration: "",
+  //   programmingLanguages: [],
+  //   languages: [],
+  //   uid: ""
+  // };
 
   // const inputRef = useRef<HTMLInputElement>(null);
   // const [inputValue, setInputValue] = useState("");

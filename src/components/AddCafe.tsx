@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import "../styles/AddProfile.scss";
+import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, } from "firebase/firestore";
 import { nanoid } from "nanoid";
