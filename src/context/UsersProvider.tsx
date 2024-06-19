@@ -12,9 +12,10 @@ interface AuthDataContextType {
 const UsersDataContext = createContext<AuthDataContextType>(null!);
 
 export function UsersDataProvider({ children }: Props) {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
   const [logInUser, setLogInUser] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   //Obtain data from firebase
   useEffect(() => {
@@ -25,19 +26,24 @@ export function UsersDataProvider({ children }: Props) {
         ...(doc.data() as UserProfile),
       }));
       setUsers(usersData);
+      setLoaded(true)
     }
     getUsers();
-  }, []);
+  }, [loading]);
+  console.log(loading)
 
   const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
   
   useEffect(() => {
     setLogInUser(currentLogInUser)
-  }, [currentLogInUser])
+    console.log(123)
+  })
+  // }, [currentLogInUser])
 
   const value = {
     logInUser,
     users,
+    loaded
   };
 
   return (

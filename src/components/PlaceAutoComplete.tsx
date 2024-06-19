@@ -3,9 +3,10 @@ import { Place } from "../interfaces/interfaces";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import React from "react";
 
-export function PlaceAutoComplete({setPlace }: {setPlace:React.Dispatch<React.SetStateAction<Place>>}) {
+export function PlaceAutoComplete({ setPlace, defaultPlace }: { setPlace:React.Dispatch<React.SetStateAction<Place>> }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(defaultPlace);
+  // const [inputValue, setInputValue] = useState("");
 
   // Place autocomplete function
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

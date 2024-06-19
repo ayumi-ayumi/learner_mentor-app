@@ -10,9 +10,9 @@ import { useUsersData } from '../context/UsersProvider'
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { logOut } = useAuth();
+  const { logOut, logInUser } = useAuth();
   const navigate = useNavigate();
-  const { logInUser } = useUsersData();
+  // const { logInUser } = useUsersData();
 
   const handleSignOut = () => {
     logOut()

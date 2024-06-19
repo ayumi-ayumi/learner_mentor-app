@@ -23,13 +23,15 @@ import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useUsersData } from '../context/UsersProvider'
 import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate, Link } from "react-router-dom";
+
 
 
 export default function ShowProfile() {
-  const { logInUser } = useUsersData();
+  // const { logInUser } = useUsersData();
 
 
-  const { currentUser } = useAuth();
+  const { currentUser, logInUser } = useAuth();
 
   const defaultValues: UserProfile = {
     id: 0,
@@ -79,12 +81,14 @@ export default function ShowProfile() {
     // setInputValue("")
   };
 
+  const navigate = useNavigate();
+
 
   return (
     <>
       <Container maxWidth="sm">
         <div>
-          <Button onClick={() => navigate('/myprofile')} variant="contained" startIcon={<EditIcon />}>
+          <Button onClick={() => navigate('/editprofile')} variant="contained" startIcon={<EditIcon />}>
             Edit
           </Button>
         </div>

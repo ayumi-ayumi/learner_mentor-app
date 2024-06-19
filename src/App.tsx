@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import FormProfile from "./components/FormProfile";
 import MyProfile from "./components/MyProfile";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import { AuthProvider } from "./context/AuthProvider";
+import { AuthProvider, useAuth } from "./context/AuthProvider";
 import ErrorPage from "./Error";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
@@ -18,39 +18,75 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
+  // const [s, setS] = useState();
   const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
-  // useEffect(()=>{
-  //   console.log(logInUser)
+  const { currentUser, loading, logInUser } = useAuth();
+  // let logInUser
 
-  // })
-  // const { logInUser } = useUsersData();
+  // if(loading) {logInUser = useUsersData();}
+  // // useEffect(()=>{
+  // //   setS(logInUser)
+
+  // // }, [])
+  // const { logInUser } = useUsersData()
+  console.log(logInUser)
 
 
 
   return (
-    <AuthProvider>
-      <UsersDataProvider>
-        <APIProvider apiKey={API_KEY} libraries={["places"]}>
-          <Routes>
-            <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
-            <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
-            <Route path="/" element={<Layout />}>
-              <Route
-                index
-                element={
-                  <RequireAuth>
-                    <Home />
-                  </RequireAuth>
-                }
-              />
-              <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} />
-              {/* <Route path="myprofile" element={<MyProfile />} /> */}
-              <Route path="addcafe" element={<AddCafe />} />
-            </Route>
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </APIProvider>
-      </UsersDataProvider>
-    </AuthProvider>
+    // <AuthProvider>
+    // <UsersDataProvider>
+    <APIProvider apiKey={API_KEY} libraries={["places"]}>
+      <Routes>
+        <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
+        <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
+          {/* <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} /> */}
+          <Route path="myprofile" element={<MyProfile />} />
+          <Route path="addprofile" element={<FormProfile defaultValues={defaultValues}/>} />
+          <Route path="editprofile" element={<FormProfile defaultValues={logInUser}/>} />
+          <Route path="addcafe" element={<AddCafe />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </APIProvider>
+    // {/* </UsersDataProvider> */}
+    // {/* </AuthProvider> */}
   );
+  // return (
+  //   <AuthProvider>
+  //     <UsersDataProvider>
+  //       <APIProvider apiKey={API_KEY} libraries={["places"]}>
+  //         <Routes>
+  //           <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
+  //           <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
+  //           <Route path="/" element={<Layout />}>
+  //             <Route
+  //               index
+  //               element={
+  //                 <RequireAuth>
+  //                   <Home />
+  //                 </RequireAuth>
+  //               }
+  //             />
+  //             {/* <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} /> */}
+  //             <Route path="myprofile" element={<MyProfile />} />
+  //             <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
+  //             {/* <Route path="editprofile" element={<FormProfile defaultValues={logInUser} />} /> */}
+  //             <Route path="addcafe" element={<AddCafe />} />
+  //           </Route>
+  //           <Route path="*" element={<ErrorPage />} />
+  //         </Routes>
+  //       </APIProvider>
+  //     </UsersDataProvider>
+  //   </AuthProvider>
+  // );
 }

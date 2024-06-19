@@ -25,12 +25,16 @@ import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import FormProfile from "./FormProfile";
 import { useUsersData } from "../context/UsersProvider";
 import ShowProfile from "./ShowProfile";
+import { useNavigate, Link } from "react-router-dom";
+
 
 // import Button from '@mui/material/Button';
 
 export default function MyProfile() {
 
-  const { logInUser } = useUsersData();
+  const { logInUser } = useAuth();
+  // console.log(useUsersData())
+
   // const { currentUser } = useAuth();
   // console.log(currentUser)
   // console.log(logInUser)
@@ -82,11 +86,30 @@ export default function MyProfile() {
   //   methods.reset(defaultValues);
   //   // setInputValue("")
   // };
+  const navigate = useNavigate();
 
 
   return (
     <>
       {
+        !logInUser
+          ?
+          (<>
+            <Button
+              variant="contained"
+              onClick={() => navigate('/addprofile')}
+              // style={{ display: addprofile ? "none" : "block" }}
+            >
+              + Add my profile
+            </Button>
+            {/* <div>
+              {addprofile && <FormProfile defaultValues={defaultValues}/>}
+            </div> */}
+          </>)
+          :
+          (<ShowProfile />)
+      }
+      {/* {
         !logInUser
           ?
           (<>
@@ -103,7 +126,7 @@ export default function MyProfile() {
           </>)
           :
           (<ShowProfile />)
-      }
+      } */}
     </>
   );
 }

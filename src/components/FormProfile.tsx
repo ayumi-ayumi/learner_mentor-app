@@ -21,10 +21,15 @@ import { Place, UserProfile } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
+import { useUsersData } from "../context/UsersProvider";
 
-export default function FormProfile({defaultValues}) {
+export default function FormProfile({ defaultValues }) {
+  // console.log(defaultValues)
+  
+  const { currentUser, loading, logInUser } = useAuth();
+  // const { logInUser } = useUsersData();
 
-  const { currentUser } = useAuth();
+  // console.log(currentUser)
 
   // const defaultValues: UserProfile = {
   //   id: 0,
@@ -122,7 +127,7 @@ export default function FormProfile({defaultValues}) {
 
   return (
     <>
-      <FormProvider {...methods}>
+     {currentUser && ( <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
             Your profile is save successfully.
@@ -146,7 +151,8 @@ export default function FormProfile({defaultValues}) {
                 ref={inputRef}
               />
             </div> */}
-            <PlaceAutoComplete setPlace={setPlace} />
+            <PlaceAutoComplete setPlace={setPlace} defaultPlace={defaultValues.place?.address}/>
+            {/* <PlaceAutoComplete setPlace={setPlace}/> */}
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
@@ -182,7 +188,7 @@ export default function FormProfile({defaultValues}) {
           </Stack>
         </Container>
 
-      </FormProvider>
+      </FormProvider>)}
 
     </>
   );
