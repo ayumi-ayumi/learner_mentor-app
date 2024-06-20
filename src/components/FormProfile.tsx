@@ -124,10 +124,11 @@ export default function FormProfile({ defaultValues }) {
   //     });
   //   }
   // }, [inputValue]);
+  console.log(logInUser)
 
   return (
     <>
-     {currentUser && ( <FormProvider {...methods}>
+     {logInUser && ( <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
             Your profile is save successfully.

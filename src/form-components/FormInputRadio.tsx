@@ -9,6 +9,9 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputProps } from "../interfaces/interfaces";
 
+import { useUsersData } from '../context/UsersProvider'
+
+
 export const FormInputRadio = ({
   name,
   label,
@@ -23,6 +26,10 @@ export const FormInputRadio = ({
   // const handleRadioChange = () => {
   //   handleChange()
   // }
+
+  // const { logInUser } = useAuth();
+  // console.log(logInUser)
+
 
   return (
     <Controller

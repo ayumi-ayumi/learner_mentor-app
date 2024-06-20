@@ -29,7 +29,6 @@ const AuthContext = createContext<AuthContextType>(null!);
 export function AuthProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [loading, setLoading] = useState<boolean>(true);
-
   const [logInUser, setLogInUser] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
@@ -48,11 +47,14 @@ export function AuthProvider({ children }: Props) {
     return signOut(auth);
   };
 
+  // Watch if an user is signed in or out
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
         setLoading(false);
+      console.log("onAuthStateChanged")
+
       } else {
         setCurrentUser(null);
       }
@@ -69,15 +71,25 @@ export function AuthProvider({ children }: Props) {
         ...(doc.data() as UserProfile),
       }));
       setUsers(usersData);
+      const currentLogInUser: UserProfile | undefined = usersData.find(user => user.uid === currentUser?.uid)
+    setLogInUser(currentLogInUser)
+
+
+      console.log("getUsers")
     }
     getUsers();
-  }, [loading]);
+  }, [currentUser]);
+  console.log(logInUser)
 
-  const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  // const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
   
-  useEffect(() => {
-    setLogInUser(currentLogInUser)
-  })
+  // useEffect(() => {
+  //   // console.log(users.length)
+  //   if(users.length){
+  //     const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  //   setLogInUser(currentLogInUser)
+  //   console.log("loginuser")}
+  // }, [users])
 
 
   const authValue = {

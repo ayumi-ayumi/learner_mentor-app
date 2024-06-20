@@ -49,7 +49,7 @@ export const FormInputDropdown = ({
                   key={option.value}
                   control={
                     <MenuItem key={option.value} value={option.value}>
-                      <Checkbox checked={value.includes(option.value)}
+                      <Checkbox checked={value?.includes(option.value)}
                         onChange={() => {
                           if (value.includes(option.value)) {
                             onChange(

@@ -20,7 +20,7 @@ export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   // const [s, setS] = useState();
   const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
-  const { currentUser, loading, logInUser } = useAuth();
+  const { currentUser, loading, logInUser, users } = useAuth();
   // let logInUser
 
   // if(loading) {logInUser = useUsersData();}
@@ -29,6 +29,9 @@ export default function App() {
 
   // // }, [])
   // const { logInUser } = useUsersData()
+  console.log(currentUser) //1
+  console.log(loading)
+  console.log(users) // 1
   console.log(logInUser)
 
 

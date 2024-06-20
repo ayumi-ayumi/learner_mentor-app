@@ -29,7 +29,7 @@ export const FormInputCheckbox= ({
 							<FormControlLabel
 								control={
 									<Checkbox
-										checked={value.includes(option.value)}
+										checked={value?.includes(option.value)}
 										onChange={() => {
 											if (value.includes(option.value)) {
 												onChange(
