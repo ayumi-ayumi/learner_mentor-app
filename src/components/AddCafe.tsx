@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
-import { collection, addDoc, } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
@@ -58,7 +58,7 @@ export default function AddCafe() {
       ...data,
       // uid: currentUser?.uid,
       id: nanoid(),
-      datetime: new Date(),
+      serverTimestamp: serverTimestamp(),
       place: place
     });
     // setInputValue("");

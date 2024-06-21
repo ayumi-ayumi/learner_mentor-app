@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
-import { collection, addDoc, } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
@@ -24,7 +24,7 @@ import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useUsersData } from "../context/UsersProvider";
 
 export default function FormProfile({ defaultValues }) {
-  // console.log(defaultValues)
+  console.log(defaultValues)
   
   const { currentUser, loading, logInUser } = useAuth();
   // const { logInUser } = useUsersData();
@@ -61,13 +61,14 @@ export default function FormProfile({ defaultValues }) {
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
-    console.log(data)
+    console.log(typeof(data.languages))
     console.log(place)
     addDoc(collection(db, "users"), {
       ...data,
       uid: currentUser?.uid,
       id: nanoid(),
-      datetime: new Date(),
+      timestamp: serverTimestamp(),
+      // datetime: new Date(),
       place: place
     });
     // setInputValue("");
@@ -78,6 +79,11 @@ export default function FormProfile({ defaultValues }) {
     methods.reset(defaultValues);
     // setInputValue("")
   };
+
+  const onUpdate = () => {
+    methods.reset(defaultValues);
+
+  }
 
   // Place autocomplete function
   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

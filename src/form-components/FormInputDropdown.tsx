@@ -39,17 +39,19 @@ export const FormInputDropdown = ({
             value={value}
             label="Languages"
             multiple
-            input={<OutlinedInput label="Tag" />}
+            input={<OutlinedInput />}
             renderValue={(selected) => selected.join(', ')}
           >
             <FormGroup>
               {options?.map((option) => (
                 <FormControlLabel
+                  // label={value}
                   label={option.label}
                   key={option.value}
                   control={
                     <MenuItem key={option.value} value={option.value}>
-                      <Checkbox checked={value?.includes(option.value)}
+                      <Checkbox
+                        checked={value?.includes(option.value)}
                         onChange={() => {
                           if (value.includes(option.value)) {
                             onChange(

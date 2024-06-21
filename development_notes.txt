@@ -98,3 +98,6 @@ style={{ display: FormProfile ? "none" : "block" }}
     {anotherCondition && <div></div>}
   </div>
 )}
+
+onSnapshot() のおかげで各コンポーネントで呼び出しても無駄なリクエストは走らないので、これだけで条件通りの実装ができてしまいました。
+Firestore の onSnapshot() は同じ Document / Collection / Query であれば、複数回リッスンしても外部リクエスト自体は1回になります。

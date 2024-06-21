@@ -32,6 +32,9 @@ export default function ShowProfile() {
 
 
   const { currentUser, logInUser } = useAuth();
+  console.log(typeof(logInUser.programmingLanguages
+
+  ))
 
   const defaultValues: UserProfile = {
     id: 0,

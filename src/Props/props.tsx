@@ -1,3 +1,4 @@
+import { serverTimestamp } from "firebase/firestore";
 import { UserProfile } from "../interfaces/interfaces";
 
 
@@ -185,7 +186,7 @@ export const options_cafeDetail = [
 
 export const defaultValues: UserProfile = {
   id: 0,
-  dateTime: new Date(),
+  timestamp: serverTimestamp(),
   place: {
     address: "",
     position: {

@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export interface UserProfile {
   uid: string,
   id: number,
-  dateTime: Date,
+  timestamp: Date,
   place: Place,
   name: string,
   learnerORmentor: string,
@@ -16,7 +16,7 @@ export interface UserProfile {
 export interface CafeDetail {
   // uid: string,
   id: number,
-  dateTime: Date,
+  serverTimestamp: Date,
   place: Place,
   // name: string,
   // learnerORmentor: string,
