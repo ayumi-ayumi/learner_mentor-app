@@ -37,7 +37,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfile, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
-  const { logInUser } = useAuth();
+  const { logInUserProfile } = useAuth();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -57,7 +57,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
           borderColor={"#1e89a1"}
           scale={1.3}
         >
-          {user.uid === logInUser?.uid ? "Me" : "🧑‍💻"}
+          {user.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
         </Pin> : <Pin
           background={"pink"}
           borderColor={"#1e89a1"}

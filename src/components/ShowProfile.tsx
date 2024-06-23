@@ -28,61 +28,58 @@ import { useNavigate, Link } from "react-router-dom";
 
 
 export default function ShowProfile() {
-  // const { logInUser } = useUsersData();
+  // const { logInUserProfile } = useUsersData();
 
 
-  const { currentUser, logInUser } = useAuth();
-  console.log(typeof(logInUser.programmingLanguages
+  const { logInUserProfile } = useAuth();
 
-  ))
+  // const defaultValues: UserProfile = {
+  //   id: 0,
+  //   timestamp: serverTimestamp(),
+  //   place: {
+  //     address: "",
+  //     position: {
+  //       lat: 0,
+  //       lng: 0
+  //     },
+  //   },
+  //   name: "",
+  //   learnerORmentor: "",
+  //   learningDuration: "",
+  //   workingDuration: "",
+  //   programmingLanguages: [],
+  //   languages: [],
+  //   uid: ""
+  // };
 
-  const defaultValues: UserProfile = {
-    id: 0,
-    dateTime: new Date(),
-    place: {
-      address: "",
-      position: {
-        lat: 0,
-        lng: 0
-      },
-    },
-    name: "",
-    learnerORmentor: "",
-    learningDuration: "",
-    workingDuration: "",
-    programmingLanguages: [],
-    languages: [],
-    uid: ""
-  };
+  // // const inputRef = useRef<HTMLInputElement>(null);
+  // // const [inputValue, setInputValue] = useState("");
+  // const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
 
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // const [inputValue, setInputValue] = useState("");
-  const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
+  // const [edit, setEdit] = useState(false);
 
-  const [edit, setEdit] = useState(false);
+  // const methods = useForm<UserProfile>({ defaultValues });
+  // const learnerORmentor = methods.watch("learnerORmentor")
 
-  const methods = useForm<UserProfile>({ defaultValues });
-  const learnerORmentor = methods.watch("learnerORmentor")
+  // // Store the user data when clicking the submit button
+  // const onSubmit = (data: UserProfile) => {
+  //   console.log(data)
+  //   console.log(place)
+  //   addDoc(collection(db, "users"), {
+  //     ...data,
+  //     uid: currentUser?.uid,
+  //     id: nanoid(),
+  //     datetime: new Date(),
+  //     place: place
+  //   });
+  //   // setInputValue("");
+  //   setSaved(true)
+  // };
 
-  // Store the user data when clicking the submit button
-  const onSubmit = (data: UserProfile) => {
-    console.log(data)
-    console.log(place)
-    addDoc(collection(db, "users"), {
-      ...data,
-      uid: currentUser?.uid,
-      id: nanoid(),
-      datetime: new Date(),
-      place: place
-    });
-    // setInputValue("");
-    setSaved(true)
-  };
-
-  const handleReset = () => {
-    methods.reset(defaultValues);
-    // setInputValue("")
-  };
+  // const handleReset = () => {
+  //   methods.reset(defaultValues);
+  //   // setInputValue("")
+  // };
 
   const navigate = useNavigate();
 
@@ -103,31 +100,31 @@ export default function ShowProfile() {
         >
           <div>
             <div className="section-title">My name</div>
-            <div className="section-value">{logInUser.name}</div>
+            <div className="section-value">{logInUserProfile.name}</div>
           </div>
           <div>
             <div className="section-title">My place</div>
-            <div className="section-value">{logInUser.place.address}</div>
+            <div className="section-value">{logInUserProfile.place.address}</div>
           </div>
           <div>
             <div className="section-title">I am a</div>
-            <div className="section-value">{logInUser.learnerORmentor}</div>
+            <div className="section-value">{logInUserProfile.learnerORmentor}</div>
           </div>
           <div>
             <div className="section-title">I have been learning for </div>
-            <div className="section-value">{logInUser.learningDuration}</div>
+            <div className="section-value">{logInUserProfile.learningDuration}</div>
           </div>
           <div>
             <div className="section-title">I have been working for </div>
-            <div className="section-value">{logInUser.workingDuration}</div>
+            <div className="section-value">{logInUserProfile.workingDuration}</div>
           </div>
           <div>
             <div className="section-title">My skills</div>
-            <div className="section-value">{logInUser.programmingLanguages}</div>
+            <div className="section-value">{logInUserProfile.programmingLanguages}</div>
           </div>
           <div>
             <div className="section-title">Spoken langugages</div>
-            <div className="section-value">{logInUser.languages}</div>
+            <div className="section-value">{logInUserProfile.languages}</div>
           </div>
         </Stack>
       </Container>

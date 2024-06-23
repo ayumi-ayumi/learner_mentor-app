@@ -20,21 +20,15 @@ export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   // const [s, setS] = useState();
   const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
-  const { currentUser, loading, logInUser, users } = useAuth();
-  // let logInUser
+  const { currentUser, loading, logInUserProfile, users } = useAuth();
+  // let logInUserProfile
 
-  // if(loading) {logInUser = useUsersData();}
+  // if(loading) {logInUserProfile = useUsersData();}
   // // useEffect(()=>{
-  // //   setS(logInUser)
+  // //   setS(logInUserProfile)
 
   // // }, [])
-  // const { logInUser } = useUsersData()
-  console.log(currentUser) //1
-  console.log(loading)
-  console.log(users) // 1
-  console.log(logInUser)
-
-
+  // const { logInUserProfile } = useUsersData()
 
   return (
     // <AuthProvider>
@@ -54,8 +48,10 @@ export default function App() {
           />
           {/* <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} /> */}
           <Route path="myprofile" element={<MyProfile />} />
-          <Route path="addprofile" element={<FormProfile defaultValues={defaultValues}/>} />
-          <Route path="editprofile" element={<FormProfile defaultValues={logInUser}/>} />
+          <Route path="addprofile" element={<FormProfile />} />
+          <Route path="editprofile" element={<FormProfile />} />
+          {/* <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
+          <Route path="editprofile" element={<FormProfile defaultValues={logInUserProfile} />} /> */}
           <Route path="addcafe" element={<AddCafe />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
@@ -83,7 +79,7 @@ export default function App() {
   //             {/* <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} /> */}
   //             <Route path="myprofile" element={<MyProfile />} />
   //             <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
-  //             {/* <Route path="editprofile" element={<FormProfile defaultValues={logInUser} />} /> */}
+  //             {/* <Route path="editprofile" element={<FormProfile defaultValues={logInUserProfile} />} /> */}
   //             <Route path="addcafe" element={<AddCafe />} />
   //           </Route>
   //           <Route path="*" element={<ErrorPage />} />

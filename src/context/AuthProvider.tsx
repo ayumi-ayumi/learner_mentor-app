@@ -6,7 +6,7 @@ import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
 import { UserProfile, Props } from "../interfaces/interfaces";
 
 // interface AuthDataContextType {
-//   logInUser: UserProfile | undefined,
+//   logInUserProfile: UserProfile | undefined,
 //   users: UserProfile[],
 // }
 
@@ -20,7 +20,7 @@ interface AuthContextType {
   setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  logInUser: UserProfile | undefined,
+  logInUserProfile: UserProfile | undefined,
   users: UserProfile[],
 }
 
@@ -29,7 +29,7 @@ const AuthContext = createContext<AuthContextType>(null!);
 export function AuthProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [loading, setLoading] = useState<boolean>(true);
-  const [logInUser, setLogInUser] = useState<UserProfile>();
+  const [logInUserProfile, setLogInUserProfile] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
 
   const createUser = (email: string, password: string) => {
@@ -53,7 +53,6 @@ export function AuthProvider({ children }: Props) {
       if (user) {
         setCurrentUser(user);
         setLoading(false);
-      console.log("onAuthStateChanged")
 
       } else {
         setCurrentUser(null);
@@ -72,39 +71,38 @@ export function AuthProvider({ children }: Props) {
   //     }));
   //     setUsers(usersData);
   //     const currentLogInUser: UserProfile | undefined = usersData.find(user => user.uid === currentUser?.uid)
-  //   setLogInUser(currentLogInUser)
+  //   setLogInUserProfile(currentLogInUser)
 
 
-  //     console.log("getUsers")
   //   }
   //   getUsers();
   // }, [currentUser]);
-  // console.log(logInUser)
 
+  const dataCollectionRef = collection(db, 'users')
   useEffect(() => {
     // Create a function to handle updates and unsubscribe from the listener when the component unmounts
-    const dataCollectionRef = collection(db, 'users')
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
       // Process the data from the Firestore snapshot
       const newData: UserProfile[] = snapshot.docs.map((doc) => doc.data() as UserProfile);
       // Update the component state with the new data
       setUsers(newData);
+
+
       // setUsers((prevData) => [...prevData, ...newData]);
     });
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []); // The empty dependency array ensures the effect runs only once
-  console.log(users)
-
+  // const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  // setLogInUserProfile(currentLogInUser)
+  
   // const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
   
-  // useEffect(() => {
-  //   // console.log(users.length)
-  //   if(users.length){
-  //     const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
-  //   setLogInUser(currentLogInUser)
-  //   console.log("loginuser")}
-  // }, [users])
+  useEffect(() => {
+    const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+    setLogInUserProfile(currentLogInUser)
+  }, [users])
+  // console.log(logInUserProfile)
 
 
   const authValue = {
@@ -115,7 +113,7 @@ export function AuthProvider({ children }: Props) {
     createUser,
     loginUser,
     logOut,
-    logInUser,
+    logInUserProfile,
     users,
   };
 

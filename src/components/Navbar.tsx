@@ -10,9 +10,9 @@ import { useUsersData } from '../context/UsersProvider'
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { logOut, logInUser } = useAuth();
+  const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
-  // const { logInUser } = useUsersData();
+  // const { logInUserProfile } = useUsersData();
 
   const handleSignOut = () => {
     logOut()
@@ -43,7 +43,7 @@ export default function Navbar() {
         }}
       >
         <Link className="site-logo" to="/">Learner or Mentor</Link>
-        {logInUser && <div>Hello {logInUser?.name}</div>}
+        {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
           <IconButton
             id="basic-button"

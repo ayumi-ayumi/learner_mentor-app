@@ -27,29 +27,29 @@ export const FormInputRadio = ({
   //   handleChange()
   // }
 
-  // const { logInUser } = useAuth();
-  // console.log(logInUser)
+  // const { logInUserProfile } = useAuth();
+  // console.log(logInUserProfile)
 
 
   return (
     <Controller
-			control={control}
-			name={name}
-			render={({ field, fieldState: { error } }) => (
-				<FormControl {...field} error={!!error}>
-					<FormLabel>{label}</FormLabel>
-					<RadioGroup>
-						{options?.map((option) => (
-							<FormControlLabel
-								value={option.value}
-								control={<Radio checked={field.value === option.value}/>}
-								label={option.label}
-								key={option.value}
-							/>
-						))}
-					</RadioGroup>
-				</FormControl>
-			)}
-		></Controller>
+      control={control}
+      name={name}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl {...field} error={!!error}>
+          <FormLabel>{label}</FormLabel>
+          <RadioGroup>
+            {options?.map((option) => (
+              <FormControlLabel
+                value={option.value}
+                control={<Radio checked={field.value === option.value} />}
+                label={option.label}
+                key={option.value}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      )}
+    ></Controller>
   );
 };

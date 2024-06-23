@@ -32,12 +32,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function MyProfile() {
 
-  const { logInUser } = useAuth();
+  const { logInUserProfile } = useAuth();
   // console.log(useUsersData())
 
   // const { currentUser } = useAuth();
   // console.log(currentUser)
-  // console.log(logInUser)
+  // console.log(logInUserProfile)
 
   // const defaultValues: UserProfile = {
   //   id: 0,
@@ -92,13 +92,13 @@ export default function MyProfile() {
   return (
     <>
       {
-        !logInUser
+        !logInUserProfile
           ?
           (<>
             <Button
               variant="contained"
               onClick={() => navigate('/addprofile')}
-              // style={{ display: addprofile ? "none" : "block" }}
+            // style={{ display: addprofile ? "none" : "block" }}
             >
               + Add my profile
             </Button>
@@ -110,7 +110,7 @@ export default function MyProfile() {
           (<ShowProfile />)
       }
       {/* {
-        !logInUser
+        !logInUserProfile
           ?
           (<>
             <Button

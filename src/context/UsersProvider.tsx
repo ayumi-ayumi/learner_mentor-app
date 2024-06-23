@@ -5,7 +5,7 @@ import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
 import { UserProfile, Props } from "../interfaces/interfaces";
 
 interface AuthDataContextType {
-  logInUser: UserProfile | undefined,
+  logInUserProfile: UserProfile | undefined,
   users: UserProfile[],
 }
 
@@ -13,7 +13,7 @@ const UsersDataContext = createContext<AuthDataContextType>(null!);
 
 export function UsersDataProvider({ children }: Props) {
   const { currentUser, loading } = useAuth();
-  const [logInUser, setLogInUser] = useState<UserProfile>();
+  const [logInUserProfile, setLogInUser] = useState<UserProfile>();
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -43,18 +43,16 @@ export function UsersDataProvider({ children }: Props) {
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []); // The empty dependency array ensures the effect runs only once
-  console.log(users)
 
   const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
-  
+
   useEffect(() => {
     setLogInUser(currentLogInUser)
-    console.log(123)
   })
   // }, [currentLogInUser])
 
   const value = {
-    logInUser,
+    logInUserProfile,
     users,
     loaded
   };

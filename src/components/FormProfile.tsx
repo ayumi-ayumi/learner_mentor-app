@@ -23,32 +23,41 @@ import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useUsersData } from "../context/UsersProvider";
 
-export default function FormProfile({ defaultValues }) {
-  console.log(defaultValues)
-  
-  const { currentUser, loading, logInUser } = useAuth();
-  // const { logInUser } = useUsersData();
+export default function FormProfile() {
+  // export default function FormProfile({ defaultValues }) {
 
-  // console.log(currentUser)
+  const defaultValues: UserProfile = {
+    id: 0,
+    timestamp: new Date(),
+    place: {
+      address: "",
+      position: {
+        lat: 0,
+        lng: 0
+      },
+    },
+    name: "",
+    learnerORmentor: "",
+    learningDuration: "",
+    workingDuration: "",
+    programmingLanguages: [],
+    languages: [],
+    uid: ""
+  };
+  const [values, setValues] = useState(defaultValues)
 
-  // const defaultValues: UserProfile = {
-  //   id: 0,
-  //   dateTime: new Date(),
-  //   place: {
-  //     address: "",
-  //     position: {
-  //       lat: 0,
-  //       lng: 0
-  //     },
-  //   },
-  //   name: "",
-  //   learnerORmentor: "learner",
-  //   learningDuration: "",
-  //   workingDuration: "",
-  //   programmingLanguages: [],
-  //   languages: [],
-  //   uid: ""
-  // };
+
+  const { currentUser, loading, logInUserProfile } = useAuth();
+  console.log(logInUserProfile)
+
+  useEffect(() => {
+    setValues(logInUserProfile)
+
+  }, [logInUserProfile])
+  // const { logInUserProfile } = useUsersData();
+  console.log(values)
+
+
 
   // const inputRef = useRef<HTMLInputElement>(null);
   // const [inputValue, setInputValue] = useState("");
@@ -56,23 +65,26 @@ export default function FormProfile({ defaultValues }) {
 
   const [saved, setSaved] = useState(false);
 
-  const methods = useForm<UserProfile>({ defaultValues });
+  const methods = useForm<UserProfile>({ values });
   const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfile) => {
-    console.log(typeof(data.languages))
-    console.log(place)
-    addDoc(collection(db, "users"), {
-      ...data,
-      uid: currentUser?.uid,
-      id: nanoid(),
-      timestamp: serverTimestamp(),
-      // datetime: new Date(),
-      place: place
-    });
-    // setInputValue("");
-    setSaved(true)
+    if (logInUserProfile) {
+      console.log(123)
+    } else {
+      console.log(data)
+      addDoc(collection(db, "users"), {
+        ...data,
+        uid: currentUser?.uid,
+        id: nanoid(),
+        timestamp: serverTimestamp(),
+        // datetime: new Date(),
+        place: place
+      });
+      // setInputValue("");
+      setSaved(true)
+    }
   };
 
   const handleReset = () => {
@@ -130,11 +142,10 @@ export default function FormProfile({ defaultValues }) {
   //     });
   //   }
   // }, [inputValue]);
-  console.log(logInUser)
 
   return (
     <>
-     {logInUser && ( <FormProvider {...methods}>
+      {values && <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
             Your profile is save successfully.
@@ -149,16 +160,16 @@ export default function FormProfile({ defaultValues }) {
             className="form-container"
           >
             {/* <div className="input-container">
-              <label htmlFor="location">Your location?</label>
-              <input
-                type="text"
-                id="location"
-                value={inputValue}
-                onChange={(e) => handleInputChange(e)}
-                ref={inputRef}
-              />
-            </div> */}
-            <PlaceAutoComplete setPlace={setPlace} defaultPlace={defaultValues.place?.address}/>
+    <label htmlFor="location">Your location?</label>
+    <input
+      type="text"
+      id="location"
+      value={inputValue}
+      onChange={(e) => handleInputChange(e)}
+      ref={inputRef}
+    />
+  </div> */}
+            <PlaceAutoComplete setPlace={setPlace} defaultPlace={values?.place.address} />
             {/* <PlaceAutoComplete setPlace={setPlace}/> */}
             <FormInputText name="name" label="Name" />
             <FormInputRadio
@@ -194,8 +205,7 @@ export default function FormProfile({ defaultValues }) {
             </Stack>
           </Stack>
         </Container>
-
-      </FormProvider>)}
+      </FormProvider>}
 
     </>
   );
