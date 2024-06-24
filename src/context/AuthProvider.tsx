@@ -3,11 +3,11 @@ import { auth } from "../firebase/BaseConfig";
 import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, } from "firebase/auth";
 import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
-import { UserProfile, Props } from "../interfaces/interfaces";
+import { UserProfileType, Props } from "../interfaces/interfaces";
 
 // interface AuthDataContextType {
-//   logInUserProfile: UserProfile | undefined,
-//   users: UserProfile[],
+//   logInUserProfile: UserProfileType | undefined,
+//   users: UserProfileType[],
 // }
 
 type UserType = User | null;
@@ -20,8 +20,8 @@ interface AuthContextType {
   setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
   loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  logInUserProfile: UserProfile | undefined,
-  users: UserProfile[],
+  logInUserProfile: UserProfileType | undefined,
+  users: UserProfileType[],
 }
 
 const AuthContext = createContext<AuthContextType>(null!);
@@ -29,8 +29,8 @@ const AuthContext = createContext<AuthContextType>(null!);
 export function AuthProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [loading, setLoading] = useState<boolean>(true);
-  const [logInUserProfile, setLogInUserProfile] = useState<UserProfile>();
-  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [logInUserProfile, setLogInUserProfile] = useState<UserProfileType>();
+  const [users, setUsers] = useState<UserProfileType[]>([]);
 
   const createUser = (email: string, password: string) => {
     setLoading(true);
@@ -66,11 +66,11 @@ export function AuthProvider({ children }: Props) {
   //   async function getUsers() {
   //     const q = query(collection(db, "users"));
   //     const querySnapshot = await getDocs(q);
-  //     const usersData: UserProfile[] = querySnapshot.docs.map((doc) => ({
-  //       ...(doc.data() as UserProfile),
+  //     const usersData: UserProfileType[] = querySnapshot.docs.map((doc) => ({
+  //       ...(doc.data() as UserProfileType),
   //     }));
   //     setUsers(usersData);
-  //     const currentLogInUser: UserProfile | undefined = usersData.find(user => user.uid === currentUser?.uid)
+  //     const currentLogInUser: UserProfileType | undefined = usersData.find(user => user.uid === currentUser?.uid)
   //   setLogInUserProfile(currentLogInUser)
 
 
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: Props) {
     // Create a function to handle updates and unsubscribe from the listener when the component unmounts
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
       // Process the data from the Firestore snapshot
-      const newData: UserProfile[] = snapshot.docs.map((doc) => doc.data() as UserProfile);
+      const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
       // Update the component state with the new data
       setUsers(newData);
 
@@ -93,13 +93,13 @@ export function AuthProvider({ children }: Props) {
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []); // The empty dependency array ensures the effect runs only once
-  // const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  // const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
   // setLogInUserProfile(currentLogInUser)
-  
-  // const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
-  
+
+  // const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
+
   useEffect(() => {
-    const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+    const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
   }, [users])
   // console.log(logInUserProfile)

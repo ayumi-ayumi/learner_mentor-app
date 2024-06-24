@@ -46,12 +46,11 @@ export default function App() {
               </RequireAuth>
             }
           />
-          {/* <Route path="myprofile" element={<FormProfile defaultValues={defaultValues}/>} /> */}
           <Route path="myprofile" element={<MyProfile />} />
-          <Route path="addprofile" element={<FormProfile />} />
-          <Route path="editprofile" element={<FormProfile />} />
-          {/* <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
-          <Route path="editprofile" element={<FormProfile defaultValues={logInUserProfile} />} /> */}
+          {/* <Route path="addprofile" element={<FormProfile />} /> */}
+          {/* <Route path="editprofile" element={<FormProfile />} /> */}
+          <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
+          <Route path="editprofile" element={<FormProfile defaultValues={logInUserProfile} />} />
           <Route path="addcafe" element={<AddCafe />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />

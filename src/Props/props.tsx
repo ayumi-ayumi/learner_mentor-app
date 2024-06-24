@@ -1,5 +1,5 @@
 import { serverTimestamp } from "firebase/firestore";
-import { UserProfile } from "../interfaces/interfaces";
+import { UserProfileType } from "../interfaces/interfaces";
 
 
 export const options_learnerORmentor = [
@@ -184,7 +184,7 @@ export const options_cafeDetail = [
   },
 ]
 
-export const defaultValues: UserProfile = {
+export const defaultValues: UserProfileType = {
   id: 0,
   timestamp: serverTimestamp(),
   place: {

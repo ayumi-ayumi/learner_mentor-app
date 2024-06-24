@@ -1,9 +1,10 @@
+import { FieldValue } from "firebase/firestore";
 import { ReactNode } from "react";
 
-export interface UserProfile {
+export interface UserProfileType {
   uid: string,
   id: number,
-  timestamp: Date,
+  timestamp: FieldValue,
   place: Place,
   name: string,
   learnerORmentor: string,

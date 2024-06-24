@@ -18,7 +18,7 @@ import {
   options_ProgrammingLanguages,
   defaultValues
 } from "../Props/props";
-import { Place, UserProfile } from "../interfaces/interfaces";
+import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
@@ -39,7 +39,7 @@ export default function MyProfile() {
   // console.log(currentUser)
   // console.log(logInUserProfile)
 
-  // const defaultValues: UserProfile = {
+  // const defaultValues: UserProfileType = {
   //   id: 0,
   //   dateTime: new Date(),
   //   place: {
@@ -64,11 +64,11 @@ export default function MyProfile() {
 
   const [addprofile, setAddprofile] = useState(false);
 
-  // const methods = useForm<UserProfile>({ defaultValues });
+  // const methods = useForm<UserProfileType>({ defaultValues });
   // const learnerORmentor = methods.watch("learnerORmentor")
 
   // // Store the user data when clicking the submit button
-  // const onSubmit = (data: UserProfile) => {
+  // const onSubmit = (data: UserProfileType) => {
   //   console.log(data)
   //   console.log(place)
   //   addDoc(collection(db, "users"), {

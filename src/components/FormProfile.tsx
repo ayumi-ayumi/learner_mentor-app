@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
-import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, updateDoc, doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
@@ -17,45 +17,45 @@ import {
   options_Langugages,
   options_ProgrammingLanguages
 } from "../Props/props";
-import { Place, UserProfile } from "../interfaces/interfaces";
+import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useUsersData } from "../context/UsersProvider";
 
-export default function FormProfile() {
-  // export default function FormProfile({ defaultValues }) {
+// export default function FormProfile() {
+  export default function FormProfile({ defaultValues }) {
 
-  const defaultValues: UserProfile = {
-    id: 0,
-    timestamp: new Date(),
-    place: {
-      address: "",
-      position: {
-        lat: 0,
-        lng: 0
-      },
-    },
-    name: "",
-    learnerORmentor: "",
-    learningDuration: "",
-    workingDuration: "",
-    programmingLanguages: [],
-    languages: [],
-    uid: ""
-  };
-  const [values, setValues] = useState(defaultValues)
+  // const defaultValues: UserProfileType = {
+  //   id: 0,
+  //   timestamp: serverTimestamp(),
+  //   place: {
+  //     address: "",
+  //     position: {
+  //       lat: 0,
+  //       lng: 0
+  //     },
+  //   },
+  //   name: "",
+  //   learnerORmentor: "",
+  //   learningDuration: "",
+  //   workingDuration: "",
+  //   programmingLanguages: [],
+  //   languages: [],
+  //   uid: ""
+  // };
+
+  const [userProfile, setUserProfile] = useState<UserProfileType>(defaultValues)
 
 
   const { currentUser, loading, logInUserProfile } = useAuth();
-  console.log(logInUserProfile)
 
   useEffect(() => {
-    setValues(logInUserProfile)
-
+    if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
   // const { logInUserProfile } = useUsersData();
-  console.log(values)
+  // console.log(typeof(userProfile))
+  console.log(currentUser)
 
 
 
@@ -65,26 +65,39 @@ export default function FormProfile() {
 
   const [saved, setSaved] = useState(false);
 
-  const methods = useForm<UserProfile>({ values });
+  // const methods = useForm<UserProfileType>({ userProfile }); //Not working
+  const methods = useForm<UserProfileType>({defaultValues}); //OK
   const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
-  const onSubmit = (data: UserProfile) => {
-    if (logInUserProfile) {
-      console.log(123)
-    } else {
+  const onSubmit = (data: UserProfileType) => {
       console.log(data)
-      addDoc(collection(db, "users"), {
-        ...data,
+      const addDataRef = doc(db, 'users', currentUser.uid)
+      setDoc(addDataRef, 
+        {...data,
         uid: currentUser?.uid,
         id: nanoid(),
         timestamp: serverTimestamp(),
         // datetime: new Date(),
         place: place
-      });
+      }
+
+      )
       // setInputValue("");
       setSaved(true)
-    }
+
+
+      // console.log(data)
+      // addDoc(collection(db, "users"), {
+      //   ...data,
+      //   uid: currentUser?.uid,
+      //   id: nanoid(),
+      //   timestamp: serverTimestamp(),
+      //   // datetime: new Date(),
+      //   place: place
+      // });
+      // // setInputValue("");
+      // setSaved(true)
   };
 
   const handleReset = () => {
@@ -145,7 +158,7 @@ export default function FormProfile() {
 
   return (
     <>
-      {values && <FormProvider {...methods}>
+      <FormProvider {...methods}>
         <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
           {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
             Your profile is save successfully.
@@ -159,18 +172,7 @@ export default function FormProfile() {
             }}
             className="form-container"
           >
-            {/* <div className="input-container">
-    <label htmlFor="location">Your location?</label>
-    <input
-      type="text"
-      id="location"
-      value={inputValue}
-      onChange={(e) => handleInputChange(e)}
-      ref={inputRef}
-    />
-  </div> */}
-            <PlaceAutoComplete setPlace={setPlace} defaultPlace={values?.place.address} />
-            {/* <PlaceAutoComplete setPlace={setPlace}/> */}
+            <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}
@@ -205,7 +207,7 @@ export default function FormProfile() {
             </Stack>
           </Stack>
         </Container>
-      </FormProvider>}
+      </FormProvider>
 
     </>
   );

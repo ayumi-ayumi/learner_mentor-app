@@ -2,19 +2,19 @@ import React, { createContext, useState, useContext, useEffect, } from 'react';
 import { useAuth } from "./AuthProvider";
 import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
-import { UserProfile, Props } from "../interfaces/interfaces";
+import { UserProfileType, Props } from "../interfaces/interfaces";
 
 interface AuthDataContextType {
-  logInUserProfile: UserProfile | undefined,
-  users: UserProfile[],
+  logInUserProfile: UserProfileType | undefined,
+  users: UserProfileType[],
 }
 
 const UsersDataContext = createContext<AuthDataContextType>(null!);
 
 export function UsersDataProvider({ children }: Props) {
   const { currentUser, loading } = useAuth();
-  const [logInUserProfile, setLogInUser] = useState<UserProfile>();
-  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [logInUserProfile, setLogInUser] = useState<UserProfileType>();
+  const [users, setUsers] = useState<UserProfileType[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
 
   //Obtain data from firebase
@@ -22,8 +22,8 @@ export function UsersDataProvider({ children }: Props) {
   //   async function getUsers() {
   //     const q = query(collection(db, "users"));
   //     const querySnapshot = await getDocs(q);
-  //     const usersData: UserProfile[] = querySnapshot.docs.map((doc) => ({
-  //       ...(doc.data() as UserProfile),
+  //     const usersData: UserProfileType[] = querySnapshot.docs.map((doc) => ({
+  //       ...(doc.data() as UserProfileType),
   //     }));
   //     setUsers(usersData);
   //     setLoaded(true)
@@ -35,7 +35,7 @@ export function UsersDataProvider({ children }: Props) {
     const dataCollectionRef = collection(db, 'users')
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
       // Process the data from the Firestore snapshot
-      const newData: UserProfile[] = snapshot.docs.map((doc) => doc.data() as UserProfile);
+      const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
       // Update the component state with the new data
       setUsers(newData);
       // setUsers((prevData) => [...prevData, ...newData]);
@@ -44,7 +44,7 @@ export function UsersDataProvider({ children }: Props) {
     return () => unsubscribe();
   }, []); // The empty dependency array ensures the effect runs only once
 
-  const currentLogInUser: UserProfile | undefined = users.find(user => user.uid === currentUser?.uid)
+  const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
 
   useEffect(() => {
     setLogInUser(currentLogInUser)

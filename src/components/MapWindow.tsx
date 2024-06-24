@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
 import PlaceMarker from "./PlaceMarker";
-import { UserProfile } from "../interfaces/interfaces";
+import { UserProfileType } from "../interfaces/interfaces";
 import { useUsersData } from "../context/UsersProvider";
 import { db } from "../firebase/BaseConfig";
 import { collection, getDocs, query } from "firebase/firestore";
 import { AuthProvider, useAuth } from "../context/AuthProvider";
 
-export default function MapWindow( {filter}: {filter: string} ) {
+export default function MapWindow({ filter }: { filter: string }) {
   const { users } = useAuth();
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
   const [markerPlaceId, setMarkerPlaceId] = useState(null);
-  
-  function filterTodos(users:UserProfile[], filter: string) {
+
+  function filterTodos(users: UserProfileType[], filter: string) {
     return users.filter((user: { learnerORmentor: string; }) => {
       if (filter === "all") {
         return true;
@@ -56,7 +56,7 @@ export default function MapWindow( {filter}: {filter: string} ) {
         style={{ minWidth: 800, minHeight: "80vh" }}
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
       >
-        {VisibleUsers.map((user:UserProfile) => {
+        {VisibleUsers.map((user: UserProfileType) => {
           return (
             <PlaceMarker
               isOpen={user.id == markerPlaceId}
