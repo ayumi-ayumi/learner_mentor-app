@@ -24,7 +24,7 @@ import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useUsersData } from "../context/UsersProvider";
 
 // export default function FormProfile() {
-  export default function FormProfile({ defaultValues }) {
+  export default function FormProfile({ defaultValues }: {defaultValues: UserProfileType}) {
 
   // const defaultValues: UserProfileType = {
   //   id: 0,
@@ -46,28 +46,15 @@ import { useUsersData } from "../context/UsersProvider";
   // };
 
   const [userProfile, setUserProfile] = useState<UserProfileType>(defaultValues)
-
-
   const { currentUser, loading, logInUserProfile } = useAuth();
+  const [place, setPlace] = useState<Place>({ address: defaultValues.place.address, position:defaultValues.place.position });
+  const [saved, setSaved] = useState(false);
+  const methods = useForm<UserProfileType>({defaultValues}); //OK
+  const learnerORmentor = methods.watch("learnerORmentor")
 
   useEffect(() => {
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
-  // const { logInUserProfile } = useUsersData();
-  // console.log(typeof(userProfile))
-  console.log(currentUser)
-
-
-
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // const [inputValue, setInputValue] = useState("");
-  const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
-
-  const [saved, setSaved] = useState(false);
-
-  // const methods = useForm<UserProfileType>({ userProfile }); //Not working
-  const methods = useForm<UserProfileType>({defaultValues}); //OK
-  const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
@@ -78,16 +65,9 @@ import { useUsersData } from "../context/UsersProvider";
         uid: currentUser?.uid,
         id: nanoid(),
         timestamp: serverTimestamp(),
-        // datetime: new Date(),
         place: place
-      }
-
-      )
-      // setInputValue("");
+      })
       setSaved(true)
-
-
-      // console.log(data)
       // addDoc(collection(db, "users"), {
       //   ...data,
       //   uid: currentUser?.uid,
@@ -109,53 +89,7 @@ import { useUsersData } from "../context/UsersProvider";
     methods.reset(defaultValues);
 
   }
-
-  // Place autocomplete function
-  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue(event.target.value);
-  // };
-
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const onPlaceChanged = (place: any) => {
-  //   if (place) {
-  //     setInputValue(place.formatted_address || place.name);
-  //   }
-  //   // Keep focus on input element
-  //   inputRef.current && inputRef.current.focus();
-  // };
-
-  // const autocompleteInstance = useAutocomplete({
-  //   inputField: inputRef && inputRef.current,
-  //   onPlaceChanged,
-  // });
-
-  // if (autocompleteInstance) {
-  //   autocompleteInstance.setFields([
-  //     "formatted_address",
-  //     "geometry.location",
-  //   ]);
-  //   autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-  // }
-
-  // useEffect(() => {
-  //   if (autocompleteInstance?.getPlace()) {
-  //     const { formatted_address, geometry } = autocompleteInstance.getPlace();
-  //     const lat = geometry?.location
-  //     const lng = geometry?.location
-
-  //     setPlace((prev) => {
-  //       return {
-  //         ...prev,
-  //         address: formatted_address,
-  //         position: {
-  //           lat: lat?.lat(),
-  //           lng: lng?.lng()
-  //         },
-  //       };
-  //     });
-  //   }
-  // }, [inputValue]);
-
+console.log(place)
   return (
     <>
       <FormProvider {...methods}>

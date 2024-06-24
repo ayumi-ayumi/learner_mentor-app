@@ -7,10 +7,17 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(defaultPlace);
   // const [inputValue, setInputValue] = useState("");
+  console.log(inputValue)
+
+
+  useEffect(()=>{
+    if(inputValue) setInputValue(inputValue);
+  },[])
 
   // Place autocomplete function
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(event.target.value)
+    console.log(event.target.value)
+    
     setInputValue(event.target.value);
   };
 
