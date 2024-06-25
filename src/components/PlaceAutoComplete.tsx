@@ -3,12 +3,11 @@ import { Place } from "../interfaces/interfaces";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import React from "react";
 
-export function PlaceAutoComplete({ setPlace, defaultPlace }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: React.Dispatch<React.SetStateAction<Place | undefined>>, defaultPlace: any}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(defaultPlace);
   // const [inputValue, setInputValue] = useState("");
-  console.log(inputValue)
-
 
   useEffect(()=>{
     if(inputValue) setInputValue(inputValue);
@@ -16,8 +15,6 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }) {
 
   // Place autocomplete function
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
-    
     setInputValue(event.target.value);
   };
 
@@ -44,7 +41,6 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }) {
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
   }
 
-  // console.log(autocompleteInstance)
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
       const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
@@ -52,7 +48,7 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }) {
       const lat = geometry?.location
       const lng = geometry?.location
 
-      setPlace((prev) => {
+      setPlace((prev: Place | undefined) => {
         return {
           ...prev,
           name: name,

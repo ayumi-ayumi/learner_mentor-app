@@ -1,15 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
-import { collection, addDoc, serverTimestamp, updateDoc, doc, setDoc } from "firebase/firestore";
+import { serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import { Button, Paper, Typography, Container, Stack, Alert } from "@mui/material";
+import { Button, Container, Stack, Alert } from "@mui/material";
 import {
   options_learnerORmentor,
   options_LearningDuration,
@@ -21,10 +20,9 @@ import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
-import { useUsersData } from "../context/UsersProvider";
 
 // export default function FormProfile() {
-  export default function FormProfile({ defaultValues }: {defaultValues: UserProfileType}) {
+export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
 
   // const defaultValues: UserProfileType = {
   //   id: 0,
@@ -45,39 +43,32 @@ import { useUsersData } from "../context/UsersProvider";
   //   uid: ""
   // };
 
-  const [userProfile, setUserProfile] = useState<UserProfileType>(defaultValues)
-  const { currentUser, loading, logInUserProfile } = useAuth();
-  const [place, setPlace] = useState<Place>({ address: defaultValues.place.address, position:defaultValues.place.position });
+  const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
+  const { currentUser, logInUserProfile } = useAuth();
+  const [place, setPlace] = useState<Place | undefined>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
   const [saved, setSaved] = useState(false);
-  const methods = useForm<UserProfileType>({defaultValues}); //OK
+  const methods = useForm<UserProfileType>({ defaultValues }); //OK
   const learnerORmentor = methods.watch("learnerORmentor")
 
+  
   useEffect(() => {
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
+console.log(userProfile)
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
-      console.log(data)
-      const addDataRef = doc(db, 'users', currentUser.uid)
-      setDoc(addDataRef, 
-        {...data,
+    console.log(data)
+    const addDataRef = doc(db, 'users', currentUser.uid)
+    setDoc(addDataRef,
+      {
+        ...data,
         uid: currentUser?.uid,
         id: nanoid(),
         timestamp: serverTimestamp(),
         place: place
       })
-      setSaved(true)
-      // addDoc(collection(db, "users"), {
-      //   ...data,
-      //   uid: currentUser?.uid,
-      //   id: nanoid(),
-      //   timestamp: serverTimestamp(),
-      //   // datetime: new Date(),
-      //   place: place
-      // });
-      // // setInputValue("");
-      // setSaved(true)
+    setSaved(true)
   };
 
   const handleReset = () => {
@@ -85,11 +76,6 @@ import { useUsersData } from "../context/UsersProvider";
     // setInputValue("")
   };
 
-  const onUpdate = () => {
-    methods.reset(defaultValues);
-
-  }
-console.log(place)
   return (
     <>
       <FormProvider {...methods}>

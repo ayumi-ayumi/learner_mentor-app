@@ -2,13 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { auth } from "../firebase/BaseConfig";
 import { User, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential, } from "firebase/auth";
 import { db } from "../firebase/BaseConfig";
-import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { UserProfileType, Props } from "../interfaces/interfaces";
-
-// interface AuthDataContextType {
-//   logInUserProfile: UserProfileType | undefined,
-//   users: UserProfileType[],
-// }
 
 type UserType = User | null;
 
@@ -50,18 +45,35 @@ export function AuthProvider({ children }: Props) {
   // Watch if an user is signed in or out
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      // if (user) {
+        // setCurrentUser(user);
+        // setLoading(false);
+      // } else {
+      //   setCurrentUser(null);
+      // }
         setCurrentUser(user);
         setLoading(false);
-
-      } else {
-        setCurrentUser(null);
-      }
+      console.log(user)
     });
     return unsubscribe;
   }, []);
 
-  //Obtain data from firebase
+    //Obtain data from firebase by onSnapshot
+  const dataCollectionRef = collection(db, 'users')
+  useEffect(() => {
+    // Create a function to handle updates and unsubscribe from the listener when the component unmounts
+    const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
+      // Process the data from the Firestore snapshot
+      const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
+      
+      // Update the component state with the new data
+      setUsers(newData);
+    });
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, []); // The empty dependency array ensures the effect runs only once
+
+    //Obtain data from firebase
   // useEffect(() => {
   //   async function getUsers() {
   //     const q = query(collection(db, "users"));
@@ -78,32 +90,10 @@ export function AuthProvider({ children }: Props) {
   //   getUsers();
   // }, [currentUser]);
 
-  const dataCollectionRef = collection(db, 'users')
-  useEffect(() => {
-    // Create a function to handle updates and unsubscribe from the listener when the component unmounts
-    const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
-      // Process the data from the Firestore snapshot
-      const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
-      // Update the component state with the new data
-      setUsers(newData);
-
-
-      // setUsers((prevData) => [...prevData, ...newData]);
-    });
-    // Clean up the listener when the component unmounts
-    return () => unsubscribe();
-  }, []); // The empty dependency array ensures the effect runs only once
-  // const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
-  // setLogInUserProfile(currentLogInUser)
-
-  // const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
-
   useEffect(() => {
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
-  }, [users])
-  // console.log(logInUserProfile)
-
+  }, [loading])
 
   const authValue = {
     currentUser,
@@ -125,55 +115,3 @@ export function AuthProvider({ children }: Props) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-// const AuthContext = createContext<AuthContextType>(null!);
-
-// export function AuthProvider({ children }: Props) {
-//   const [currentUser, setCurrentUser] = useState<UserType>(null);
-//   const [loading, setLoading] = useState<boolean>(true);
-
-//   const createUser = (email: string, password: string) => {
-//     setLoading(true);
-//     return createUserWithEmailAndPassword(auth, email, password);
-//   };
-
-//   const loginUser = (email: string, password: string) => {
-//     setLoading(true);
-//     return signInWithEmailAndPassword(auth, email, password);
-//   };
-
-//   const logOut = () => {
-//     setLoading(true);
-//     return signOut(auth);
-//   };
-
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (user) => {
-
-//       if (user) {
-//         setCurrentUser(user);
-//         setLoading(false);
-//       } else {
-//         setCurrentUser(null);
-//       }
-//     });
-//     return unsubscribe;
-//   }, []);
-
-//   const authValue = {
-//     currentUser,
-//     setCurrentUser,
-//     loading,
-//     setLoading,
-//     createUser,
-//     loginUser,
-//     logOut,
-//   };
-
-//   return (
-//     <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
-//   );
-// }
-
-// export function useAuth() {
-//   return useContext(AuthContext);
-// }
