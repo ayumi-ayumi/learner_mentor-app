@@ -72,6 +72,7 @@ export function AuthProvider({ children }: Props) {
     // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []); // The empty dependency array ensures the effect runs only once
+  console.log(users)
 
     //Obtain data from firebase
   // useEffect(() => {
@@ -93,7 +94,7 @@ export function AuthProvider({ children }: Props) {
   useEffect(() => {
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
-  }, [loading])
+  }, [users])
 
   const authValue = {
     currentUser,
