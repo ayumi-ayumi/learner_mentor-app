@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Place } from "../interfaces/interfaces";
 import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: React.Dispatch<React.SetStateAction<Place | undefined>>, defaultPlace: any}) {
+export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: Dispatch<SetStateAction<Place | undefined>>, defaultPlace: any}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(defaultPlace);
   // const [inputValue, setInputValue] = useState("");

@@ -20,6 +20,7 @@ import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
+import { useNavigate } from "react-router-dom";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
@@ -49,6 +50,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues }); //OK
   const learnerORmentor = methods.watch("learnerORmentor")
+  const navigate = useNavigate();
 
   
   useEffect(() => {
@@ -69,6 +71,8 @@ console.log(userProfile)
         place: place
       })
     setSaved(true)
+    navigate("/");
+
   };
 
   const handleReset = () => {

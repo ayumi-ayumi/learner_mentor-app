@@ -14,10 +14,10 @@ export interface UserProfileType {
   languages: string[],
 }
 
-export interface CafeDetail {
+export interface CafeDetailType {
   // uid: string,
   id: number,
-  serverTimestamp: Date,
+  timestamp: FieldValue,
   place: Place,
   // name: string,
   // learnerORmentor: string,

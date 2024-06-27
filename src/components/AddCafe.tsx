@@ -1,35 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import { useAutocomplete, } from "@vis.gl/react-google-maps";
-import { FormInputText } from "../form-components/FormInputText";
-import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
-import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import { Button, Paper, Typography, Container, Stack, Alert } from "@mui/material";
-import {
-  options_learnerORmentor,
-  options_LearningDuration,
-  options_WorkingDuration,
-  options_Langugages,
-  options_ProgrammingLanguages,
-  options_cafeDetail
-} from "../Props/props";
-import { Place, CafeDetail } from "../interfaces/interfaces";
-import { useAuth } from "../context/AuthProvider";
+import { Button, Container, Stack, Alert } from "@mui/material";
+import { options_cafeDetail } from "../Props/props";
+import { Place, CafeDetailType } from "../interfaces/interfaces";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
+import { useNavigate } from "react-router-dom";
+
 
 export default function AddCafe() {
 
-  // const { currentUser } = useAuth();
-
-  const defaultValues: CafeDetail = {
+  const defaultValues: CafeDetailType = {
     id: 0,
-    dateTime: new Date(),
+    timestamp: serverTimestamp(),
     place: {
       address: "",
       position: {
@@ -37,39 +25,31 @@ export default function AddCafe() {
         lng: 0
       },
     },
-    // name: "",
     cafe_detail: [],
   };
 
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // const [inputValue, setInputValue] = useState("");
   const [place, setPlace] = useState<Place>({ address: "", position: { lat: 0, lng: 0 } });
-
   const [saved, setSaved] = useState(false);
+  const methods = useForm<CafeDetailType>({ defaultValues });
+  const navigate = useNavigate();
 
-  const methods = useForm<CafeDetail>({ defaultValues });
-  // const learnerORmentor = methods.watch("learnerORmentor")
 
   // Store the user data when clicking the submit button
-  const onSubmit = (data: CafeDetail) => {
-    // console.log(data)
-    // console.log(place)
+  const onSubmit = (data: CafeDetailType) => {
     addDoc(collection(db, "cafes"), {
       ...data,
-      // uid: currentUser?.uid,
       id: nanoid(),
-      serverTimestamp: serverTimestamp(),
+      timestamp: serverTimestamp(),
       place: place
     });
-    // setInputValue("");
     setSaved(true)
+    navigate("/");
+
   };
 
   const handleReset = () => {
     methods.reset(defaultValues);
-    // setInputValue("")
   };
-
 
   return (
     <>
@@ -88,7 +68,7 @@ export default function AddCafe() {
             }}
             className="form-container"
           >
-            <PlaceAutoComplete setPlace={setPlace} />
+            <PlaceAutoComplete setPlace={setPlace} defaultPlace={""} />
             <FormInputCheckbox
               name={"cafe_detail"}
               label={"Cafe enviroment"}
