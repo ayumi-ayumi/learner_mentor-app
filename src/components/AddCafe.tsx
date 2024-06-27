@@ -12,7 +12,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
 
-
 export default function AddCafe() {
 
   const defaultValues: CafeDetailType = {
@@ -33,7 +32,6 @@ export default function AddCafe() {
   const methods = useForm<CafeDetailType>({ defaultValues });
   const navigate = useNavigate();
 
-
   // Store the user data when clicking the submit button
   const onSubmit = (data: CafeDetailType) => {
     addDoc(collection(db, "cafes"), {
@@ -43,8 +41,7 @@ export default function AddCafe() {
       place: place
     });
     setSaved(true)
-    navigate("/");
-
+    navigate("/")
   };
 
   const handleReset = () => {
@@ -82,9 +79,7 @@ export default function AddCafe() {
             </Stack>
           </Stack>
         </Container>
-
       </FormProvider>
-
     </>
   );
 }

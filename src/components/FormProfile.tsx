@@ -25,38 +25,17 @@ import { useNavigate } from "react-router-dom";
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
 
-  // const defaultValues: UserProfileType = {
-  //   id: 0,
-  //   timestamp: serverTimestamp(),
-  //   place: {
-  //     address: "",
-  //     position: {
-  //       lat: 0,
-  //       lng: 0
-  //     },
-  //   },
-  //   name: "",
-  //   learnerORmentor: "",
-  //   learningDuration: "",
-  //   workingDuration: "",
-  //   programmingLanguages: [],
-  //   languages: [],
-  //   uid: ""
-  // };
-
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
   const { currentUser, logInUserProfile } = useAuth();
-  const [place, setPlace] = useState<Place | undefined>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
+  const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
   const [saved, setSaved] = useState(false);
-  const methods = useForm<UserProfileType>({ defaultValues }); //OK
+  const methods = useForm<UserProfileType>({ defaultValues }); 
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
-console.log(userProfile)
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
@@ -72,12 +51,10 @@ console.log(userProfile)
       })
     setSaved(true)
     navigate("/");
-
   };
 
   const handleReset = () => {
     methods.reset(defaultValues);
-    // setInputValue("")
   };
 
   return (
@@ -132,7 +109,6 @@ console.log(userProfile)
           </Stack>
         </Container>
       </FormProvider>
-
     </>
   );
 }
