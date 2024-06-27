@@ -9,27 +9,12 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputProps } from "../interfaces/interfaces";
 
-import { useUsersData } from '../context/UsersProvider'
-
-
 export const FormInputRadio = ({
   name,
   label,
   options,
 }: FormInputProps) => {
   const { control } = useFormContext();
-  // const [selectedValue, setSelectedValue] = useState();
-  // const handleChange = (event) => {
-  //   setSelectedValue(event.target.value);
-  // };
-
-  // const handleRadioChange = () => {
-  //   handleChange()
-  // }
-
-  // const { logInUserProfile } = useAuth();
-  // console.log(logInUserProfile)
-
 
   return (
     <Controller

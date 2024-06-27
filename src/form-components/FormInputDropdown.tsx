@@ -10,17 +10,6 @@ export const FormInputDropdown = ({
 }: FormInputProps) => {
   const { control } = useFormContext();
 
-  // const [languages, setLanguages] = useState([]);
-
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const handleChange = (event: { target: { value: any; }; }) => {
-  //   const { target: { value }, } = event;
-  //   setLanguages(
-  //     // On autofill we get a stringified value.
-  //     typeof value === 'string' ? value.split(',') : value,
-  //   );
-  // };
-
   return (
     <Controller
       control={control}

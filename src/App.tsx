@@ -21,8 +21,6 @@ export default function App() {
   const { logInUserProfile } = useAuth();
 
   return (
-    // <AuthProvider>
-    // <UsersDataProvider>
     <APIProvider apiKey={API_KEY} libraries={["places"]}>
       <Routes>
         <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
@@ -46,7 +44,5 @@ export default function App() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </APIProvider>
-    // {/* </UsersDataProvider> */}
-    // {/* </AuthProvider> */}
   );
 }
