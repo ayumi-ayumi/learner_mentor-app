@@ -4,21 +4,18 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import "../styles/Navbar.scss";
-import { useUsersData } from '../context/UsersProvider'
-
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
-  // const { logInUserProfile } = useUsersData();
 
   const handleSignOut = () => {
     logOut()
       .then(() => {
         console.log("User logged out successfully");
-        navigate("/signin"); // Redirect to the login page after logout
+        navigate("/signin");
       })
       .catch((error) => console.error(error));
   };

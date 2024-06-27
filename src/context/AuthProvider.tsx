@@ -45,51 +45,21 @@ export function AuthProvider({ children }: Props) {
   // Watch if an user is signed in or out
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // if (user) {
-        // setCurrentUser(user);
-        // setLoading(false);
-      // } else {
-      //   setCurrentUser(null);
-      // }
-        setCurrentUser(user);
-        setLoading(false);
-      console.log(user)
+      setCurrentUser(user);
+      setLoading(false);
     });
     return unsubscribe;
   }, []);
 
-    //Obtain data from firebase by onSnapshot
+  //Obtain data from firebase by onSnapshot
   const dataCollectionRef = collection(db, 'users')
   useEffect(() => {
-    // Create a function to handle updates and unsubscribe from the listener when the component unmounts
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
-      // Process the data from the Firestore snapshot
       const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
-      
-      // Update the component state with the new data
       setUsers(newData);
     });
-    // Clean up the listener when the component unmounts
     return () => unsubscribe();
-  }, []); // The empty dependency array ensures the effect runs only once
-  console.log(users)
-
-    //Obtain data from firebase
-  // useEffect(() => {
-  //   async function getUsers() {
-  //     const q = query(collection(db, "users"));
-  //     const querySnapshot = await getDocs(q);
-  //     const usersData: UserProfileType[] = querySnapshot.docs.map((doc) => ({
-  //       ...(doc.data() as UserProfileType),
-  //     }));
-  //     setUsers(usersData);
-  //     const currentLogInUser: UserProfileType | undefined = usersData.find(user => user.uid === currentUser?.uid)
-  //   setLogInUserProfile(currentLogInUser)
-
-
-  //   }
-  //   getUsers();
-  // }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)

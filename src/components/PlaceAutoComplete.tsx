@@ -4,10 +4,9 @@ import { useAutocomplete, } from "@vis.gl/react-google-maps";
 import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: Dispatch<SetStateAction<Place | undefined>>, defaultPlace: any}) {
+export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: Dispatch<SetStateAction<Place>>, defaultPlace: any}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(defaultPlace);
-  // const [inputValue, setInputValue] = useState("");
 
   useEffect(()=>{
     if(inputValue) setInputValue(inputValue);
@@ -44,7 +43,6 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: Dispatch
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
       const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
-
       const lat = geometry?.location
       const lng = geometry?.location
 
@@ -74,6 +72,4 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }:{setPlace: Dispatch
       />
     </div>
   )
-
-
 }

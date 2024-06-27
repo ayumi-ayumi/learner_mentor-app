@@ -11,18 +11,15 @@ import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography } fr
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
-import { useUsersData } from "../context/UsersProvider"
 import { useAuth } from "../context/AuthProvider";
-
-
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -34,7 +31,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: UserProfileType | CafeDetailType, isOpen: boolean, setMarkerPlaceId: any }) {
+export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: any, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
   const { logInUserProfile } = useAuth();
