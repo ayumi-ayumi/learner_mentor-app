@@ -22,8 +22,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: Props) {
-  const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [logInUserProfile, setLogInUserProfile] = useState<UserProfileType>();
   const [users, setUsers] = useState<UserProfileType[]>([]);
 
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: Props) {
   useEffect(() => {
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
-  }, [users])
+  }, [currentUser])
 
   const authValue = {
     currentUser,

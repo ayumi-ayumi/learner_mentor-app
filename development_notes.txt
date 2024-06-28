@@ -2,13 +2,13 @@
 ---The cause was using crypto.randomUUID for each marker. The blink is gone by using marker.id
 
 >> refer from the nanoid github
-There’s no correct way to use Nano ID for React key prop since it should be consistent among renders.
+There's no correct way to use Nano ID for React key prop since it should be consistent among renders.
 
 function Todos({todos}) {
   return (
     <ul>
       {todos.map(todo => (
-        <li key={nanoid()}> /* DON’T DO IT */
+        <li key={nanoid()}> /* DON'T DO IT */
           {todo.text}
         </li>
       ))}
