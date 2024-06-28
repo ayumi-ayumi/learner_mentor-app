@@ -8,6 +8,7 @@ import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
+import ShowAvater from './ShowAvater'
 import { Button, Container, Stack, Alert } from "@mui/material";
 import {
   options_learnerORmentor,
@@ -73,6 +74,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             }}
             className="form-container"
           >
+            <ShowAvater />
             <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio

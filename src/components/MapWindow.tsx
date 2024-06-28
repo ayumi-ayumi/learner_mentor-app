@@ -51,26 +51,26 @@ export default function MapWindow({ filter }: { filter: string }) {
         style={{ minWidth: 800, minHeight: "80vh" }}
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
       >
-        {visibleUsers.map((user) => {
-          return (
+        {visibleUsers.map((user) => (
+          // return (
             <PlaceMarker
               isOpen={user.id == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
               key={user.id}
               user={user}
             />
-          );
-        })}
-        {visibleCafes?.map((cafe) => {
-          return (
+          // );
+        ))}
+        {visibleCafes?.map((cafe) => (
+          // return (
             <PlaceMarker
               isOpen={cafe.id == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
               key={cafe.id}
               user={cafe}
             />
-          );
-        })}
+          // );
+        ))}
       </Map>
     </>
   );

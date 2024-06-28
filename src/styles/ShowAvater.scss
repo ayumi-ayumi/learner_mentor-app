@@ -1,0 +1,13 @@
+.avaterImg {
+  height: 130px;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.avater-container {
+  // height: 80px;
+  // width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}

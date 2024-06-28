@@ -17,7 +17,7 @@ import socketIO, { io } from 'socket.io-client';
 import Chathome from "./components/Chathome";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const socket = io('http://localhost:5000');
+// const socket = io('http://localhost:5000');
 // const socket = socketIO.connect('http://localhost:5173');
 // const socket = io();
 // console.log(socket)
@@ -29,15 +29,16 @@ const socket = io('http://localhost:5000');
 export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
-  const { logInUserProfile } = useAuth();
+  const { logInUserProfile, currentUser } = useAuth();
+  // console.log(currentUser, logInUserProfile)
 
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>
       <Routes>
         <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
         <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
-        <Route path='/chathome' element={<Chathome socket={socket} />} />
-        <Route path='/chat' element={<Chat socket={socket} />} />
+        {/* <Route path='/chathome' element={<Chathome socket={socket} />} />
+        <Route path='/chat' element={<Chat socket={socket} />} /> */}
         <Route path="/" element={<Layout />}>
           <Route
             index

@@ -16,7 +16,6 @@ export const FormInputCheckbox= ({
   options,
 } : FormInputProps) => {
   const { control } = useFormContext();
-
   return (
     <Controller
 			control={control}
