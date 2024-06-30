@@ -12,6 +12,7 @@ import RequireAuth from "./Auth/RequireAuth";
 import Layout from "./Layout";
 import AddCafe from "./components/AddCafe";
 import { defaultValues } from "./Props/props";
+import Chatroom from './components/ChatRoom'
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
         <Route path={`/signin`} element={<SignIn signupProps={signup} />} />
+        <Route path={`/chat`} element={<Chatroom />} />
         <Route path="/" element={<Layout />}>
           <Route
             index

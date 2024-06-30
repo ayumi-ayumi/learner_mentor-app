@@ -68,9 +68,9 @@ export function AuthProvider({ children }: Props) {
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
   }, [users])
-  console.log(logInUserProfile)
-  console.log(currentUser)
-  console.log(users)
+  // console.log(logInUserProfile)
+  // console.log(currentUser)
+  // console.log(users)
 
 
   const authValue = {

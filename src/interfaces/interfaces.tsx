@@ -12,6 +12,7 @@ export interface UserProfileType {
   workingDuration: string,
   programmingLanguages: string[],
   languages: string[],
+  avater: string
 }
 
 export interface CafeDetailType {

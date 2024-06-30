@@ -29,10 +29,12 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
   const { currentUser, logInUserProfile } = useAuth();
   const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
+  const [avater, setAvater] = useState();
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues }); 
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
+  console.log(avater)
 
   useEffect(() => {
     if (logInUserProfile) setUserProfile(logInUserProfile)
@@ -48,7 +50,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         uid: currentUser?.uid,
         id: nanoid(),
         timestamp: serverTimestamp(),
-        place: place
+        place: place,
+        avater: avater
       })
     setSaved(true)
     navigate("/");
@@ -74,7 +77,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             }}
             className="form-container"
           >
-            <ShowAvater />
+            <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
             <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio

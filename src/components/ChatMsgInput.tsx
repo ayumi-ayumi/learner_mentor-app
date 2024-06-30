@@ -9,16 +9,16 @@ import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/fires
 
 export default function ChatMsgInput({ scroll }) {
   const [message, setMessage] = useState("");
+  const { currentUser, logInUserProfile } = useAuth(); //uid
 
   function sendMessage(e) {
     e.preventDefault();
-    const { currentUser } = useAuth(); //uid
-
-    const messagesRef = doc(collection(db, "messages"));
+    console.log("submitting")
+    const messagesRef = collection(db, "messages");
     addDoc(messagesRef,{
       text: message,
-      photoURL: currentUser.avater,
-      uid: currentUser?.uid,
+      photoURL: logInUserProfile?.avater,
+      uid,
       createdAt: serverTimestamp(),
     })
     setMessage("");
@@ -42,7 +42,8 @@ export default function ChatMsgInput({ scroll }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <SendIcon style={{ color: "#7AC2FF", marginLeft: "20px" }} />
+          <button type="submit" disabled={!message}>🕊️</button>
+          <button type="submit" disabled={!message}><SendIcon style={{ color: "#7AC2FF", marginLeft: "20px" }} /></button>
         </div>
       </form>
     </div>

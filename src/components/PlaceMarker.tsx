@@ -13,6 +13,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
+import { avaterImgs } from "../Props/props";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -39,6 +40,11 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const showDescription = (src) => {
+    const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
+    return desc
+  }
 
   return (
     <>
@@ -77,8 +83,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    R
+                  <Avatar sx={{ bgcolor: red[500] }} aria-label={showDescription(user.avater)} src={user.avater}>
                   </Avatar>
                 }
                 // action={
@@ -87,6 +92,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                 //   </IconButton>
                 // }
                 title={user.name}
+                // title= {showDescription(user.avater)} 
               // subheader="September 14, 2016" 
               />
               {/* <CardMedia

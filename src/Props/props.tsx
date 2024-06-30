@@ -200,7 +200,8 @@ export const defaultValues: UserProfileType = {
   workingDuration: "",
   programmingLanguages: [],
   languages: [],
-  uid: ""
+  uid: "",
+  avater: ""
 };
 
 export const avaterImgs = [
