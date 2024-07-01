@@ -36,9 +36,10 @@ export default function ChatRoom() {
         {messages.map(({ id, uid, text, photoURL }) => (
           <div 
           key={id} 
-          className={`msg ${uid === currentUser.uid ? "sent" : "received"}`}
+          className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
           >
-            <img src={photoURL} alt={showDescription(photoURL)} />
+            <img src={photoURL}/>
+            {/* <img src={photoURL} alt={showDescription(photoURL)} /> */}
             <p>{text}</p>
           </div>
         ))}

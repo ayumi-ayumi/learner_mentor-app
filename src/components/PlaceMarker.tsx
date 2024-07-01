@@ -7,13 +7,15 @@ import {
 } from "@vis.gl/react-google-maps";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography } from "@mui/material";
+import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography, Button } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import { avaterImgs } from "../Props/props";
+import SendIcon from '@mui/icons-material/Send';
+import { useNavigate } from "react-router-dom";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -36,6 +38,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
   const { logInUserProfile } = useAuth();
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -92,7 +95,7 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                 //   </IconButton>
                 // }
                 title={user.name}
-                // title= {showDescription(user.avater)} 
+              // title= {showDescription(user.avater)} 
               // subheader="September 14, 2016" 
               />
               {/* <CardMedia
@@ -106,43 +109,47 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                   {user.learnerORmentor}
                 </Typography>
               </CardContent>
-              <CardActions disableSpacing>
-                {/* <IconButton aria-label="add to favorites">
+              <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
+              Message
+            </Button>
+
+            <CardActions disableSpacing>
+              {/* <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="share">
                   <ShareIcon />
                 </IconButton> */}
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </ExpandMore>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography paragraph>I have been learning for </Typography>
-                  <Typography paragraph>
-                    {user.learningDuration}
-                  </Typography>
-                  <Typography paragraph>
-                    I am learning
-                  </Typography>
-                  <Typography paragraph>
-                    {user.programmingLanguages}
-                  </Typography>
-                  <Typography>
-                    I speak {user.languages}
-                  </Typography>
-                </CardContent>
-              </Collapse>
-            </Card>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph>I have been learning for </Typography>
+                <Typography paragraph>
+                  {user.learningDuration}
+                </Typography>
+                <Typography paragraph>
+                  I am learning
+                </Typography>
+                <Typography paragraph>
+                  {user.programmingLanguages}
+                </Typography>
+                <Typography>
+                  I speak {user.languages}
+                </Typography>
+              </CardContent>
+            </Collapse>
+          </Card>
           </InfoWindow>
         )}
-      </AdvancedMarker>
+    </AdvancedMarker >
     </>
   );
 }

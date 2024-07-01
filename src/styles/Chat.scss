@@ -130,8 +130,14 @@
 //   display: flex;
 //   align-items: center;
 // }
-
-
+.msg {
+  display: flex;
+  padding: 20px 10px 0 20px;
+  margin: 20px;
+  border-radius: 3000px;
+  box-shadow: 0 0 10px rgb(164, 164, 164);
+  align-items: center;
+}
 .sent {
   flex-direction: row-reverse;
 }
@@ -141,6 +147,7 @@
   // background: #0b93f6;
   align-self: flex-end;
 }
+
 .received p {
   background: #e5e5ea;
   color: black;
@@ -149,7 +156,7 @@
 img {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
+  // border-radius: 50%;
   margin: 2px 5px;
   border: 2px solid black;
 }

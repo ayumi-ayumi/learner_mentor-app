@@ -18,7 +18,7 @@ export default function ChatMsgInput({ scroll }) {
     addDoc(messagesRef,{
       text: message,
       photoURL: logInUserProfile?.avater,
-      uid,
+      uid: logInUserProfile?.uid,
       createdAt: serverTimestamp(),
     })
     setMessage("");
@@ -42,7 +42,7 @@ export default function ChatMsgInput({ scroll }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button type="submit" disabled={!message}>🕊️</button>
+          {/* <button type="submit" disabled={!message}>🕊️</button> */}
           <button type="submit" disabled={!message}><SendIcon style={{ color: "#7AC2FF", marginLeft: "20px" }} /></button>
         </div>
       </form>

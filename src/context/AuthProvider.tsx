@@ -49,8 +49,11 @@ export function AuthProvider({ children }: Props) {
       setCurrentUser(user);
       setLoading(false);
     });
-    return unsubscribe;
+    // return unsubscribe;
+    return () => unsubscribe();
+
   }, []);
+  console.log(currentUser)
 
   //Obtain data from firebase by onSnapshot
   const dataCollectionRef = collection(db, 'users')
@@ -67,8 +70,8 @@ export function AuthProvider({ children }: Props) {
     console.log("userprofile")
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
-  }, [users])
-  // console.log(logInUserProfile)
+  }, [currentUser, users])
+  console.log(logInUserProfile)
   // console.log(currentUser)
   // console.log(users)
 

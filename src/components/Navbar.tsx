@@ -10,6 +10,7 @@ export default function Navbar() {
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
+  console.log(logInUserProfile)
 
   const handleSignOut = () => {
     logOut()
@@ -65,6 +66,7 @@ export default function Navbar() {
           >
             <MenuItem onClick={() => navigate('/myprofile')}>My Profile</MenuItem>
             <MenuItem onClick={() => navigate('/addcafe')}>Add Cafe</MenuItem>
+            <MenuItem onClick={() => navigate('/chat')}>Message</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </div>
