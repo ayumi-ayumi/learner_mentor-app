@@ -4,19 +4,16 @@
   border-radius: 5px;
   border: 1px solid gray;
 }
-  
+
 .avaterImg:hover {
   opacity: 0.4;
-  }
+}
+
 .avaterImg:active {
   background-color: red;
- }
-
-
+}
 
 .avater-container {
-  // height: 80px;
-  // width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-}
+}/*# sourceMappingURL=ShowAvater.css.map */
