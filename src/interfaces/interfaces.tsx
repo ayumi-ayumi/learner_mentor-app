@@ -7,6 +7,7 @@ export interface UserProfileType {
   timestamp: FieldValue,
   place: Place,
   name: string,
+  aboutme: string,
   learnerORmentor: string,
   learningDuration: string,
   workingDuration: string,

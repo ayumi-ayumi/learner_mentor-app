@@ -80,6 +80,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
             <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
+            <FormInputText name="aboutme" label="About Me" />
             <FormInputRadio
               name={"learnerORmentor"}
               label={"I am a "}
