@@ -20,6 +20,7 @@ export default function ChatMsgInput({ scroll }) {
       photoURL: logInUserProfile?.avater,
       uid: logInUserProfile?.uid,
       createdAt: serverTimestamp(),
+      created_by:logInUserProfile?.uid
     })
     setMessage("");
     scroll.current.scrollIntoView({ behavior: "smooth" });

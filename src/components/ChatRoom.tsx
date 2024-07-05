@@ -25,10 +25,11 @@ export default function ChatRoom() {
   }, []);
 
   console.log(messages)
-  const showDescription = (src) => {
-    const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
-    return desc
-  }
+
+  // const showDescription = (src) => {
+  //   const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
+  //   return desc
+  // }
 
   return (
     <div>
