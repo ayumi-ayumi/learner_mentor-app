@@ -110,7 +110,6 @@ export default function PlaceMarker({ user, isOpen, setMarkerPlaceId }: { user: 
                 </Typography>
               </CardContent>
               <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
-              Message
             </Button>
 
             <CardActions disableSpacing>

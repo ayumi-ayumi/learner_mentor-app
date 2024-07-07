@@ -89,7 +89,8 @@ export function AuthProvider({ children }: Props) {
   };
 
   return (
-    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>{!loading && children}</AuthContext.Provider>
+    // <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   );
 }
 

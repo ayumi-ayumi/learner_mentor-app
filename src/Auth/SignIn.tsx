@@ -21,6 +21,7 @@ export default function SignIn({ signupProps }: any) {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  console.log(signupProps.signedUp)
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
