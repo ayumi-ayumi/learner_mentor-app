@@ -86,7 +86,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                 avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
+                  <Avatar sx={{ width: 60, height: 60 }} aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
                   </Avatar>
                 }
                 // action={
