@@ -57,7 +57,7 @@ export default function MapWindow({ filter }: { filter: string }) {
               isOpen={user.id == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
               key={user.id}
-              user={user}
+              place_datas={user}
             />
           // );
         ))}
@@ -67,7 +67,7 @@ export default function MapWindow({ filter }: { filter: string }) {
               isOpen={cafe.id == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
               key={cafe.id}
-              user={cafe}
+              place_datas={cafe}
             />
           // );
         ))}
