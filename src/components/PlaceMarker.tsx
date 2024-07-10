@@ -84,11 +84,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
             onCloseClick={() => setMarkerPlaceId(null)}
           >
             <Card sx={{ maxWidth: 345 }}>
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ width: 60, height: 60 }} aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
-                  </Avatar>
-                }
+              {/* <CardHeader
                 // action={
                 //   <IconButton aria-label="settings">
                 //     <MoreVertIcon />
@@ -97,56 +93,59 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
                 title={place_datas.name || place_datas.place.name}
               // title= {showDescription(place_datas.avater)} 
               // subheader="September 14, 2016" 
-              />
-              {/* <CardMedia
+              > */}
+                <Avatar sx={{ width: 60, height: 60 }} aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
+                </Avatar>
+                {/* <CardHeader /> */}
+                {/* <CardMedia
                 component="img"
                 height="194"
                 image="/static/images/cards/paella.jpg"
                 alt="Paella dish"
               /> */}
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {place_datas.learnerORmentor}
-                </Typography>
-              </CardContent>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {place_datas.learnerORmentor}
+                  </Typography>
+                </CardContent>
 
-              {place_datas.uid && <>
-                <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
-                </Button>
-                <CardActions disableSpacing>
-                  {/* <IconButton aria-label="add to favorites">
+                {place_datas.uid && <>
+                  <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
+                  </Button>
+                  <CardActions disableSpacing>
+                    {/* <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="share">
                   <ShareIcon />
                 </IconButton> */}
-                  <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
-                    <Typography paragraph>I have been learning for </Typography>
-                    <Typography paragraph>
-                      {place_datas.learningDuration}
-                    </Typography>
-                    <Typography paragraph>
-                      I am learning
-                    </Typography>
-                    <Typography paragraph>
-                      {place_datas.programmingLanguages}
-                    </Typography>
-                    <Typography>
-                      I speak {place_datas.languages}
-                    </Typography>
-                  </CardContent>
-                </Collapse>
-              </>}
+                    <ExpandMore
+                      expand={expanded}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="show more"
+                    >
+                      <ExpandMoreIcon />
+                    </ExpandMore>
+                  </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      <Typography paragraph>I have been learning for </Typography>
+                      <Typography paragraph>
+                        {place_datas.learningDuration}
+                      </Typography>
+                      <Typography paragraph>
+                        I am learning
+                      </Typography>
+                      <Typography paragraph>
+                        {place_datas.programmingLanguages}
+                      </Typography>
+                      <Typography>
+                        I speak {place_datas.languages}
+                      </Typography>
+                    </CardContent>
+                  </Collapse>
+                </>}
             </Card>
           </InfoWindow>
         )}
