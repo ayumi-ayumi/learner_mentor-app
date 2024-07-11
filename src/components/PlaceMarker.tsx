@@ -75,7 +75,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
         {isOpen && (
           <InfoWindow
             anchor={marker}
-            maxWidth={400}
+            minWidth={400}
             // style={{
             //   height: 500,
             //   width: 500,
@@ -94,8 +94,9 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
               // title= {showDescription(place_datas.avater)} 
               // subheader="September 14, 2016" 
               > */}
-                <Avatar sx={{ width: 60, height: 60 }} aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
-                </Avatar>
+                {/* <Avatar  aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
+                </Avatar> */}
+                <img src={place_datas.avater} style={{height: 100, width: 100, borderRadius:50}}/>
                 {/* <CardHeader /> */}
                 {/* <CardMedia
                 component="img"
