@@ -16,6 +16,8 @@ import { useAuth } from "../context/AuthProvider";
 import { avaterImgs } from "../Props/props";
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
+import '../styles/PlaceMarker.scss'
+
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -76,77 +78,52 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
           <InfoWindow
             anchor={marker}
             minWidth={400}
-            // style={{
-            //   height: 500,
-            //   width: 500,
-            //   fontSize: 30
-            // }}
             onCloseClick={() => setMarkerPlaceId(null)}
           >
             <Card sx={{ maxWidth: 345 }}>
-              {/* <CardHeader
-                // action={
-                //   <IconButton aria-label="settings">
-                //     <MoreVertIcon />
-                //   </IconButton>
-                // }
-                title={place_datas.name || place_datas.place.name}
-              // title= {showDescription(place_datas.avater)} 
-              // subheader="September 14, 2016" 
-              > */}
-                {/* <Avatar  aria-label={showDescription(place_datas.avater)} src={place_datas.avater}>
-                </Avatar> */}
-                <img src={place_datas.avater} style={{height: 100, width: 100, borderRadius:50}}/>
-                {/* <CardHeader /> */}
-                {/* <CardMedia
-                component="img"
-                height="194"
-                image="/static/images/cards/paella.jpg"
-                alt="Paella dish"
-              /> */}
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {place_datas.learnerORmentor}
-                  </Typography>
-                </CardContent>
+              <div className="card_upper">
+                <div className="card_upper left">
+                  <img src={place_datas.avater} style={{ height: 100, width: 100, borderRadius: 50 }} aria-label={showDescription(place_datas.avater)} />
+                </div>
+                <div className="card_upper right">
+                  <div className="learnerORmentor">{place_datas.learnerORmentor}</div>
+                  <div className="name">{place_datas.name}</div>
+                </div>
+              </div>
 
-                {place_datas.uid && <>
-                  <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
-                  </Button>
-                  <CardActions disableSpacing>
-                    {/* <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton> */}
-                    <ExpandMore
-                      expand={expanded}
-                      onClick={handleExpandClick}
-                      aria-expanded={expanded}
-                      aria-label="show more"
-                    >
-                      <ExpandMoreIcon />
-                    </ExpandMore>
-                  </CardActions>
-                  <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                      <Typography paragraph>I have been learning for </Typography>
-                      <Typography paragraph>
-                        {place_datas.learningDuration}
-                      </Typography>
-                      <Typography paragraph>
-                        I am learning
-                      </Typography>
-                      <Typography paragraph>
-                        {place_datas.programmingLanguages}
-                      </Typography>
-                      <Typography>
-                        I speak {place_datas.languages}
-                      </Typography>
-                    </CardContent>
-                  </Collapse>
-                </>}
+              {place_datas.uid && <>
+                <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
+                </Button>
+
+                <CardActions disableSpacing>
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+                </CardActions>
+
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <Typography paragraph>I have been learning for </Typography>
+                    <Typography paragraph>
+                      {place_datas.learningDuration}
+                    </Typography>
+                    <Typography paragraph>
+                      I am learning
+                    </Typography>
+                    <Typography paragraph>
+                      {place_datas.programmingLanguages}
+                    </Typography>
+                    <Typography>
+                      I speak {place_datas.languages}
+                    </Typography>
+                  </CardContent>
+                </Collapse>
+              </>}
             </Card>
           </InfoWindow>
         )}

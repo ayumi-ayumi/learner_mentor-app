@@ -29,16 +29,17 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
   const { currentUser, logInUserProfile } = useAuth();
   const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
-  const [avater, setAvater] = useState();
+  const [avater, setAvater] = useState("");
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues }); 
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
-  console.log(avater)
 
   useEffect(() => {
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
+
+  // console.log(userProfile)
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
@@ -61,6 +62,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
     methods.reset(defaultValues);
   };
 
+
+
   return (
     <>
       <FormProvider {...methods}>
@@ -80,7 +83,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
             <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
-            <FormInputText name="aboutme" label="About Me" />
+            {/* <FormInputText name="aboutme" label="About Me" /> */}
             <FormInputRadio
               name={"learnerORmentor"}
               label={"I am a "}

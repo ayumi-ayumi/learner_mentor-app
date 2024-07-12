@@ -24,9 +24,9 @@ export default function SignIn({ signupProps }: any) {
   console.log(signupProps.signedUp)
 
   // If the user is already authenticated, redirect to the home page
-  useEffect(() => {
-    if (currentUser && !signupProps.signedUp) navigate("/");
-  }, [currentUser])
+  // useEffect(() => {
+  //   if (currentUser && !signupProps.signedUp) navigate("/");
+  // }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,6 +47,7 @@ export default function SignIn({ signupProps }: any) {
     e.target.reset();
   };
 
+  console.log(signupProps.signedUp)
   return (
     <>
       <Container maxWidth="sm" component="form" onSubmit={handleFormSubmit}>

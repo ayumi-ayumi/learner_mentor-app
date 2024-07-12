@@ -44,7 +44,6 @@ export function AuthProvider({ children }: Props) {
 
   // Watch if an user is signed in or out
   useEffect(() => {
-    console.log("onAuthStateChanged")
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
@@ -53,12 +52,10 @@ export function AuthProvider({ children }: Props) {
     return () => unsubscribe();
 
   }, []);
-  console.log(currentUser)
 
   //Obtain data from firebase by onSnapshot
   const dataCollectionRef = collection(db, 'users')
   useEffect(() => {
-    console.log("fetch users")
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
       const newData: UserProfileType[] = snapshot.docs.map((doc) => doc.data() as UserProfileType);
       setUsers(newData);
@@ -67,14 +64,9 @@ export function AuthProvider({ children }: Props) {
   }, []);
 
   useEffect(() => {
-    console.log("userprofile")
     const currentLogInUser: UserProfileType | undefined = users.find(user => user.uid === currentUser?.uid)
     setLogInUserProfile(currentLogInUser)
   }, [currentUser, users])
-  console.log(logInUserProfile)
-  // console.log(currentUser)
-  // console.log(users)
-
 
   const authValue = {
     currentUser,

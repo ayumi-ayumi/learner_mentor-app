@@ -13,7 +13,6 @@ export default function ChatMsgInput({ scroll }) {
 
   function sendMessage(e) {
     e.preventDefault();
-    console.log("submitting")
     const messagesRef = doc(db, 'messages', currentUser.uid)
     // const messagesRef = collection(db, "messages");
     setDoc(messagesRef,{

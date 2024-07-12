@@ -1,0 +1,22 @@
+.card_upper {
+  display: flex;
+
+  .left {
+    width: 30%;
+    background-color: red;
+  }
+
+  .right {
+    width: 70%;
+    
+
+    .learnerORmentor{
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// .card_upper_left {
+//   background-color: red;
+
+// }

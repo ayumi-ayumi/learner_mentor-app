@@ -1,0 +1,13 @@
+.card_upper {
+  display: flex;
+}
+.card_upper .left {
+  width: 30%;
+  background-color: red;
+}
+.card_upper .right {
+  width: 70%;
+}
+.card_upper .right .learnerORmentor {
+  font-size: 0.8rem;
+}/*# sourceMappingURL=PlaceMarker.css.map */

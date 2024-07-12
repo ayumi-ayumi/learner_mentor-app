@@ -20,6 +20,7 @@ export default function App() {
   const [signedUp, setSignedUp] = useState<boolean>(false);
   const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
   const { logInUserProfile, currentUser } = useAuth();
+  console.log(signedUp)
 
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>

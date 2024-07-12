@@ -24,7 +24,6 @@ export default function ChatRoom() {
     return () => unsubscribe();
   }, []);
 
-  console.log(messages)
 
   // const showDescription = (src) => {
   //   const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()

@@ -14,7 +14,6 @@ export const FormInputSlider = ({
   }, [name, setValue, sliderValue]);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue)
     setSliderValue(newValue);
   };
   return (

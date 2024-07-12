@@ -10,7 +10,6 @@ export default function Navbar() {
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
-  console.log(logInUserProfile)
 
   const handleSignOut = () => {
     logOut()

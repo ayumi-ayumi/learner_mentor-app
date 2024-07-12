@@ -8,9 +8,18 @@
 .avaterImg:hover {
   opacity: 0.4;
   }
-.avaterImg:active {
-  background-color: red;
- }
+// .avaterImg:active {
+//   background-color: red;
+//  }
+
+.selected_avatarImg {
+  height: 130px;
+  width: 100px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 3px solid black
+
+}
 
 
 
