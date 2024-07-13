@@ -1,13 +1,25 @@
 .card_upper {
   display: flex;
 }
-.card_upper .left {
-  width: 30%;
-  background-color: red;
+.card_upper .left .avatar {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
 }
 .card_upper .right {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
   width: 70%;
+  margin: 20px;
+}
+.card_upper .right > div {
+  margin: 10px;
 }
 .card_upper .right .learnerORmentor {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.card-container {
+  background-color: red;
 }/*# sourceMappingURL=PlaceMarker.css.map */

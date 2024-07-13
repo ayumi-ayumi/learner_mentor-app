@@ -77,13 +77,13 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
         {isOpen && (
           <InfoWindow
             anchor={marker}
-            minWidth={400}
+            minWidth={200}
             onCloseClick={() => setMarkerPlaceId(null)}
           >
-            <Card sx={{ maxWidth: 345 }}>
+            <Card className="card-container">
               <div className="card_upper">
                 <div className="card_upper left">
-                  <img src={place_datas.avater} style={{ height: 100, width: 100, borderRadius: 50 }} aria-label={showDescription(place_datas.avater)} />
+                  <img src={place_datas.avater} className="card_upper left avatar" aria-label={showDescription(place_datas.avater)} />
                 </div>
                 <div className="card_upper right">
                   <div className="learnerORmentor">{place_datas.learnerORmentor}</div>
