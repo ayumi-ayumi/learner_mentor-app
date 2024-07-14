@@ -7,8 +7,14 @@ import {
 } from "@vis.gl/react-google-maps";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import { CardHeader, CardContent, CardActions, Collapse, Avatar, Typography, Button } from "@mui/material";
+import { Stack, CardHeader, CardContent, CardActions, Collapse, Avatar, Typography, Button, Box } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import ChatIcon from '@mui/icons-material/Chat';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LanguageIcon from '@mui/icons-material/Language';
+import HistoryIcon from '@mui/icons-material/History';
+import CodeIcon from '@mui/icons-material/Code';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
@@ -39,6 +45,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: { place_datas: any, isOpen: boolean, setMarkerPlaceId: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
+  const [isFav, setIsFav] = useState(false);
   const { logInUserProfile } = useAuth();
   const navigate = useNavigate();
 
@@ -50,7 +57,6 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
     const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
     return desc
   }
-
   return (
     <>
       <AdvancedMarker
@@ -80,7 +86,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
             minWidth={200}
             onCloseClick={() => setMarkerPlaceId(null)}
           >
-            <Card className="card-container">
+            <Box className="card-container">
               <div className="card_upper">
                 <div className="card_upper left">
                   <img src={place_datas.avater} className="card_upper left avatar" aria-label={showDescription(place_datas.avater)} />
@@ -92,9 +98,24 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
               </div>
 
               {place_datas.uid && <>
-                <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
-                </Button>
+                {/* <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
+                </Button> */}
+                <Stack direction="row" justifyContent="center" spacing={1}>
 
+                  <IconButton aria-label="chat">
+                    <ChatIcon color="primary" />
+                  </IconButton>
+                  <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>
+                    {isFav
+                      ?
+                      <FavoriteIcon color="primary" />
+                      :
+                      <FavoriteBorderIcon color="primary" />
+                    }
+                  </IconButton>
+                </Stack>
+
+                {/* <CardActions > */}
                 <CardActions disableSpacing>
                   <ExpandMore
                     expand={expanded}
@@ -108,23 +129,26 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                   <CardContent>
-                    <Typography paragraph>I have been learning for </Typography>
-                    <Typography paragraph>
-                      {place_datas.learningDuration}
-                    </Typography>
-                    <Typography paragraph>
-                      I am learning
-                    </Typography>
-                    <Typography paragraph>
-                      {place_datas.programmingLanguages}
-                    </Typography>
-                    <Typography>
-                      I speak {place_datas.languages}
-                    </Typography>
+                    <div>
+                      <HistoryIcon />
+                      <span className="profile learningDuration" >{place_datas.learningDuration}</span>
+                    </div>
+                    <div>
+                      <CodeIcon />
+                      {place_datas.programmingLanguages.map((programmingLanguage) => (
+                        <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
+                      ))}
+                    </div>
+                    <div>
+                      <LanguageIcon />
+                      {place_datas.languages.map((language) => (
+                        <span className="profile languages" key={language}>{language}</span>
+                      ))}
+                    </div>
                   </CardContent>
                 </Collapse>
               </>}
-            </Card>
+            </Box>
           </InfoWindow>
         )}
       </AdvancedMarker >

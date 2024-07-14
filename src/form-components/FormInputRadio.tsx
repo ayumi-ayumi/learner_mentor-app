@@ -26,10 +26,10 @@ export const FormInputRadio = ({
           <RadioGroup>
             {options?.map((option) => (
               <FormControlLabel
-                value={option.value}
-                control={<Radio checked={field.value === option.value} />}
-                label={option.label}
-                key={option.value}
+                value={option}
+                control={<Radio checked={field.value === option} />}
+                label={option}
+                key={option}
               />
             ))}
           </RadioGroup>

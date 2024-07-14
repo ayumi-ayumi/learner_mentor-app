@@ -41,7 +41,7 @@ export interface Place {
 export interface FormInputProps {
   name: string;
   label: string;
-  options?: {label:string, value:string}[];
+  options?: string[];
 }
 
 export interface Props {

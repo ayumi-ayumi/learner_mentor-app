@@ -28,23 +28,23 @@ export const FormInputCheckbox= ({
 							<FormControlLabel
 								control={
 									<Checkbox
-										checked={value?.includes(option.value)}
+										checked={value?.includes(option)}
 										onChange={() => {
-											if (value.includes(option.value)) {
+											if (value.includes(option)) {
 												onChange(
 													(value as string[]).filter(
-														(item) => item !== option.value
+														(item) => item !== option
 													)
 												);
 											} else {
-												onChange([...value, option.value]);
+												onChange([...value, option]);
 											}
 										}}
-										key={option.value}
+										key={option}
 									/>
 								}
-								label={option.label}
-								key={option.value}
+								label={option}
+								key={option}
 							/>
 						))}
 					</FormGroup>

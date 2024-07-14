@@ -1,23 +1,25 @@
 .card_upper {
   display: flex;
+  align-items: center;
 }
 .card_upper .left .avatar {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
+  border: 2px solid black;
 }
 .card_upper .right {
   display: flex;
   flex-direction: column;
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 70%;
   margin: 20px;
 }
 .card_upper .right > div {
-  margin: 10px;
+  margin: 5px;
 }
 .card_upper .right .learnerORmentor {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .card-container {
