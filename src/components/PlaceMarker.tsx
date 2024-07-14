@@ -101,7 +101,6 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
                 {/* <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
                 </Button> */}
                 <Stack direction="row" justifyContent="center" spacing={1}>
-
                   <IconButton aria-label="chat">
                     <ChatIcon color="primary" />
                   </IconButton>
@@ -115,8 +114,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
                   </IconButton>
                 </Stack>
 
-                {/* <CardActions > */}
-                <CardActions disableSpacing>
+                {/* <CardActions disableSpacing>
                   <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}
@@ -125,28 +123,29 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
                   >
                     <ExpandMoreIcon />
                   </ExpandMore>
-                </CardActions>
+                </CardActions> */}
+                <hr />
 
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent>
-                    <div>
-                      <HistoryIcon />
-                      <span className="profile learningDuration" >{place_datas.learningDuration}</span>
-                    </div>
-                    <div>
-                      <CodeIcon />
-                      {place_datas.programmingLanguages.map((programmingLanguage) => (
-                        <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
-                      ))}
-                    </div>
-                    <div>
-                      <LanguageIcon />
-                      {place_datas.languages.map((language) => (
-                        <span className="profile languages" key={language}>{language}</span>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Collapse>
+                {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  <CardContent> */}
+                <Stack direction="row" alignItems="center">
+                  <HistoryIcon />
+                  <span className="profile learningDuration" >{place_datas.learningDuration}</span>
+                </Stack>
+                <Stack direction="row" alignItems="center">
+                  <CodeIcon />
+                  {place_datas.programmingLanguages.map((programmingLanguage) => (
+                    <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
+                  ))}
+                </Stack>
+                <Stack direction="row" alignItems="center">
+                  <LanguageIcon />
+                  {place_datas.languages.map((language) => (
+                    <span className="profile languages" key={language}>{language}</span>
+                  ))}
+                </Stack>
+                {/* </CardContent>
+                </Collapse> */}
               </>}
             </Box>
           </InfoWindow>
