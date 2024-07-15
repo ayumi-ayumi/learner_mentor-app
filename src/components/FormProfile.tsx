@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
@@ -22,16 +22,21 @@ import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
+
+  const [selectedPlace, setSelectedPlace] = useState();
+  // useState<google.maps.places.PlaceResult | null>(null);
 
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
   const { currentUser, logInUserProfile } = useAuth();
   const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
   const [avater, setAvater] = useState("");
   const [saved, setSaved] = useState(false);
-  const methods = useForm<UserProfileType>({ defaultValues }); 
+  const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
 
@@ -39,7 +44,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
 
-  // console.log(userProfile)
+
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
@@ -51,7 +56,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         uid: currentUser?.uid,
         id: nanoid(),
         timestamp: serverTimestamp(),
-        place: place,
+        place: selectedPlace,
+        // place: place,
         avater: avater
       })
     setSaved(true)
@@ -61,8 +67,6 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const handleReset = () => {
     methods.reset(defaultValues);
   };
-
-
 
   return (
     <>
@@ -81,7 +85,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             className="form-container"
           >
             <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
-            <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} />
+            {/* <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} /> */}
+            <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
             <FormInputText name="name" label="Name" />
             {/* <FormInputText name="aboutme" label="About Me" /> */}
             <FormInputRadio
@@ -121,3 +126,56 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
     </>
   );
 }
+
+const PlaceAutocomplete = ({ onPlaceSelect }) => {
+  const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const places = useMapsLibrary('places');
+
+  const [photos, setPhotos] = useState([])
+  useEffect(() => {
+    if (!places || !inputRef.current) return;
+
+    const options = {
+      fields: ['geometry', 'name', 'formatted_address', 'photos'],
+      componentRestrictions: { country: "de" },
+    };
+
+    setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+  }, [places]);
+
+  useEffect(() => {
+    if (!placeAutocomplete) return;
+
+    placeAutocomplete.addListener('place_changed', () => {
+      const { name, formatted_address, geometry, photos } = placeAutocomplete.getPlace();
+      const lat = geometry?.location
+      const lng = geometry?.location
+      console.log(photos[0].getUrl())
+      setPhotos(photos)
+
+      onPlaceSelect({
+        name: name,
+        address: formatted_address,
+        position: {
+          lat: lat?.lat(),
+          lng: lng?.lng()
+        },
+      });
+    });
+  }, [onPlaceSelect, placeAutocomplete]);
+
+  return (
+    <div className="autocomplete-container">
+      <input ref={inputRef} />
+      {photos && photos.map((photo) => (
+        <img key={photo.html_attributions} src={photo.getUrl()} style={{
+          display: "grid",
+          height: "80px",
+          width: "60px",
+          // margin: "10px 300px",
+        }}/>
+      ))}
+    </div>
+  );
+};

@@ -6,19 +6,6 @@ import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
 import { db } from "../firebase/BaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useAuth } from "../context/AuthProvider";
-// import { PlaceOverview } from '@googlemaps/extended-component-library/react';
-// import { PlaceOverview } from '@googlemaps/extended-component-library/place_overview.js';
-import '@googlemaps/extended-component-library/place_overview.js';
-import {
-  PlaceReviews,
-  PlaceDataProvider,
-  PlaceDirectionsButton,
-  IconButton,
-  PlaceOverview,
-  SplitLayout,
-  OverlayLayout,
-  PlacePicker
-} from '@googlemaps/extended-component-library/react';
 
 export default function MapWindow({ filter }: { filter: string }) {
   const { users } = useAuth();
@@ -56,10 +43,6 @@ export default function MapWindow({ filter }: { filter: string }) {
 
   return (
     <>
-<PlaceOverview place="ChIJN1t_tDeuEmsRUsoyG83frY4">
-</PlaceOverview>
-{/* <gmpx-place-overview place="ChIJN1t_tDeuEmsRUsoyG83frY4">
-</gmpx-place-overview> */}
       <Map
         zoom={12}
         center={center}
