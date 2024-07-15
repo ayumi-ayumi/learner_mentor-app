@@ -36,17 +36,18 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }: { setPlace: Dispat
       "name",
       "formatted_address",
       "geometry.location",
-      "photos"
+      // "photos"
     ]);
     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
   }
 
   useEffect(() => {
     if (autocompleteInstance?.getPlace()) {
-      const { name, formatted_address, geometry, photos} = autocompleteInstance.getPlace();
+      const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
+      // const { name, formatted_address, geometry, photos} = autocompleteInstance.getPlace();
       const lat = geometry?.location
       const lng = geometry?.location
-      console.log(photos)
+      // console.log(photos)
 
       setPlace((prev: Place | undefined) => {
         return {
@@ -57,7 +58,7 @@ export function PlaceAutoComplete({ setPlace, defaultPlace }: { setPlace: Dispat
             lat: lat?.lat(),
             lng: lng?.lng()
           },
-          photos: photos,
+          // photos: photos,
         };
       });
     }

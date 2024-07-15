@@ -66,19 +66,24 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
         key={place_datas.id}
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
-        {place_datas.uid ? <Pin
-          background={place_datas.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
-          borderColor={"#1e89a1"}
-          scale={1.3}
-        >
-          {place_datas.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
-        </Pin> : <Pin
-          background={"pink"}
-          borderColor={"#1e89a1"}
-          scale={1.3}
-        >
-          ☕
-        </Pin>}
+        {place_datas.uid
+          ?
+          <Pin
+            background={place_datas.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
+            borderColor={"#1e89a1"}
+            scale={1.3}
+          >
+            {place_datas.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
+          </Pin>
+          :
+          <Pin
+            background={"pink"}
+            borderColor={"#1e89a1"}
+            scale={1.3}
+          >
+            ☕
+          </Pin>
+        }
 
         {isOpen && (
           <InfoWindow
@@ -97,56 +102,37 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
                 </div>
               </div>
 
-              {place_datas.uid && <>
-                {/* <Button variant="contained" endIcon={<SendIcon />} onClick={() => navigate('/chat')}>
-                </Button> */}
-                <Stack direction="row" justifyContent="center" spacing={1}>
-                  <IconButton aria-label="chat">
-                    <ChatIcon color="primary" />
-                  </IconButton>
-                  <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>
-                    {isFav
-                      ?
-                      <FavoriteIcon color="primary" />
-                      :
-                      <FavoriteBorderIcon color="primary" />
-                    }
-                  </IconButton>
-                </Stack>
+              <Stack direction="row" justifyContent="center" spacing={1}>
+                <IconButton aria-label="chat" onClick={() => navigate('/chat')}>
+                  <ChatIcon color="primary" />
+                </IconButton>
+                <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>
+                  {isFav
+                    ?
+                    <FavoriteIcon color="primary" />
+                    :
+                    <FavoriteBorderIcon color="primary" />
+                  }
+                </IconButton>
+              </Stack>
+              <hr />
 
-                {/* <CardActions disableSpacing>
-                  <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </CardActions> */}
-                <hr />
-
-                {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  <CardContent> */}
-                <Stack direction="row" alignItems="center">
-                  <HistoryIcon />
-                  <span className="profile learningDuration" >{place_datas.learningDuration}</span>
-                </Stack>
-                <Stack direction="row" alignItems="center">
-                  <CodeIcon />
-                  {place_datas.programmingLanguages.map((programmingLanguage) => (
-                    <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
-                  ))}
-                </Stack>
-                <Stack direction="row" alignItems="center">
-                  <LanguageIcon />
-                  {place_datas.languages.map((language) => (
-                    <span className="profile languages" key={language}>{language}</span>
-                  ))}
-                </Stack>
-                {/* </CardContent>
-                </Collapse> */}
-              </>}
+              <Stack direction="row" alignItems="center">
+                <HistoryIcon />
+                <span className="profile learningDuration" >{place_datas.learningDuration}</span>
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <CodeIcon />
+                {place_datas.programmingLanguages.map((programmingLanguage) => (
+                  <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
+                ))}
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <LanguageIcon />
+                {place_datas.languages.map((language) => (
+                  <span className="profile languages" key={language}>{language}</span>
+                ))}
+              </Stack>
             </Box>
           </InfoWindow>
         )}
