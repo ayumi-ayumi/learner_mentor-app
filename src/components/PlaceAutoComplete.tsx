@@ -1,79 +1,147 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Place } from "../interfaces/interfaces";
-import { useAutocomplete, } from "@vis.gl/react-google-maps";
+import { useAutocomplete, useMapsLibrary, } from "@vis.gl/react-google-maps";
 import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function PlaceAutoComplete({ setPlace, defaultPlace }: { setPlace: Dispatch<SetStateAction<Place>>, defaultPlace: any }) {
-  const inputRef = useRef<HTMLInputElement>(null);
+// export function PlaceAutoComplete({ setPlace, defaultPlace }: { setPlace: Dispatch<SetStateAction<Place>>, defaultPlace: any }) {
+//   const inputRef = useRef<HTMLInputElement>(null);
+//   const [inputValue, setInputValue] = useState(defaultPlace);
+
+//   useEffect(() => {
+//     if (inputValue) setInputValue(inputValue);
+//   }, [])
+
+//   // Place autocomplete function
+//   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     setInputValue(event.target.value);
+//   };
+
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   const onPlaceChanged = (place: any) => {
+//     if (place) {
+//       setInputValue(place.formatted_address || place.name);
+//     }
+//     // Keep focus on input element
+//     inputRef.current && inputRef.current.focus();
+//   };
+
+//   const autocompleteInstance = useAutocomplete({
+//     inputField: inputRef && inputRef.current,
+//     onPlaceChanged,
+//   });
+
+//   if (autocompleteInstance) {
+//     autocompleteInstance.setFields([
+//       "name",
+//       "formatted_address",
+//       "geometry.location",
+//       // "photos"
+//     ]);
+//     autocompleteInstance.setComponentRestrictions({ country: ["de"] });
+//   }
+
+//   useEffect(() => {
+//     if (autocompleteInstance?.getPlace()) {
+//       const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
+//       // const { name, formatted_address, geometry, photos} = autocompleteInstance.getPlace();
+//       const lat = geometry?.location
+//       const lng = geometry?.location
+//       // console.log(photos)
+
+//       setPlace((prev: Place | undefined) => {
+//         return {
+//           ...prev,
+//           name: name,
+//           address: formatted_address,
+//           position: {
+//             lat: lat?.lat(),
+//             lng: lng?.lng()
+//           },
+//           // photos: photos,
+//         };
+//       });
+//     }
+//   }, [inputValue]);
+
+//   return (
+//     <div className="input-container">
+//       <label htmlFor="location">Your location?</label>
+//       <input
+//         type="text"
+//         id="location"
+//         value={inputValue}
+//         onChange={(e) => handleInputChange(e)}
+//         ref={inputRef}
+//       />
+//     </div>
+//   )
+// }
+
+export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
+  const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [inputValue, setInputValue] = useState(defaultPlace);
 
-  useEffect(() => {
-    if (inputValue) setInputValue(inputValue);
-  }, [])
+  const inputRef = useRef<HTMLInputElement>(null);
+  const places = useMapsLibrary('places');
 
-  // Place autocomplete function
+  //   useEffect(() => {
+  //   if (inputValue) setInputValue(inputValue);
+  // }, [])
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
+        setInputValue(event.target.value);
+      };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPlaceChanged = (place: any) => {
-    if (place) {
-      setInputValue(place.formatted_address || place.name);
-    }
-    // Keep focus on input element
-    inputRef.current && inputRef.current.focus();
-  };
+  // const [photos, setPhotos] = useState([])
 
-  const autocompleteInstance = useAutocomplete({
-    inputField: inputRef && inputRef.current,
-    onPlaceChanged,
-  });
+  // console.log(placeAutocomplete)
+  useEffect(() => {
+    if (!places || !inputRef.current) return;
 
-  if (autocompleteInstance) {
-    autocompleteInstance.setFields([
-      "name",
-      "formatted_address",
-      "geometry.location",
-      // "photos"
-    ]);
-    autocompleteInstance.setComponentRestrictions({ country: ["de"] });
-  }
+    const options = {
+      fields: ['geometry', 'name', 'formatted_address', 'photos'],
+      componentRestrictions: { country: "de" },
+    };
+    
+    setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+  }, [places]);
 
   useEffect(() => {
-    if (autocompleteInstance?.getPlace()) {
-      const { name, formatted_address, geometry } = autocompleteInstance.getPlace();
-      // const { name, formatted_address, geometry, photos} = autocompleteInstance.getPlace();
+    if (!placeAutocomplete) return;
+
+    placeAutocomplete.addListener('place_changed', () => {
+      const { name, formatted_address, geometry } = placeAutocomplete.getPlace();
+      // const { name, formatted_address, geometry, photos } = placeAutocomplete.getPlace();
       const lat = geometry?.location
       const lng = geometry?.location
-      // console.log(photos)
+      // setPhotos(photos)
 
-      setPlace((prev: Place | undefined) => {
-        return {
-          ...prev,
-          name: name,
-          address: formatted_address,
-          position: {
-            lat: lat?.lat(),
-            lng: lng?.lng()
-          },
-          // photos: photos,
-        };
+      onPlaceSelect({
+        name: name,
+        address: formatted_address,
+        position: {
+          lat: lat?.lat(),
+          lng: lng?.lng()
+        },
       });
-    }
-  }, [inputValue]);
+    });
+  }, [onPlaceSelect, placeAutocomplete]);
 
   return (
-    <div className="input-container">
-      <label htmlFor="location">Your location?</label>
-      <input
-        type="text"
-        id="location"
-        value={inputValue}
-        onChange={(e) => handleInputChange(e)}
-        ref={inputRef}
+    <div className="autocomplete-container">
+      <input ref={inputRef}  
+      value={inputValue}
+      onChange={(e) => handleInputChange(e)}
       />
+      {/* {photos && photos.map((photo) => (
+        <img key={photo.html_attributions} src={photo.getUrl()} style={{
+          display: "grid",
+          height: "80px",
+          width: "60px",
+          // margin: "10px 300px",
+        }}/>
+      ))} */}
     </div>
-  )
-}
+  );
+};

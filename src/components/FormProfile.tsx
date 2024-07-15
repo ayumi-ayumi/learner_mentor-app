@@ -86,7 +86,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
           >
             <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
             {/* <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} /> */}
-            <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
+            <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address}/>
             <FormInputText name="name" label="Name" />
             {/* <FormInputText name="aboutme" label="About Me" /> */}
             <FormInputRadio
@@ -127,55 +127,55 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   );
 }
 
-const PlaceAutocomplete = ({ onPlaceSelect }) => {
-  const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const places = useMapsLibrary('places');
+// const PlaceAutocomplete = ({ onPlaceSelect }) => {
+//   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
+//   const inputRef = useRef<HTMLInputElement>(null);
+//   const places = useMapsLibrary('places');
 
-  const [photos, setPhotos] = useState([])
-  useEffect(() => {
-    if (!places || !inputRef.current) return;
+//   const [photos, setPhotos] = useState([])
+//   useEffect(() => {
+//     if (!places || !inputRef.current) return;
 
-    const options = {
-      fields: ['geometry', 'name', 'formatted_address', 'photos'],
-      componentRestrictions: { country: "de" },
-    };
+//     const options = {
+//       fields: ['geometry', 'name', 'formatted_address', 'photos'],
+//       componentRestrictions: { country: "de" },
+//     };
 
-    setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
-  }, [places]);
+//     setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+//   }, [places]);
 
-  useEffect(() => {
-    if (!placeAutocomplete) return;
+//   useEffect(() => {
+//     if (!placeAutocomplete) return;
 
-    placeAutocomplete.addListener('place_changed', () => {
-      const { name, formatted_address, geometry, photos } = placeAutocomplete.getPlace();
-      const lat = geometry?.location
-      const lng = geometry?.location
-      console.log(photos[0].getUrl())
-      setPhotos(photos)
+//     placeAutocomplete.addListener('place_changed', () => {
+//       const { name, formatted_address, geometry, photos } = placeAutocomplete.getPlace();
+//       const lat = geometry?.location
+//       const lng = geometry?.location
+//       console.log(photos[0].getUrl())
+//       setPhotos(photos)
 
-      onPlaceSelect({
-        name: name,
-        address: formatted_address,
-        position: {
-          lat: lat?.lat(),
-          lng: lng?.lng()
-        },
-      });
-    });
-  }, [onPlaceSelect, placeAutocomplete]);
+//       onPlaceSelect({
+//         name: name,
+//         address: formatted_address,
+//         position: {
+//           lat: lat?.lat(),
+//           lng: lng?.lng()
+//         },
+//       });
+//     });
+//   }, [onPlaceSelect, placeAutocomplete]);
 
-  return (
-    <div className="autocomplete-container">
-      <input ref={inputRef} />
-      {photos && photos.map((photo) => (
-        <img key={photo.html_attributions} src={photo.getUrl()} style={{
-          display: "grid",
-          height: "80px",
-          width: "60px",
-          // margin: "10px 300px",
-        }}/>
-      ))}
-    </div>
-  );
-};
+//   return (
+//     <div className="autocomplete-container">
+//       <input ref={inputRef} />
+//       {photos && photos.map((photo) => (
+//         <img key={photo.html_attributions} src={photo.getUrl()} style={{
+//           display: "grid",
+//           height/: "80px",
+//           width: "60px",
+//           // margin: "10px 300px",
+//         }}/>
+//       ))}
+//     </div>
+//   );
+// };
