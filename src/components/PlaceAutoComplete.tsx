@@ -89,13 +89,24 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
   //   if (inputValue) setInputValue(inputValue);
   // }, [])
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
-      };
+  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //       setInputValue(event.target.value);
+  //     };
 
   // const [photos, setPhotos] = useState([])
 
   // console.log(placeAutocomplete)
+
+  useEffect(() => {
+    console.log(placeAutocomplete)
+    if (placeAutocomplete) return;
+    console.log(123)
+    const inputElement = inputRef.current as HTMLInputElement;
+    inputElement.value = defaultPlace
+  }, []);
+
+console.log(inputRef)
+
   useEffect(() => {
     if (!places || !inputRef.current) return;
 
@@ -131,8 +142,8 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
   return (
     <div className="autocomplete-container">
       <input ref={inputRef}  
-      value={inputValue}
-      onChange={(e) => handleInputChange(e)}
+      // value={inputValue}
+      // onChange={(e) => handleInputChange(e)}
       />
       {/* {photos && photos.map((photo) => (
         <img key={photo.html_attributions} src={photo.getUrl()} style={{
