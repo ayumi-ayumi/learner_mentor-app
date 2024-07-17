@@ -97,13 +97,14 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
 
   // console.log(placeAutocomplete)
 
-  useEffect(() => {
-    console.log(placeAutocomplete)
-    if (placeAutocomplete) return;
-    console.log(123)
-    const inputElement = inputRef.current as HTMLInputElement;
-    inputElement.value = defaultPlace
-  }, []);
+  // useEffect(() => {
+  //   console.log(placeAutocomplete)
+  //   if (placeAutocomplete) return;
+  //   // console.log(123)
+  //   const inputElement = inputRef.current as HTMLInputElement;
+  //   inputElement.value = defaultPlace
+  //   console.log(inputElement.value)
+  // }, []);
 
 console.log(inputRef)
 
@@ -116,6 +117,7 @@ console.log(inputRef)
     };
     
     setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+    // console.log(new places.Autocomplete(inputRef.current, options));
   }, [places]);
 
   useEffect(() => {

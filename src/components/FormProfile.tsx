@@ -44,7 +44,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
     if (logInUserProfile) setUserProfile(logInUserProfile)
   }, [logInUserProfile])
 
-
+console.log(selectedPlace)
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
