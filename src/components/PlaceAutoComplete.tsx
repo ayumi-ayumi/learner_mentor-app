@@ -106,7 +106,6 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
   //   console.log(inputElement.value)
   // }, []);
 
-console.log(inputRef)
 
   useEffect(() => {
     if (!places || !inputRef.current) return;
@@ -117,7 +116,6 @@ console.log(inputRef)
     };
     
     setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
-    // console.log(new places.Autocomplete(inputRef.current, options));
   }, [places]);
 
   useEffect(() => {
@@ -144,6 +142,12 @@ console.log(inputRef)
   return (
     <div className="autocomplete-container">
       <input ref={inputRef}  
+      // placeholder={defaultPlace}
+      // onKeyDown={(e) => {
+      //   if (e.key === 'Enter') {
+      //       return e.preventDefault()
+      //   }}}
+        defaultValue={defaultPlace}
       // value={inputValue}
       // onChange={(e) => handleInputChange(e)}
       />
