@@ -9,7 +9,7 @@ import { Button, Container, Stack, Alert } from "@mui/material";
 import { options_cafeDetail } from "../Props/props";
 import { Place, CafeDetailType } from "../interfaces/interfaces";
 import CheckIcon from '@mui/icons-material/Check';
-import { PlaceAutoComplete } from "./PlaceAutoComplete";
+import { PlaceAutoCompleteForCafe } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
 
 export default function AddCafe() {
@@ -65,7 +65,15 @@ export default function AddCafe() {
             }}
             className="form-container"
           >
-            <PlaceAutoComplete setPlace={setPlace} defaultPlace={""} />
+            <PlaceAutoCompleteForCafe setPlace={setPlace} defaultPlace={""} />
+            {place.photos && place.photos.map((photo) => (
+              <img key={photo.html_attributions} src={photo.getUrl()} style={{
+                display: "grid",
+                height: "80px",
+                width: "60px",
+                // margin: "10px 300px",
+              }} />
+            ))}
             <FormInputCheckbox
               name={"cafe_detail"}
               label={"Cafe enviroment"}
