@@ -11,6 +11,7 @@ import { Place, CafeDetailType } from "../interfaces/interfaces";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoCompleteForCafe } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
+import {APILoader, PlaceDirectionsButton, PlaceOverview} from '@googlemaps/extended-component-library/react';
 
 export default function AddCafe() {
 
@@ -74,6 +75,7 @@ export default function AddCafe() {
                 // margin: "10px 300px",
               }} />
             ))}
+            <PlaceOverview place="ChIJbzYnQte8woARJaqqFVpKeNo" />
             <FormInputCheckbox
               name={"cafe_detail"}
               label={"Cafe enviroment"}

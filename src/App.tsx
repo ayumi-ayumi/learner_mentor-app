@@ -22,7 +22,7 @@ export default function App() {
   const { logInUserProfile, currentUser } = useAuth();
 
   return (
-    <APIProvider apiKey={API_KEY} libraries={["places"]}>
+    <APIProvider apiKey={API_KEY} libraries={["places"]} solution-channel="GMP_DOCS_placeoverview_v1">
       <Routes>
         <Route path={`/signup`} element={<SignUp signupProps={signup} />} />
         <Route path={`/signin`} element={<SignIn signupProps={signup} />} />

@@ -81,7 +81,6 @@ export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
       const lat = geometry?.location
       const lng = geometry?.location
       // setPhotos(photos)
-
       setPlace({
         name: name,
         address: formatted_address,
