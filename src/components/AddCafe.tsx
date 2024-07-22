@@ -75,7 +75,7 @@ export default function AddCafe() {
                 // margin: "10px 300px",
               }} />
             ))}
-            <PlaceOverview place="ChIJbzYnQte8woARJaqqFVpKeNo" />
+            {/* <PlaceOverview place="ChIJbzYnQte8woARJaqqFVpKeNo" /> */}
             <FormInputCheckbox
               name={"cafe_detail"}
               label={"Cafe enviroment"}
