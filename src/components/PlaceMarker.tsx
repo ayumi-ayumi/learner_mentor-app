@@ -23,11 +23,15 @@ import { avaterImgs } from "../Props/props";
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
+import {APILoader, PlaceOverview} from '@googlemaps/extended-component-library/react';
 
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
 }
+
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -139,4 +143,42 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
       </AdvancedMarker >
     </>
   );
+}
+
+export function PlaceMarkerCafe ({ place_datas, isOpen, setMarkerPlaceId }) {
+  const [markerRef, marker] = useAdvancedMarkerRef();
+
+
+  return (  <>
+      <AdvancedMarker
+        ref={markerRef}
+        onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place_id)}
+        position={place_datas.place.position}
+        key={place_datas.place.place_id}
+        title={"AdvancedMarker that opens an Infowindow when clicked."}
+      >
+          <Pin
+            background={"pink"}
+            borderColor={"#1e89a1"}
+            scale={1.3}
+          >
+            ☕
+          </Pin>
+        
+
+        {isOpen && (
+          <InfoWindow
+            anchor={marker}
+            minWidth={200}
+            onCloseClick={() => setMarkerPlaceId(null)}
+          >
+            <div className="container">
+      <APILoader apiKey={API_KEY}  solutionChannel="GMP_GCC_placeoverview_v1_m" />
+      <PlaceOverview place={place_datas.place.place_id} size="medium" google-logo-already-displayed />
+    </div>
+          </InfoWindow>
+        )}
+      </AdvancedMarker >
+    </>)
+
 }

@@ -37,7 +37,7 @@ export default function AddCafe() {
   const onSubmit = (data: CafeDetailType) => {
     addDoc(collection(db, "cafes"), {
       ...data,
-      id: nanoid(),
+      // id: nanoid(),
       timestamp: serverTimestamp(),
       place: place
     });
@@ -67,14 +67,14 @@ export default function AddCafe() {
             className="form-container"
           >
             <PlaceAutoCompleteForCafe setPlace={setPlace} defaultPlace={""} />
-            {place.photos && place.photos.map((photo) => (
+            {/* {place.photos && place.photos.map((photo) => (
               <img key={photo.html_attributions} src={photo.getUrl()} style={{
                 display: "grid",
                 height: "80px",
                 width: "60px",
                 // margin: "10px 300px",
               }} />
-            ))}
+            ))} */}
             {/* <PlaceOverview place="ChIJbzYnQte8woARJaqqFVpKeNo" /> */}
             <FormInputCheckbox
               name={"cafe_detail"}

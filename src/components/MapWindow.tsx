@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
-import PlaceMarker from "./PlaceMarker";
+import PlaceMarker, { PlaceMarkerCafe } from "./PlaceMarker";
 import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
 import { db } from "../firebase/BaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -14,6 +14,7 @@ export default function MapWindow({ filter }: { filter: string }) {
   const [cafes, setCafes] = useState<CafeDetailType[]>([]);
   const visibleUsers = filterUsers(users, filter);
   const visibleCafes = filterCafes(cafes, filter);
+  console.log(markerPlaceId)
 
   const dataCollectionRef = collection(db, 'cafes')
   useEffect(() => {
@@ -63,7 +64,8 @@ export default function MapWindow({ filter }: { filter: string }) {
         ))}
         {visibleCafes?.map((cafe) => (
           // return (
-            <PlaceMarker
+            <PlaceMarkerCafe
+            // <PlaceMarker
               isOpen={cafe.id == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
               key={cafe.id}
