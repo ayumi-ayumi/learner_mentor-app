@@ -14,7 +14,6 @@ export default function MapWindow({ filter }: { filter: string }) {
   const [cafes, setCafes] = useState<CafeDetailType[]>([]);
   const visibleUsers = filterUsers(users, filter);
   const visibleCafes = filterCafes(cafes, filter);
-  console.log(markerPlaceId)
 
   const dataCollectionRef = collection(db, 'cafes')
   useEffect(() => {
@@ -66,9 +65,9 @@ export default function MapWindow({ filter }: { filter: string }) {
           // return (
             <PlaceMarkerCafe
             // <PlaceMarker
-              isOpen={cafe.id == markerPlaceId}
+              isOpen={cafe.place.placeId == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
-              key={cafe.id}
+              key={cafe.place.placeId}
               place_datas={cafe}
             />
           // );

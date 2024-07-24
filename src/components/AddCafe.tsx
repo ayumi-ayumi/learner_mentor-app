@@ -16,7 +16,7 @@ import {APILoader, PlaceDirectionsButton, PlaceOverview} from '@googlemaps/exten
 export default function AddCafe() {
 
   const defaultValues: CafeDetailType = {
-    id: 0,
+    // id: 0,
     timestamp: serverTimestamp(),
     place: {
       address: "",
@@ -66,7 +66,7 @@ export default function AddCafe() {
             }}
             className="form-container"
           >
-            <PlaceAutoCompleteForCafe setPlace={setPlace} defaultPlace={""} />
+            <PlaceAutoCompleteForCafe setPlace={setPlace} />
             {/* {place.photos && place.photos.map((photo) => (
               <img key={photo.html_attributions} src={photo.getUrl()} style={{
                 display: "grid",

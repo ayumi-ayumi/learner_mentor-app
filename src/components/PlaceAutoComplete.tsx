@@ -56,7 +56,7 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
   );
 };
 
-export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
+export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const places = useMapsLibrary('places');
@@ -65,7 +65,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
     if (!places || !inputRef.current) return;
 
     const options = {
-      fields: ['geometry', 'name', 'formatted_address', 'photos', 'place_id'],
+      fields: ['geometry', 'name', 'formatted_address', 'place_id'],
       componentRestrictions: { country: "de" },
     };
     
@@ -77,7 +77,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
 
     placeAutocomplete.addListener('place_changed', () => {
       // const { name, formatted_address, geometry } = placeAutocomplete.getPlace();
-      const { name, formatted_address, geometry, photos, place_id } = placeAutocomplete.getPlace();
+      const { name, formatted_address, geometry, place_id } = placeAutocomplete.getPlace();
       const lat = geometry?.location
       const lng = geometry?.location
       // setPhotos(photos)
@@ -88,7 +88,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
           lat: lat?.lat(),
           lng: lng?.lng()
         },
-        photos: photos,
+        // photos: photos,
         placeId: place_id,
       });
     });
@@ -97,16 +97,8 @@ export const PlaceAutoCompleteForCafe = ({ setPlace, defaultPlace }) => {
   return (
     <div className="autocomplete-container">
       <input ref={inputRef}  
-        defaultValue={defaultPlace}
+        // defaultValue={defaultPlace}
       />
-      {/* {photos && photos.map((photo) => (
-        <img key={photo.html_attributions} src={photo.getUrl()} style={{
-          display: "grid",
-          height: "80px",
-          width: "60px",
-          // margin: "10px 300px",
-        }}/>
-      ))} */}
     </div>
   );
 };

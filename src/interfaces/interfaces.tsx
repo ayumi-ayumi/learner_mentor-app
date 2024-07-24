@@ -1,5 +1,5 @@
 import { FieldValue } from "firebase/firestore";
-import { ReactNode } from "react";
+import { Key, ReactNode } from "react";
 
 export interface UserProfileType {
   uid: string,
@@ -18,7 +18,7 @@ export interface UserProfileType {
 
 export interface CafeDetailType {
   // uid: string,
-  id: number,
+  // id: number,
   timestamp: FieldValue,
   place: Place,
   // name: string,
@@ -31,6 +31,7 @@ export interface CafeDetailType {
 
 
 export interface Place {
+  placeId?: Key | null | undefined;
   name?: string,
   address: string | undefined,
   position: { lat: LatLng | LatLngLiteral | null | undefined, lng: LatLng | LatLngLiteral | null | undefined }

@@ -23,7 +23,9 @@ import { avaterImgs } from "../Props/props";
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
-import {APILoader, PlaceOverview} from '@googlemaps/extended-component-library/react';
+import { APILoader, PlaceOverview } from '@googlemaps/extended-component-library/react';
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
+
 
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -145,40 +147,49 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
   );
 }
 
-export function PlaceMarkerCafe ({ place_datas, isOpen, setMarkerPlaceId }) {
+export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
+//   const { Place } = useMapsLibrary('places');
+
+//   const zoo = new Place({
+//     id: 'ChIJydSuSkkUkFQRsqhB-cEtYnw', // Woodland Park Zoo, Seattle WA
+// }, )
 
 
-  return (  <>
-      <AdvancedMarker
-        ref={markerRef}
-        onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place_id)}
-        position={place_datas.place.position}
-        key={place_datas.place.place_id}
-        title={"AdvancedMarker that opens an Infowindow when clicked."}
+
+  // console.log(Place)
+  return (<>
+    <AdvancedMarker
+      ref={markerRef}
+      onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place.placeId)}
+      position={place_datas.place.position}
+      key={place_datas.place.placeId}
+      title={"AdvancedMarker that opens an Infowindow when clicked."}
+    >
+      <Pin
+        background={"pink"}
+        borderColor={"#1e89a1"}
+        scale={1.3}
       >
-          <Pin
-            background={"pink"}
-            borderColor={"#1e89a1"}
-            scale={1.3}
-          >
-            ☕
-          </Pin>
-        
+        ☕
+      </Pin>
 
-        {isOpen && (
-          <InfoWindow
-            anchor={marker}
-            minWidth={200}
-            onCloseClick={() => setMarkerPlaceId(null)}
-          >
-            <div className="container">
-      <APILoader apiKey={API_KEY}  solutionChannel="GMP_GCC_placeoverview_v1_m" />
-      <PlaceOverview place={place_datas.place.place_id} size="medium" google-logo-already-displayed />
-    </div>
-          </InfoWindow>
-        )}
-      </AdvancedMarker >
-    </>)
+
+      {isOpen && (
+        <InfoWindow
+          anchor={marker}
+          minWidth={200}
+          onCloseClick={() => setMarkerPlaceId(null)}
+        >
+          <div className="container">
+            {/* <APILoader apiKey={API_KEY}/> */}
+            {/* <APILoader apiKey={API_KEY} solutionChannel="GMP_GCC_placeoverview_v1_m" /> */}
+            {/* <PlaceOverview size="medium" place={place_datas.place.placeId} googleLogoAlreadyDisplayed /> */}
+            {/* <PlaceOverview  place={place_datas.place.placeId} size="small" google-logo-already-displayed /> */}
+          </div>
+        </InfoWindow>
+      )}
+    </AdvancedMarker >
+  </>)
 
 }
