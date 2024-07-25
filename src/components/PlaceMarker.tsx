@@ -4,6 +4,8 @@ import {
   Pin,
   InfoWindow,
   useAdvancedMarkerRef,
+  useMap,
+  useMapsLibrary
 } from "@vis.gl/react-google-maps";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -149,16 +151,19 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
 
 export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
-//   const { Place } = useMapsLibrary('places');
+  const map = useMap();
+  const places = useMapsLibrary('places');
+  const [placesService, setPlacesService] = useState<google.maps.places.PlacesService | null>(null);
+  console.log(placesService)
 
-//   const zoo = new Place({
-//     id: 'ChIJydSuSkkUkFQRsqhB-cEtYnw', // Woodland Park Zoo, Seattle WA
-// }, )
+    // Once placesLibrary and reactMap is generated, define and trigger placesService
+    useEffect(()=> {
+      if (!places || !map) return;
+      setPlacesService(new places.PlacesService(map));
+    }, [places, map]);
 
-
-
-  // console.log(Place)
-  return (<>
+ 
+ return (<>
     <AdvancedMarker
       ref={markerRef}
       onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place.placeId)}

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useMapsLibrary, } from "@vis.gl/react-google-maps";
+import { useMap, useMapsLibrary, } from "@vis.gl/react-google-maps";
 import React from "react";
 
 export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
@@ -61,6 +61,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const places = useMapsLibrary('places');
 
+
   useEffect(() => {
     if (!places || !inputRef.current) return;
 
@@ -70,6 +71,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
     };
     
     setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+
   }, [places]);
 
   useEffect(() => {
