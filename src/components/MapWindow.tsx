@@ -67,6 +67,7 @@ export default function MapWindow({ filter }: { filter: string }) {
             // <PlaceMarker
               isOpen={cafe.place.placeId == markerPlaceId}
               setMarkerPlaceId={setMarkerPlaceId}
+              markerPlaceId={markerPlaceId}
               key={cafe.place.placeId}
               place_datas={cafe}
             />

@@ -19,7 +19,7 @@ export default function AddCafe() {
     // id: 0,
     timestamp: serverTimestamp(),
     place: {
-      address: "",
+      // address: "",
       position: {
         lat: 0,
         lng: 0

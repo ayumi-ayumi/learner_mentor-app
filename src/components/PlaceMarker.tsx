@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AdvancedMarker,
   Pin,
@@ -26,7 +26,6 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
 import { APILoader, PlaceOverview } from '@googlemaps/extended-component-library/react';
-import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
 
 
@@ -149,21 +148,52 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
   );
 }
 
-export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId }) {
+export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerPlaceId }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const map = useMap();
-  const places = useMapsLibrary('places');
+  const placesLib = useMapsLibrary('places');
   const [placesService, setPlacesService] = useState<google.maps.places.PlacesService | null>(null);
-  console.log(placesService)
+  const [placeInfo, setPlaceInfo] = useState();
 
-    // Once placesLibrary and reactMap is generated, define and trigger placesService
-    useEffect(()=> {
-      if (!places || !map) return;
-      setPlacesService(new places.PlacesService(map));
-    }, [places, map]);
+  // Once placesLibrary and reactMap is generated, define and trigger placesService
+  useEffect(() => {
+    if (!placesLib || !map) return;
+    setPlacesService(new placesLib.PlacesService(map));
+  }, [placesLib, map]);
 
- 
- return (<>
+
+  // Once placesService is triggered, query and place marker for nearby clinics
+  useEffect(() => {
+    if (!placesService || !map) {
+      console.log("No places service available");
+      return;
+    }
+
+    const detailsRequest = {
+      placeId: markerPlaceId,
+      fields: ['photos', 'formatted_address', 'name', 'url'], // Request the name and opening hours fields
+    };
+
+    // Query
+    placesService.getDetails(detailsRequest, function (results: google.maps.places.PlaceResult | null, status: google.maps.places.PlacesServiceStatus) {
+      if (status === "OK") {
+        const sendPlaceInfo = {
+          // photos: results?.photos[0].getUrl(),
+          photos: results?.photos.slice(0, 5),
+          formatted_address: results?.formatted_address,
+          name: results?.name,
+          url: results?.url
+        }
+        setPlaceInfo(sendPlaceInfo);
+        // setPlaceInfo((oldPlaceInfo) => [...oldPlaceInfo, sendPlaceInfo]);
+      }
+    });
+  }, [markerPlaceId])
+  console.log(placeInfo)
+  // }, [placesService])
+
+
+  return (<>
     <AdvancedMarker
       ref={markerRef}
       onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place.placeId)}
@@ -186,12 +216,19 @@ export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId }) {
           minWidth={200}
           onCloseClick={() => setMarkerPlaceId(null)}
         >
-          <div className="container">
-            {/* <APILoader apiKey={API_KEY}/> */}
-            {/* <APILoader apiKey={API_KEY} solutionChannel="GMP_GCC_placeoverview_v1_m" /> */}
-            {/* <PlaceOverview size="medium" place={place_datas.place.placeId} googleLogoAlreadyDisplayed /> */}
-            {/* <PlaceOverview  place={place_datas.place.placeId} size="small" google-logo-already-displayed /> */}
+          {placeInfo && 
+          <>
+          <div className="cafeCard-container">
+            <div>{placeInfo.name}</div>
+            <div>{placeInfo.url}</div>
+            <div>{placeInfo.formatted_address}</div>
+            {placeInfo.photos.map((photo)=>(
+            <img src={photo.getUrl()} key={photo.getUrl()}/>
+
+            ))}
           </div>
+          </>
+          }
         </InfoWindow>
       )}
     </AdvancedMarker >

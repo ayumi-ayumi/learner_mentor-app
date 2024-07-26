@@ -66,7 +66,7 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
     if (!places || !inputRef.current) return;
 
     const options = {
-      fields: ['geometry', 'name', 'formatted_address', 'place_id'],
+      fields: ['geometry', 'place_id'],
       componentRestrictions: { country: "de" },
     };
     
@@ -79,13 +79,13 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
 
     placeAutocomplete.addListener('place_changed', () => {
       // const { name, formatted_address, geometry } = placeAutocomplete.getPlace();
-      const { name, formatted_address, geometry, place_id } = placeAutocomplete.getPlace();
+      const { geometry, place_id } = placeAutocomplete.getPlace();
       const lat = geometry?.location
       const lng = geometry?.location
       // setPhotos(photos)
       setPlace({
-        name: name,
-        address: formatted_address,
+        // name: name,
+        // address: formatted_address,
         position: {
           lat: lat?.lat(),
           lng: lng?.lng()
