@@ -16,7 +16,7 @@ import {APILoader, PlaceDirectionsButton, PlaceOverview} from '@googlemaps/exten
 export default function AddCafe() {
 
   const defaultValues: CafeDetailType = {
-    id: 0,
+    // id: 0,
     timestamp: serverTimestamp(),
     place: {
       // address: "",
@@ -28,7 +28,7 @@ export default function AddCafe() {
     cafe_detail: [],
   };
 
-  const [place, setPlace] = useState<CafePlace>({ address: "", position: { lat: 0, lng: 0 } });
+  const [place, setPlace] = useState<CafePlace>({ position: { lat: 0, lng: 0 } });
   const [saved, setSaved] = useState(false);
   const methods = useForm<CafeDetailType>({ defaultValues });
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function AddCafe() {
   const onSubmit = (data: CafeDetailType) => {
     addDoc(collection(db, "cafes"), {
       ...data,
-      id: nanoid(),
+      // id: nanoid(),
       timestamp: serverTimestamp(),
       place: place
     });

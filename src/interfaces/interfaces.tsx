@@ -18,7 +18,7 @@ export interface UserProfileType {
 
 export interface CafeDetailType {
   // uid: string,
-  id: number,
+  // id: number,
   timestamp: FieldValue,
   place: CafePlace,
   // name: string,
@@ -32,8 +32,8 @@ export interface CafeDetailType {
 
 export interface CafePlace {
   placeId?: Key | null | undefined;
-  name?: string,
-  address: string | undefined,
+  // name?: string,
+  // address: string | undefined,
   position: { lat: LatLng | LatLngLiteral | null | undefined, lng: LatLng | LatLngLiteral | null | undefined }
   // position: { lat: number | undefined, lng: number | undefined }
 }

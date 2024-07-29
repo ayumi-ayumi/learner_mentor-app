@@ -16,7 +16,7 @@ export default function MapWindow({ filter }: { filter: string }) {
   const visibleUsers = filterUsers(users, filter);
   const visibleCafes = filterCafes(cafes, filter);
 
-  console.log(markerID)
+  // console.log(markerID)
 
   const dataCollectionRef = collection(db, 'cafes')
   useEffect(() => {

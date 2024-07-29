@@ -187,7 +187,7 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
     });
   }, [markerID])
   // }, [markerCafeID])
-  console.log(markerCafeID)
+  // console.log(markerCafeID)
   // }, [placesService])
 
 
