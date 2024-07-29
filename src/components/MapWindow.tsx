@@ -10,10 +10,13 @@ import { useAuth } from "../context/AuthProvider";
 export default function MapWindow({ filter }: { filter: string }) {
   const { users } = useAuth();
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
-  const [markerPlaceId, setMarkerPlaceId] = useState(null);
+  const [markerID, setMarkerID] = useState(null);
+  // const [markerCafeID, setMarkerCafeID] = useState(null);
   const [cafes, setCafes] = useState<CafeDetailType[]>([]);
   const visibleUsers = filterUsers(users, filter);
   const visibleCafes = filterCafes(cafes, filter);
+
+  console.log(markerID)
 
   const dataCollectionRef = collection(db, 'cafes')
   useEffect(() => {
@@ -52,26 +55,29 @@ export default function MapWindow({ filter }: { filter: string }) {
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
       >
         {visibleUsers.map((user) => (
-          // return (
             <PlaceMarker
-              isOpen={user.id == markerPlaceId}
-              setMarkerPlaceId={setMarkerPlaceId}
-              key={user.id}
-              place_datas={user}
+              isOpen={user.uid == markerID}
+              setMarkerID={setMarkerID}
+              key={user.uid}
+              data={user}
             />
-          // );
         ))}
+
         {visibleCafes?.map((cafe) => (
-          // return (
             <PlaceMarkerCafe
             // <PlaceMarker
-              isOpen={cafe.place.placeId == markerPlaceId}
-              setMarkerPlaceId={setMarkerPlaceId}
-              markerPlaceId={markerPlaceId}
+              isOpen={cafe.place.placeId == markerID}
+              // isOpen={cafe.id == markerID}
+              // isOpen={cafe.place.placeId == markerCafeID}
+              // setMarkerCafeID={setMarkerCafeID}
+              setMarkerID={setMarkerID}
+              markerID={markerID}
+
+              markerCafeID={cafe.place.placeId}
+              // markerCafeID={markerCafeID}
               key={cafe.place.placeId}
-              place_datas={cafe}
+              data={cafe}
             />
-          // );
         ))}
       </Map>
     </>

@@ -39,8 +39,26 @@
   font-size: 0.8rem;
 }
 
-.cafeCard-container img {
-  object-fit: cover; 
-  height: 100px;
-  width: 150px;
+.cafeCard-container {
+  font-size: 1rem;
+  
+  .cafeProfile {
+    padding: 0 7px;
+    margin-left: 5px;
+    border: 1px solid rgb(223, 226, 231);
+    border-radius: 16px;
+    background-color: rgba(204, 230, 255, 0.4);
+    font-size: 0.8rem;
+
+  }
+ 
+  img{
+    object-fit: cover; 
+    height: 100px;
+    width: 150px;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
 }
+
+

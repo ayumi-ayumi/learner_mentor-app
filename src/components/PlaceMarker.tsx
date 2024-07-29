@@ -26,6 +26,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
 import { APILoader, PlaceOverview } from '@googlemaps/extended-component-library/react';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 
@@ -49,7 +50,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: { place_datas: any, isOpen: boolean, setMarkerPlaceId: any }) {
+export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, isOpen: boolean, setMarkerID: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [expanded, setExpanded] = useState(false);
   const [isFav, setIsFav] = useState(false);
@@ -60,52 +61,48 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
     setExpanded(!expanded);
   };
 
-  const showDescription = (src) => {
+  const showAvaterDescription = (src) => {
     const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
     return desc
   }
+
+  // console.log(isOpen)
+
   return (
     <>
       <AdvancedMarker
         ref={markerRef}
-        onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.id)}
-        position={place_datas.place.position}
-        key={place_datas.id}
+        onClick={() => setMarkerID(isOpen ? null : data.uid)}
+        position={data.place.position}
+        key={data.uid}
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
-        {place_datas.uid
-          ?
+        
           <Pin
-            background={place_datas.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
+            background={data.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
             borderColor={"#1e89a1"}
             scale={1.3}
           >
-            {place_datas.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
+            {data.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
           </Pin>
-          :
-          <Pin
-            background={"pink"}
-            borderColor={"#1e89a1"}
-            scale={1.3}
-          >
-            ☕
-          </Pin>
-        }
+         
+        
 
         {isOpen && (
           <InfoWindow
             anchor={marker}
             minWidth={200}
-            onCloseClick={() => setMarkerPlaceId(null)}
+            // onCloseClick={() => setMarkerID(null)}
+            // onClose={() => setMarkerID(null)}
           >
             <Box className="card-container">
               <div className="card_upper">
                 <div className="card_upper left">
-                  <img src={place_datas.avater} className="card_upper left avatar" aria-label={showDescription(place_datas.avater)} />
+                  <img src={data.avater} className="card_upper left avatar" aria-label={showAvaterDescription(data.avater)} />
                 </div>
                 <div className="card_upper right">
-                  <div className="learnerORmentor">{place_datas.learnerORmentor}</div>
-                  <div className="name">{place_datas.name}</div>
+                  <div className="learnerORmentor">{data.learnerORmentor}</div>
+                  <div className="name">{data.name}</div>
                 </div>
               </div>
 
@@ -126,17 +123,17 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
 
               <Stack direction="row" alignItems="center">
                 <HistoryIcon />
-                <span className="profile learningDuration" >{place_datas.learningDuration}</span>
+                <span className="profile learningDuration" >{data.learningDuration}</span>
               </Stack>
               <Stack direction="row" alignItems="center">
                 <CodeIcon />
-                {place_datas.programmingLanguages.map((programmingLanguage) => (
+                {data.programmingLanguages.map((programmingLanguage) => (
                   <span className="profile programmingLanguages" key={programmingLanguage}>{programmingLanguage}</span>
                 ))}
               </Stack>
               <Stack direction="row" alignItems="center">
                 <LanguageIcon />
-                {place_datas.languages.map((language) => (
+                {data.languages.map((language) => (
                   <span className="profile languages" key={language}>{language}</span>
                 ))}
               </Stack>
@@ -148,7 +145,7 @@ export default function PlaceMarker({ place_datas, isOpen, setMarkerPlaceId }: {
   );
 }
 
-export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerPlaceId }) {
+export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCafeID }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const map = useMap();
   const placesLib = useMapsLibrary('places');
@@ -170,7 +167,7 @@ export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerP
     }
 
     const detailsRequest = {
-      placeId: markerPlaceId,
+      placeId: markerCafeID,
       fields: ['photos', 'formatted_address', 'name', 'url'], // Request the name and opening hours fields
     };
 
@@ -179,7 +176,7 @@ export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerP
       if (status === "OK") {
         const sendPlaceInfo = {
           // photos: results?.photos[0].getUrl(),
-          photos: results?.photos.slice(0, 5),
+          photos: results?.photos.slice(0, 3),
           formatted_address: results?.formatted_address,
           name: results?.name,
           url: results?.url
@@ -188,17 +185,18 @@ export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerP
         // setPlaceInfo((oldPlaceInfo) => [...oldPlaceInfo, sendPlaceInfo]);
       }
     });
-  }, [markerPlaceId])
-  console.log(placeInfo)
+  }, [markerID])
+  // }, [markerCafeID])
+  console.log(markerCafeID)
   // }, [placesService])
 
 
   return (<>
     <AdvancedMarker
       ref={markerRef}
-      onClick={() => setMarkerPlaceId(isOpen ? null : place_datas.place.placeId)}
-      position={place_datas.place.position}
-      key={place_datas.place.placeId}
+      onClick={() => setMarkerID(isOpen ? null : data.place.placeId)}
+      position={data.place.position}
+      key={data.place.placeId}
       title={"AdvancedMarker that opens an Infowindow when clicked."}
     >
       <Pin
@@ -214,20 +212,29 @@ export function PlaceMarkerCafe({ place_datas, isOpen, setMarkerPlaceId, markerP
         <InfoWindow
           anchor={marker}
           minWidth={200}
-          onCloseClick={() => setMarkerPlaceId(null)}
+          onCloseClick={() => setMarkerID(null)}
+          // onClose={() => setMarkerID(null)}
         >
-          {placeInfo && 
-          <>
-          <div className="cafeCard-container">
-            <div>{placeInfo.name}</div>
-            <div>{placeInfo.url}</div>
-            <div>{placeInfo.formatted_address}</div>
-            {placeInfo.photos.map((photo)=>(
-            <img src={photo.getUrl()} key={photo.getUrl()}/>
+          {placeInfo &&
+            <>
+              <div className="cafeCard-container">
+                <div>{placeInfo.name}</div>
+                <div><LocationOnIcon />{placeInfo.formatted_address}</div>
+                <div>
+                  <a href={placeInfo.url}>View in Google Maps</a>
+                </div>
+                <div>
 
-            ))}
-          </div>
-          </>
+                {data.cafe_detail.map((detail)=>(
+                <span className="cafeProfile" key={detail}>{detail}</span>
+                ))}
+                </div>
+                {placeInfo.photos.map((photo) => (
+                  <img src={photo.getUrl()} key={photo.getUrl()} />
+
+                ))}
+              </div>
+            </>
           }
         </InfoWindow>
       )}

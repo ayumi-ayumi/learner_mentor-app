@@ -54,7 +54,7 @@ console.log(selectedPlace)
       {
         ...data,
         uid: currentUser?.uid,
-        id: nanoid(),
+        // id: nanoid(),
         timestamp: serverTimestamp(),
         place: selectedPlace,
         // place: place,
