@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useMap, useMapsLibrary, } from "@vis.gl/react-google-maps";
 import React from "react";
+import { CafePlace, Place, UserProfileType } from "../interfaces/interfaces";
 
-export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
+export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace } : { onPlaceSelect: React.Dispatch<React.SetStateAction<Place | undefined>>, defaultPlace: string | undefined }) => {
   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const places = useMapsLibrary('places');
@@ -11,7 +12,8 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
     if (!places || !inputRef.current) return;
 
     const options = {
-      fields: ['geometry', 'name', 'formatted_address', 'photos'],
+      fields: ['geometry', 'formatted_address', 'photos'],
+      // fields: ['geometry', 'name', 'formatted_address', 'photos'],
       componentRestrictions: { country: "de" },
     };
     
@@ -22,14 +24,15 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
     if (!placeAutocomplete) return;
 
     placeAutocomplete.addListener('place_changed', () => {
-      const { name, formatted_address, geometry } = placeAutocomplete.getPlace();
+      const { formatted_address, geometry } = placeAutocomplete.getPlace();
+      // const { name, formatted_address, geometry } = placeAutocomplete.getPlace();
       // const { name, formatted_address, geometry, photos } = placeAutocomplete.getPlace();
       const lat = geometry?.location
       const lng = geometry?.location
       // setPhotos(photos)
 
       onPlaceSelect({
-        name: name,
+        // name: name,
         address: formatted_address,
         position: {
           lat: lat?.lat(),
@@ -56,7 +59,7 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }) => {
   );
 };
 
-export const PlaceAutoCompleteForCafe = ({ setPlace }) => {
+export const PlaceAutoCompleteForCafe = ({ setPlace } : {setPlace: React.Dispatch<React.SetStateAction<CafePlace>>}) => {
   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const places = useMapsLibrary('places');

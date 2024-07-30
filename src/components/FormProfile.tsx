@@ -28,23 +28,21 @@ import { ConstructionOutlined } from "@mui/icons-material";
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
 
-  const [selectedPlace, setSelectedPlace] = useState();
-  // useState<google.maps.places.PlaceResult | null>(null);
-
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
+  const [selectedPlace, setSelectedPlace] = useState<Place | undefined>(userProfile?.place);
   const { currentUser, logInUserProfile } = useAuth();
-  const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
-  const [avater, setAvater] = useState("");
+  // const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
+  const [avater, setAvater] = useState(userProfile?.avater);
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
+  // console.log(logInUserProfile)
+  // console.log(currentUser.uid)
 
-  useEffect(() => {
-    if (logInUserProfile) setUserProfile(logInUserProfile)
-  }, [logInUserProfile])
-
-console.log(selectedPlace)
+  // useEffect(() => {
+  //   if (logInUserProfile) setUserProfile(logInUserProfile)
+  // }, [logInUserProfile])
 
   // Store the user data when clicking the submit button
   const onSubmit = (data: UserProfileType) => {
@@ -88,18 +86,17 @@ console.log(selectedPlace)
             {/* <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} /> */}
             <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address}/>
             <FormInputText name="name" label="Name" />
-            {/* <FormInputText name="aboutme" label="About Me" /> */}
             <FormInputRadio
               name={"learnerORmentor"}
               label={"I am a "}
               options={options_learnerORmentor}
             />
-            {learnerORmentor === "learner" && (<FormInputRadio
+            {learnerORmentor === "Learner" && (<FormInputRadio
               name={"learningDuration"}
               label={"I have been learning for "}
               options={options_LearningDuration}
             />)}
-            {learnerORmentor === "mentor" && (<FormInputRadio
+            {learnerORmentor === "Mentor" && (<FormInputRadio
               name={"workingDuration"}
               label={"I have been working for "}
               options={options_WorkingDuration}

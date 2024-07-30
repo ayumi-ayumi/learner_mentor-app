@@ -5,9 +5,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SignUp({ signupProps }: any) {
+export default function SignUp({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
-  const [clickedButton, setClickedButton] = useState<boolean>(false);
+  // const [clickedButton, setClickedButton] = useState<boolean>(false);
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
 
@@ -19,23 +19,29 @@ export default function SignUp({ signupProps }: any) {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+        // console.log(currentUser)
+        // console.log(signedUp)
+        // console.log(clickedButton)
+
 
   // If the user is already authenticated, redirect to the home page
-  useEffect(() => {
-    if (currentUser && !signupProps.signedUp) navigate("/");
-  }, [currentUser])
+  // useEffect(() => {
+  //   // if (currentUser) navigate("/");
+  //   if (currentUser && !signedUp) navigate("/");
+  // }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {
     e.preventDefault();
-    setClickedButton(true);
+    
     const email = e.target.email.value;
     const password = e.target.password.value;
     createUser(email, password)
-      .then((result) => {
+    .then((result) => {
+      // setClickedButton(true);
+      // setSignedUp(true);
         console.log("Signed up with:", result.user.uid);
-        signupProps.setSignedUp(true)
         navigate("/signin");
       })
       .catch((error) => {
@@ -44,6 +50,7 @@ export default function SignUp({ signupProps }: any) {
       });
     e.target.reset();
   };
+
 
   return (
     <>
@@ -81,7 +88,8 @@ export default function SignUp({ signupProps }: any) {
                 E-mail address or password is wrong.
               </Typography>
             )}
-            {clickedButton ? (
+            {currentUser ? (
+            // {clickedButton ? (
               <Button
                 color="primary"
                 // loading

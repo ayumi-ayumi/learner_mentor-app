@@ -40,7 +40,7 @@ export interface CafePlace {
 
 export interface Place {
   // placeId?: Key | null | undefined;
-  name?: string,
+  // name?: string,
   address: string | undefined,
   position: { lat: LatLng | LatLngLiteral | null | undefined, lng: LatLng | LatLngLiteral | null | undefined }
   // position: { lat: number | undefined, lng: number | undefined }

@@ -7,8 +7,7 @@ export const options_learnerORmentor = ["Learner", "Mentor"]
 export const options_LearningDuration = ["Beginner", "3 to 6 months", "6 to 12 months",
   "1 to 2 years", "More than 2 years"]
 
-export const options_WorkingDuration = ["6 to 12 months", "1 to 2 years", "2 to 4 years", "More than 4 years",
-  "More than 4 years"]
+export const options_WorkingDuration = ["6 to 12 months", "1 to 2 years", "2 to 4 years", "More than 4 years"]
 
 export const options_Langugages = ["German", "English", "Spanish", "French", "Italian", "Dutch", "Portuguese",
   "Russian", "Chinese", "Japanese", "Korean"]
@@ -201,7 +200,7 @@ export const options_cafeDetail = ["Wifi", "Power sockets", "Long stay", "Work-f
 // ]
 
 export const defaultValues: UserProfileType = {
-  id: 0,
+  // id: 0,
   timestamp: serverTimestamp(),
   place: {
     address: "",

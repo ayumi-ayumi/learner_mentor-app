@@ -50,7 +50,7 @@ export function AuthProvider({ children }: Props) {
     });
     // return unsubscribe;
     return () => unsubscribe();
-
+    
   }, []);
 
   //Obtain data from firebase by onSnapshot

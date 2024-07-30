@@ -65,8 +65,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
     const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
     return desc
   }
-
-  // console.log(isOpen)
+// console.log(data)
 
   return (
     <>
@@ -77,23 +76,20 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
         key={data.uid}
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
-        
-          <Pin
-            background={data.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
-            borderColor={"#1e89a1"}
-            scale={1.3}
-          >
-            {data.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
-          </Pin>
-         
-        
+        <Pin
+          background={data.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
+          borderColor={"#1e89a1"}
+          scale={1.3}
+        >
+          {data.uid === logInUserProfile?.uid ? "Me" : "🧑‍💻"}
+        </Pin>
 
         {isOpen && (
           <InfoWindow
             anchor={marker}
             minWidth={200}
-            // onCloseClick={() => setMarkerID(null)}
-            // onClose={() => setMarkerID(null)}
+            onCloseClick={() => setMarkerID(null)}
+          // onClose={() => setMarkerID(null)}
           >
             <Box className="card-container">
               <div className="card_upper">
@@ -145,12 +141,19 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
   );
 }
 
-export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCafeID }) {
+interface PlaceInfoType {
+  photos: google.maps.places.PlacePhoto[] | undefined;
+  formatted_address: string | undefined;
+  name: string | undefined;
+  url: string | undefined;
+}
+
+export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCafePlaceID }: { data: CafeDetailType, isOpen: boolean, setMarkerID: React.Dispatch<React.SetStateAction<Key | null | undefined>>, markerID: string, markerCafePlaceID: string }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const map = useMap();
   const placesLib = useMapsLibrary('places');
   const [placesService, setPlacesService] = useState<google.maps.places.PlacesService | null>(null);
-  const [placeInfo, setPlaceInfo] = useState();
+  const [placeInfo, setPlaceInfo] = useState<PlaceInfoType>();
 
   // Once placesLibrary and reactMap is generated, define and trigger placesService
   useEffect(() => {
@@ -167,7 +170,7 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
     }
 
     const detailsRequest = {
-      placeId: markerCafeID,
+      placeId: markerCafePlaceID,
       fields: ['photos', 'formatted_address', 'name', 'url'], // Request the name and opening hours fields
     };
 
@@ -176,7 +179,7 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
       if (status === "OK") {
         const sendPlaceInfo = {
           // photos: results?.photos[0].getUrl(),
-          photos: results?.photos.slice(0, 3),
+          photos: results?.photos?.slice(0, 3),
           formatted_address: results?.formatted_address,
           name: results?.name,
           url: results?.url
@@ -186,8 +189,8 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
       }
     });
   }, [markerID])
-  // }, [markerCafeID])
-  // console.log(markerCafeID)
+  // }, [markerCafePlaceID])
+  // console.log(markerCafePlaceID)
   // }, [placesService])
 
 
@@ -207,13 +210,12 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
         ☕
       </Pin>
 
-
       {isOpen && (
         <InfoWindow
           anchor={marker}
           minWidth={200}
           onCloseClick={() => setMarkerID(null)}
-          // onClose={() => setMarkerID(null)}
+        // onClose={() => setMarkerID(null)}
         >
           {placeInfo &&
             <>
@@ -224,14 +226,12 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
                   <a href={placeInfo.url}>View in Google Maps</a>
                 </div>
                 <div>
-
-                {data.cafe_detail.map((detail)=>(
-                <span className="cafeProfile" key={detail}>{detail}</span>
-                ))}
+                  {data.cafe_detail.map((detail) => (
+                    <span className="cafeProfile" key={detail}>{detail}</span>
+                  ))}
                 </div>
-                {placeInfo.photos.map((photo) => (
+                {placeInfo.photos?.map((photo) => (
                   <img src={photo.getUrl()} key={photo.getUrl()} />
-
                 ))}
               </div>
             </>

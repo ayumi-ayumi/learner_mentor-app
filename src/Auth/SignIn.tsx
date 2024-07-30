@@ -7,7 +7,7 @@ import { useAuth, } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SignIn({ signupProps }: any) {
+export default function SignIn({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
   const [clickedButton, setClickedButton] = useState(false);
   const { currentUser, loginUser } = useAuth();
@@ -21,37 +21,38 @@ export default function SignIn({ signupProps }: any) {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-  console.log(signupProps.signedUp)
+
+  console.log(currentUser)
 
   // If the user is already authenticated, redirect to the home page
-  // useEffect(() => {
-  //   if (currentUser && !signupProps.signedUp) navigate("/");
-  // }, [currentUser])
+  useEffect(() => {
+    if (currentUser) navigate("/");
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {
     e.preventDefault();
-    setClickedButton(true);
+    // setClickedButton(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     loginUser(email, password)
-      .then((result) => {
-        console.log("Signed in with:", result);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error.message)
-        setError(error.message);
-      });
+    .then((result) => {
+      console.log("Signed in with:", result);
+      navigate("/");
+    })
+    .catch((error) => {
+      console.log(error.message)
+      setError(error.message);
+    });
     e.target.reset();
   };
 
-  console.log(signupProps.signedUp)
+
   return (
     <>
       <Container maxWidth="sm" component="form" onSubmit={handleFormSubmit}>
-        {signupProps.signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+        {signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
           You have successfully signed up and now sign in.
         </Alert>}
         <Grid sx={{ pt: 3 }}>
@@ -87,7 +88,8 @@ export default function SignIn({ signupProps }: any) {
                 E-mail address or password is wrong.
               </Typography>
             )}
-            {clickedButton ? (
+            {currentUser ? (
+            // {clickedButton ? (
               <Button
                 color="primary"
                 variant="contained"

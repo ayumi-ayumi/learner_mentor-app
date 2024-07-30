@@ -18,6 +18,8 @@ export default function ShowAvater({ setAvater, defaultAvater }) {
     setAvater(src)
     setSelected(src)
   }
+
+  // console.log(selected)
   return (
     <>
     <div className='avater-container'>
