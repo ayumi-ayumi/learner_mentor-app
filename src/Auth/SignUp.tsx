@@ -25,10 +25,10 @@ export default function SignUp({signedUp, setSignedUp}) {
 
 
   // If the user is already authenticated, redirect to the home page
-  // useEffect(() => {
-  //   // if (currentUser) navigate("/");
-  //   if (currentUser && !signedUp) navigate("/");
-  // }, [currentUser])
+  useEffect(() => {
+    if (currentUser) navigate("/signin");
+    // if (currentUser && !signedUp) navigate("/");
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,7 +88,16 @@ export default function SignUp({signedUp, setSignedUp}) {
                 E-mail address or password is wrong.
               </Typography>
             )}
-            {currentUser ? (
+            <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                style={btnstyle}
+                fullWidth
+              >
+                Sign Up
+              </Button>
+            {/* {currentUser ? (
             // {clickedButton ? (
               <Button
                 color="primary"
@@ -110,7 +119,7 @@ export default function SignUp({signedUp, setSignedUp}) {
               >
                 Sign Up
               </Button>
-            )}
+            )} */}
             <Typography>
               Already have an account? <Link to="/signin">Sign in</Link>
             </Typography>

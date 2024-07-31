@@ -9,6 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignIn({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
+  const [isSignIn, setIsSignIn] = useState(false);
   const [clickedButton, setClickedButton] = useState(false);
   const { currentUser, loginUser } = useAuth();
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function SignIn({signedUp, setSignedUp}) {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser) navigate("/");
+    if (currentUser && isSignIn) navigate("/");
   }, [currentUser])
 
   // Handle form submission for user login
@@ -39,6 +40,7 @@ export default function SignIn({signedUp, setSignedUp}) {
     loginUser(email, password)
     .then((result) => {
       console.log("Signed in with:", result);
+      // setIsSignIn(true)
       navigate("/");
     })
     .catch((error) => {
@@ -47,6 +49,7 @@ export default function SignIn({signedUp, setSignedUp}) {
     });
     e.target.reset();
   };
+  console.log(isSignIn)
 
 
   return (
@@ -88,7 +91,16 @@ export default function SignIn({signedUp, setSignedUp}) {
                 E-mail address or password is wrong.
               </Typography>
             )}
-            {currentUser ? (
+            <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                style={btnstyle}
+                fullWidth
+              >
+                Sign In
+              </Button>
+            {/* {currentUser ? (
             // {clickedButton ? (
               <Button
                 color="primary"
@@ -109,7 +121,7 @@ export default function SignIn({signedUp, setSignedUp}) {
               >
                 Sign In
               </Button>
-            )}
+            )} */}
             <Typography>
               Don't have an account? <Link to="/signup">Sign up</Link>
             </Typography>
