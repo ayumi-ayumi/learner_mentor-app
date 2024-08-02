@@ -26,6 +26,7 @@ export default function SignUp({signedUp, setSignedUp}) {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
+    setSignedUp(true)
     if (currentUser) navigate("/signin");
     // if (currentUser && !signedUp) navigate("/");
   }, [currentUser])

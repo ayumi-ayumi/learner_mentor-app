@@ -28,6 +28,7 @@ export default function SignIn({signedUp, setSignedUp}) {
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
     if (currentUser && isSignIn) navigate("/");
+    // if (currentUser && isSignIn) navigate("/");
   }, [currentUser])
 
   // Handle form submission for user login
@@ -50,6 +51,7 @@ export default function SignIn({signedUp, setSignedUp}) {
     e.target.reset();
   };
   console.log(isSignIn)
+  console.log(signedUp)
 
 
   return (
