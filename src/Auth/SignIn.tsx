@@ -11,7 +11,7 @@ export default function SignIn({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
   const [isSignIn, setIsSignIn] = useState(false);
   const [clickedButton, setClickedButton] = useState(false);
-  const { currentUser, loginUser } = useAuth();
+  const { currentUser, loginUser, loading } = useAuth();
   const navigate = useNavigate();
 
   const paperStyle = {
@@ -23,11 +23,10 @@ export default function SignIn({signedUp, setSignedUp}) {
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
 
-  console.log(currentUser)
-
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser && isSignIn) navigate("/");
+    if (currentUser) navigate("/");
+    // if (currentUser && isSignIn) navigate("/");
     // if (currentUser && isSignIn) navigate("/");
   }, [currentUser])
 
@@ -57,9 +56,9 @@ export default function SignIn({signedUp, setSignedUp}) {
   return (
     <>
       <Container maxWidth="sm" component="form" onSubmit={handleFormSubmit}>
-        {signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+        {/* {signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
           You have successfully signed up and now sign in.
-        </Alert>}
+        </Alert>} */}
         <Grid sx={{ pt: 3 }}>
           <Paper elevation={10} style={paperStyle}>
             <Grid
