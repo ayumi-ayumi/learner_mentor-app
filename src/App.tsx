@@ -17,16 +17,19 @@ import Chatroom from './components/ChatRoom'
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
-  const [signedUp, setSignedUp] = useState<boolean>(false);
-  // const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
+  const [signedUp, setSignedUp] = useState("");
+  // const [signedUp, setSignedUp] = useState<boolean>(false);
+  const signup = { signedUp: signedUp, setSignedUp: setSignedUp }
   const { logInUserProfile, currentUser } = useAuth();
   console.log(signedUp)
 
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>
       <Routes>
-        <Route path={`/signup`} element={<SignUp signedUp={signedUp} setSignedUp={setSignedUp}/>} />
-        <Route path={`/signin`} element={<SignIn signedUp={signedUp} setSignedUp={setSignedUp} />} />
+        <Route path={`/signup`} element={<SignUp signup={signup} />} />
+        <Route path={`/signin`} element={<SignIn signup={signup}  />} />
+        {/* <Route path={`/signup`} element={<SignUp signedUp={signedUp} setSignedUp={setSignedUp}/>} />
+        <Route path={`/signin`} element={<SignIn signedUp={signedUp} setSignedUp={setSignedUp} />} /> */}
         <Route path={`/chat`} element={<Chatroom />} />
         <Route path="/" element={<Layout />}>
           <Route

@@ -7,12 +7,16 @@ import { useAuth, } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SignIn({signedUp, setSignedUp}) {
+export default function SignIn({signup}) {
+// export default function SignIn({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
   const [isSignIn, setIsSignIn] = useState(false);
   const [clickedButton, setClickedButton] = useState(false);
   const { currentUser, loginUser, loading } = useAuth();
   const navigate = useNavigate();
+
+  console.log(signup.signedUp)
+
 
   const paperStyle = {
     padding: 20,
@@ -24,11 +28,11 @@ export default function SignIn({signedUp, setSignedUp}) {
   const btnstyle = { margin: "8px 0" };
 
   // If the user is already authenticated, redirect to the home page
-  useEffect(() => {
-    if (currentUser) navigate("/");
-    // if (currentUser && isSignIn) navigate("/");
-    // if (currentUser && isSignIn) navigate("/");
-  }, [currentUser])
+  // useEffect(() => {
+  //   if (currentUser) navigate("/");
+  //   // if (currentUser && isSignIn) navigate("/");
+  //   // if (currentUser && isSignIn) navigate("/");
+  // }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,8 +53,7 @@ export default function SignIn({signedUp, setSignedUp}) {
     });
     e.target.reset();
   };
-  console.log(isSignIn)
-  console.log(signedUp)
+  // console.log(isSignIn)
 
 
   return (

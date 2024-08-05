@@ -27,7 +27,7 @@ export function AuthProvider({ children }: Props) {
   const [logInUserProfile, setLogInUserProfile] = useState<UserProfileType>();
   const [users, setUsers] = useState<UserProfileType[]>([]);
 
-console.log(loading)
+// console.log(loading)
 
 
   const createUser = (email: string, password: string) => {

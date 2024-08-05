@@ -5,11 +5,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SignUp({signedUp, setSignedUp}) {
+export default function SignUp({signup}) {
+// export default function SignUp({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
   // const [clickedButton, setClickedButton] = useState<boolean>(false);
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
+
+  console.log(signup.signedUp)
 
   const paperStyle = {
     padding: 20,
@@ -35,13 +38,16 @@ export default function SignUp({signedUp, setSignedUp}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {
     e.preventDefault();
-    
+    // console.log(123)
     const email = e.target.email.value;
     const password = e.target.password.value;
     createUser(email, password)
     .then((result) => {
       // setClickedButton(true);
       // setSignedUp(true);
+      // console.log(result)
+      signup.setSignedUp(123)
+
         console.log("Signed up with:", result.user.uid);
         navigate("/signin");
       })
