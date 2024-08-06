@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
+import { auth } from "../firebase/BaseConfig";
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignUp({signup}) {
@@ -12,7 +14,7 @@ export default function SignUp({signup}) {
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
 
-  console.log(signup.signedUp)
+  // console.log(signup.signedUp)
 
   const paperStyle = {
     padding: 20,
@@ -22,8 +24,7 @@ export default function SignUp({signup}) {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-        // console.log(currentUser)
-        // console.log(signedUp)
+        console.log(auth)
         // console.log(clickedButton)
 
 
@@ -57,6 +58,7 @@ export default function SignUp({signup}) {
       });
     e.target.reset();
   };
+  console.log(currentUser)
 
 
   return (
