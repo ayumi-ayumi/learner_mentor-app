@@ -24,7 +24,7 @@ export default function SignUp({signup}) {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-        console.log(auth)
+        // console.log(auth)
         // console.log(clickedButton)
 
 
@@ -34,6 +34,8 @@ export default function SignUp({signup}) {
   //   if (currentUser) navigate("/signin");
   //   // if (currentUser && !signedUp) navigate("/");
   // }, [currentUser])
+
+  console.log(currentUser)
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +51,9 @@ export default function SignUp({signup}) {
       // console.log(result)
       signup.setSignedUp(123)
 
-        console.log("Signed up with:", result.user.uid);
+        console.log("Signed up with:", result)
+        // console.log("Signed up with:", result._tokenResponse.kind);
+        // console.log("Signed up with:", result.user.uid);
         navigate("/signin");
       })
       .catch((error) => {
@@ -59,6 +63,9 @@ export default function SignUp({signup}) {
     e.target.reset();
   };
   console.log(currentUser)
+
+//identitytoolkit#SignupNewUserResponse
+//identitytoolkit#VerifyPasswordResponse
 
 
   return (

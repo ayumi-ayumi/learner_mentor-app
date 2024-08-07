@@ -34,6 +34,8 @@ export default function SignIn({signup}) {
   //   // if (currentUser && isSignIn) navigate("/");
   // }, [currentUser])
 
+  console.log(currentUser)
+
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {

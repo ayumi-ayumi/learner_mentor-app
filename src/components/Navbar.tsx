@@ -43,7 +43,7 @@ export default function Navbar() {
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
           {/* <div>{logInUserProfile.email}</div> */}
-          <div>{currentUser.email}</div>
+          {/* <div>{currentUser.email}</div> */}
           <IconButton
             id="basic-button"
             size="large"
