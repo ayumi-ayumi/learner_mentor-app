@@ -45,6 +45,7 @@ export function AuthProvider({ children }: Props) {
   // Watch if an user is signed in or out
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(123)
       setCurrentUser(user);
       setLoading(false);
     });
