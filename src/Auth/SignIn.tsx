@@ -28,13 +28,11 @@ export default function SignIn({signup}) {
   const btnstyle = { margin: "8px 0" };
 
   // If the user is already authenticated, redirect to the home page
-  // useEffect(() => {
-  //   if (currentUser) navigate("/");
-  //   // if (currentUser && isSignIn) navigate("/");
-  //   // if (currentUser && isSignIn) navigate("/");
-  // }, [currentUser])
-
-  console.log(currentUser)
+  useEffect(() => {
+    if (currentUser && currentUser.metadata.lastSignInTime) navigate("/");
+    // if (currentUser && isSignIn) navigate("/");
+    // if (currentUser && isSignIn) navigate("/");
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
