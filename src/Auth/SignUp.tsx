@@ -7,7 +7,8 @@ import { auth } from "../firebase/BaseConfig";
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SignUp({signup}) {
+export default function SignUp() {
+// export default function SignUp({signup}) {
 // export default function SignUp({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
   // const [clickedButton, setClickedButton] = useState<boolean>(false);
@@ -35,7 +36,7 @@ export default function SignUp({signup}) {
   //   // if (currentUser && !signedUp) navigate("/");
   // }, [currentUser])
 
-  console.log(currentUser)
+  // console.log(currentUser)
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +50,7 @@ export default function SignUp({signup}) {
       // setClickedButton(true);
       // setSignedUp(true);
       // console.log(result)
-      signup.setSignedUp(123)
+      // signup.setSignedUp(123)
 
         console.log("Signed up with:", result)
         // console.log("Signed up with:", result._tokenResponse.kind);
@@ -62,7 +63,7 @@ export default function SignUp({signup}) {
       });
     e.target.reset();
   };
-  console.log(currentUser)
+  // console.log(currentUser)
 
 //identitytoolkit#SignupNewUserResponse
 //identitytoolkit#VerifyPasswordResponse
