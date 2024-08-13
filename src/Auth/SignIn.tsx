@@ -31,7 +31,7 @@ export default function SignIn() {
 
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser && currentUser.metadata.lastSignInTime) navigate("/");
+    if (currentUser && currentUser.metadata.lastSignInTime !== currentUser.metadata.creationTime) navigate("/");
     // if (currentUser && isSignIn) navigate("/");
     // if (currentUser && isSignIn) navigate("/");
   }, [currentUser])
