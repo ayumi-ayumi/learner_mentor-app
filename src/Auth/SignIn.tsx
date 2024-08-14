@@ -8,17 +8,9 @@ import CheckIcon from '@mui/icons-material/Check';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignIn() {
-// export default function SignIn({signup}) {
-// export default function SignIn({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
-  // const [isSignIn, setIsSignIn] = useState(false);
-  // const [clickedButton, setClickedButton] = useState(false);
-  const { currentUser, loginUser, loading } = useAuth();
+  const { currentUser, loginUser } = useAuth();
   const navigate = useNavigate();
-
-  // console.log(signup.signedUp)
-  // console.log(loading)
-
 
   const paperStyle = {
     padding: 20,
@@ -29,24 +21,26 @@ export default function SignIn() {
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
 
+  let signedUp;
+  if(currentUser?.metadata.lastSignInTime)
+    {
+    signedUp = currentUser?.metadata.lastSignInTime == currentUser?.metadata.creationTime;
+  }
+  
   // If the user is already authenticated, redirect to the home page
   useEffect(() => {
-    if (currentUser && currentUser.metadata.lastSignInTime !== currentUser.metadata.creationTime) navigate("/");
-    // if (currentUser && isSignIn) navigate("/");
-    // if (currentUser && isSignIn) navigate("/");
+    if (currentUser?.metadata.lastSignInTime !== currentUser?.metadata.creationTime) navigate("/");
   }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {
     e.preventDefault();
-    // setClickedButton(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     loginUser(email, password)
     .then((result) => {
       console.log("Signed in with:", result);
-      // setIsSignIn(true)
       navigate("/");
     })
     .catch((error) => {
@@ -55,15 +49,13 @@ export default function SignIn() {
     });
     e.target.reset();
   };
-  // console.log(isSignIn)
-
 
   return (
     <>
       <Container maxWidth="sm" component="form" onSubmit={handleFormSubmit}>
-        {/* {signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+        {signedUp && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
           You have successfully signed up and now sign in.
-        </Alert>} */}
+        </Alert>}
         <Grid sx={{ pt: 3 }}>
           <Paper elevation={10} style={paperStyle}>
             <Grid

@@ -8,14 +8,9 @@ import { auth } from "../firebase/BaseConfig";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignUp() {
-// export default function SignUp({signup}) {
-// export default function SignUp({signedUp, setSignedUp}) {
   const [error, setError] = useState("");
-  // const [clickedButton, setClickedButton] = useState<boolean>(false);
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
-
-  // console.log(signup.signedUp)
 
   const paperStyle = {
     padding: 20,
@@ -25,36 +20,21 @@ export default function SignUp() {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
-        // console.log(auth)
-        // console.log(clickedButton)
-
 
   // If the user is already authenticated, redirect to the home page
-  // useEffect(() => {
-  //   setSignedUp(true)
-  //   if (currentUser) navigate("/signin");
-  //   // if (currentUser && !signedUp) navigate("/");
-  // }, [currentUser])
-
-  // console.log(currentUser)
+  useEffect(() => {
+    if (currentUser?.metadata.lastSignInTime !== currentUser?.metadata.creationTime) navigate("/");
+  }, [currentUser])
 
   // Handle form submission for user login
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleFormSubmit(e: any) {
     e.preventDefault();
-    // console.log(123)
     const email = e.target.email.value;
     const password = e.target.password.value;
     createUser(email, password)
     .then((result) => {
-      // setClickedButton(true);
-      // setSignedUp(true);
-      // console.log(result)
-      // signup.setSignedUp(123)
-
         console.log("Signed up with:", result)
-        // console.log("Signed up with:", result._tokenResponse.kind);
-        // console.log("Signed up with:", result.user.uid);
         navigate("/signin");
       })
       .catch((error) => {
@@ -63,11 +43,6 @@ export default function SignUp() {
       });
     e.target.reset();
   };
-  // console.log(currentUser)
-
-//identitytoolkit#SignupNewUserResponse
-//identitytoolkit#VerifyPasswordResponse
-
 
   return (
     <>
