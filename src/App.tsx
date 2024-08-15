@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import Home from "./pages/Home";
 import FormProfile from "./components/FormProfile";
 import MyProfile from "./components/MyProfile";

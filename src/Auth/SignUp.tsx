@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { Avatar, Button, TextField, Paper, Grid, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth, } from "../context/AuthProvider";
-import { auth } from "../firebase/BaseConfig";
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignUp() {
