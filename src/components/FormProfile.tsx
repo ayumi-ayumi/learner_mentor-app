@@ -53,7 +53,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         ...data,
         uid: currentUser?.uid,
         // id: nanoid(),
-        timestamp: serverTimestamp(),
+        // timestamp: serverTimestamp(),
         place: selectedPlace,
         // place: place,
         avater: avater

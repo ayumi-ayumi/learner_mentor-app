@@ -13,7 +13,6 @@
   flex-direction: column;
   font-size: 1.5rem;
   width: 70%;
-  margin: 20px;
 }
 .card_upper .right > div {
   margin: 5px;
@@ -22,7 +21,31 @@
   font-size: 1rem;
 }
 
-.card-container {
-  background-color: red;
-}/*# sourceMappingURL=PlaceMarker.css.map */
+.profile {
+  padding: 0 7px;
+  margin-left: 5px;
+  border: 1px solid rgb(223, 226, 231);
+  border-radius: 16px;
+  background-color: rgba(204, 230, 255, 0.4);
+  font-size: 0.8rem;
+}
 
+.cafeCard-container {
+  font-size: 1rem;
+}
+.cafeCard-container .cafeProfile {
+  padding: 0 7px;
+  margin-left: 5px;
+  border: 1px solid rgb(223, 226, 231);
+  border-radius: 16px;
+  background-color: rgba(204, 230, 255, 0.4);
+  font-size: 0.8rem;
+}
+.cafeCard-container img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100px;
+  width: 150px;
+  border-radius: 5px;
+  margin-left: 5px;
+}/*# sourceMappingURL=PlaceMarker.css.map */

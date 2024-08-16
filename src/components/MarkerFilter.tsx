@@ -12,10 +12,14 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
       }}
     >
       <div className="filter-tab">
-        <div style={{backgroundColor:"#22ccff"}} onClick={()=>props.setFilter("learner")}>Learner</div>
+        <div onClick={()=>props.setFilter("learner")}>Learner</div>
+        <div onClick={()=>props.setFilter("mentor")}>Mentor</div>
+        <div onClick={()=>props.setFilter("cafes")}>Cafes</div>
+        <div onClick={()=>props.setFilter("all")}>Show ALL</div>
+        {/* <div style={{backgroundColor:"#22ccff"}} onClick={()=>props.setFilter("learner")}>Learner</div>
         <div style={{backgroundColor:"yellow"}} onClick={()=>props.setFilter("mentor")}>Mentor</div>
         <div style={{backgroundColor:"pink"}} onClick={()=>props.setFilter("cafes")}>Cafes</div>
-        <div onClick={()=>props.setFilter("all")}>Show ALL</div>
+        <div onClick={()=>props.setFilter("all")}>Show ALL</div> */}
       </div>
     </Box>
   );

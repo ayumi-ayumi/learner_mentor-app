@@ -77,7 +77,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
         title={"AdvancedMarker that opens an Infowindow when clicked."}
       >
         <Pin
-          background={data.learnerORmentor === "learner" ? "#22ccff" : "yellow"}
+          background={data.learnerORmentor === "Learner" ? "#22ccff" : "yellow"}
           borderColor={"#1e89a1"}
           scale={1.3}
         >
