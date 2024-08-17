@@ -9,7 +9,8 @@ export default function Home() {
 
   return (
     <>
-      <MarkerFilter setFilter={setFilter} /><MapWindow filter={filter} />
+      <MarkerFilter setFilter={setFilter} />
+      <MapWindow filter={filter} />
     </>
   );
 }

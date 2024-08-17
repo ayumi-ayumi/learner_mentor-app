@@ -29,9 +29,9 @@ export default function MapWindow({ filter }: { filter: string }) {
       if (filter === "all") {
         return true;
       } else if (filter === "learner") {
-        return user.learnerORmentor === "learner";
+        return user.learnerORmentor === "Learner";
       } else if (filter === "mentor") {
-        return user.learnerORmentor === "mentor";
+        return user.learnerORmentor === "Mentor";
       }
     });
   }
