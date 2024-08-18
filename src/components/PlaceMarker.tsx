@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Key, useEffect, useState } from "react";
 import {
   AdvancedMarker,
   Pin,
@@ -7,9 +7,7 @@ import {
   useMap,
   useMapsLibrary
 } from "@vis.gl/react-google-maps";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import { Stack, CardHeader, CardContent, CardActions, Collapse, Avatar, Typography, Button, Box } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -17,55 +15,24 @@ import LanguageIcon from '@mui/icons-material/Language';
 import HistoryIcon from '@mui/icons-material/History';
 import CodeIcon from '@mui/icons-material/Code';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { red } from "@mui/material/colors";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
+import { CafeDetailType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
 import { avaterImgs } from "../Props/props";
-import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
-import { APILoader, PlaceOverview } from '@googlemaps/extended-component-library/react';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-
-
-
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean
-}
-
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, isOpen: boolean, setMarkerID: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
-  const [expanded, setExpanded] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const { logInUserProfile } = useAuth();
   const navigate = useNavigate();
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const showAvaterDescription = (src) => {
     const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
     return desc
   }
-// console.log(data)
 
   return (
     <>
@@ -178,21 +145,15 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
     placesService.getDetails(detailsRequest, function (results: google.maps.places.PlaceResult | null, status: google.maps.places.PlacesServiceStatus) {
       if (status === "OK") {
         const sendPlaceInfo = {
-          // photos: results?.photos[0].getUrl(),
           photos: results?.photos?.slice(0, 3),
           formatted_address: results?.formatted_address,
           name: results?.name,
           url: results?.url
         }
         setPlaceInfo(sendPlaceInfo);
-        // setPlaceInfo((oldPlaceInfo) => [...oldPlaceInfo, sendPlaceInfo]);
       }
     });
   }, [markerID])
-  // }, [markerCafePlaceID])
-  // console.log(markerCafePlaceID)
-  // }, [placesService])
-
 
   return (<>
     <AdvancedMarker
