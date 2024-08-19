@@ -16,12 +16,12 @@ export const FormInputCheckbox= ({
   options,
 } : FormInputProps) => {
   const { control } = useFormContext();
-  return (
+  return ( 
     <Controller
 			control={control}
 			name={name}
 			render={({ field: { value, onChange }, fieldState: { error } }) => (
-				<FormControl error={!!error} >
+				<FormControl error={!!error} > 
 					<FormLabel>{label}</FormLabel>
 					<FormGroup row={true}>
 						{options?.map((option) => (

@@ -7,7 +7,6 @@ import {
   useMap,
   useMapsLibrary
 } from "@vis.gl/react-google-maps";
-import { Stack, Box } from "@mui/material";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -21,6 +20,7 @@ import { avaterImgs } from "../Props/props";
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Stack, Box } from "@mui/material";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, isOpen: boolean, setMarkerID: any }) {
@@ -184,7 +184,7 @@ export function PlaceMarkerCafe({ data, isOpen, setMarkerID, markerID, markerCaf
                 <div>{placeInfo.name}</div>
                 <div><LocationOnIcon />{placeInfo.formatted_address}</div>
                 <div>
-                  <a href={placeInfo.url}>View in Google Maps</a>
+                  <a href={placeInfo.url} target="_blank" rel="noreferrer">View in Google Maps</a>
                 </div>
                 <div>
                   {data.cafe_detail.map((detail) => (
