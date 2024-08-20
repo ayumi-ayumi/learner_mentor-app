@@ -1,9 +1,6 @@
 import React from "react";
 import '../styles/MarkerFilter.scss'
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
-// import ToggleButton from '@mui/material/ToggleButton';
-// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
 
 export default function MarkerFilter(props: { setFilter: (arg0: string) => void; }) {
   const [alignment, setAlignment] = React.useState('all');

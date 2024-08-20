@@ -8,7 +8,7 @@ import "../styles/Navbar.scss";
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { logOut, logInUserProfile, currentUser } = useAuth();
+  const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -42,8 +42,6 @@ export default function Navbar() {
         <Link className="site-logo" to="/">Learner or Mentor</Link>
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
-          {/* <div>{logInUserProfile.email}</div> */}
-          {/* <div>{currentUser.email}</div> */}
           <IconButton
             id="basic-button"
             size="large"

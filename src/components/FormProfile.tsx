@@ -3,7 +3,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { serverTimestamp, doc, setDoc } from "firebase/firestore";
-import { nanoid } from "nanoid";
 import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
@@ -23,7 +22,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
@@ -37,8 +35,6 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
-  // console.log(logInUserProfile)
-  // console.log(currentUser.uid)
 
   // useEffect(() => {
   //   if (logInUserProfile) setUserProfile(logInUserProfile)
@@ -83,7 +79,6 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             className="form-container"
           >
             <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
-            {/* <PlaceAutoComplete setPlace={setPlace} defaultPlace={userProfile?.place?.address} /> */}
             <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address}/>
             <FormInputText name="name" label="Name" />
             <FormInputRadio

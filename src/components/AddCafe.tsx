@@ -3,7 +3,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
-import { nanoid } from "nanoid";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { Button, Container, Stack, Alert } from "@mui/material";
 import { options_cafeDetail } from "../Props/props";
@@ -11,7 +10,6 @@ import { CafePlace, CafeDetailType } from "../interfaces/interfaces";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoCompleteForCafe } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
-import {APILoader, PlaceDirectionsButton, PlaceOverview} from '@googlemaps/extended-component-library/react';
 
 export default function AddCafe() {
 
@@ -37,7 +35,6 @@ export default function AddCafe() {
   const onSubmit = (data: CafeDetailType) => {
     addDoc(collection(db, "cafes"), {
       ...data,
-      // id: nanoid(),
       timestamp: serverTimestamp(),
       place: place
     });
@@ -67,15 +64,6 @@ export default function AddCafe() {
             className="form-container"
           >
             <PlaceAutoCompleteForCafe setPlace={setPlace} />
-            {/* {place.photos && place.photos.map((photo) => (
-              <img key={photo.html_attributions} src={photo.getUrl()} style={{
-                display: "grid",
-                height: "80px",
-                width: "60px",
-                // margin: "10px 300px",
-              }} />
-            ))} */}
-            {/* <PlaceOverview place="ChIJbzYnQte8woARJaqqFVpKeNo" /> */}
             <FormInputCheckbox
               name={"cafe_detail"}
               label={"Cafe enviroment"}
