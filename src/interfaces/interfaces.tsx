@@ -56,3 +56,12 @@ export interface FormInputProps {
 export interface Props {
   children?: ReactNode;
 }
+
+export interface messageType {
+    text: string,
+    photoURL: string,
+    uid: string,
+    createdAt: FieldValue,
+    created_by:string,
+    id: string
+  }

@@ -53,7 +53,7 @@ export function AuthProvider({ children }: Props) {
     return () => unsubscribe();
     
   }, []);
-  console.log(currentUser)
+  // console.log(currentUser)
 
   //Obtain data from firebase by onSnapshot
   const dataCollectionRef = collection(db, 'users')

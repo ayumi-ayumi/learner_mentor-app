@@ -5,6 +5,7 @@ import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestor
 import { useAuth } from '../context/AuthProvider';
 import { avaterImgs } from '../Props/props';
 import '../styles/Chat.scss'
+import { messageType } from '../interfaces/interfaces';
 
 export default function ChatRoom() {
   const scroll = useRef();
@@ -17,12 +18,16 @@ export default function ChatRoom() {
     const messagesRef = collection(db, 'messages');
     const q = query(messagesRef, orderBy("createdAt"), limit(25));
     const unsubscribe = onSnapshot(q, (snapshot) => {
+      console.log(snapshot.docs.map((doc) => console.log(doc.data().text)))
+      // console.log(123)
       // const fetchedMessages = snapshot.docs.map((doc) => console.log(doc.id));
-      const fetchedMessages = snapshot.docs.map((doc) =>  ({...doc.data(), id: doc.id}));
-      setMessages(fetchedMessages);
+      // const fetchedMessages:messageType[] = snapshot.docs.map((doc) =>  ({...doc.data()}));
+      // const fetchedMessages:messageType[] = snapshot.docs.map((doc) =>  ({...doc.data(), id: doc.id}));
+      // setMessages(fetchedMessages);
     });
     return () => unsubscribe();
   }, []);
+  // console.log(messages)
 
 
   // const showDescription = (src) => {
