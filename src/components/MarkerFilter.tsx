@@ -24,7 +24,7 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
         color="primary"
         value={alignment}
         exclusive
-        // onChange={handleChange}
+        onChange={handleChange}
         aria-label="Platform"
       >
         <ToggleButton onClick={() => props.setFilter("learner")} value="Learner">Learner</ToggleButton>
