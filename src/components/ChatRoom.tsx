@@ -6,7 +6,8 @@ import { useAuth } from '../context/AuthProvider';
 import { avaterImgs } from '../Props/props';
 import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
-
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 export default function ChatRoom() {
   const scroll = useRef();
   const { currentUser, logInUserProfile } = useAuth();
@@ -37,7 +38,19 @@ export default function ChatRoom() {
 
   return (
     <div>
-      <div className="msgs">
+      {/* <div className="msgs"> */}
+      <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > :not(style)': {
+          m: 4,
+          width: "80%",
+          height: 800,
+        },
+      }}
+    >
+      <Paper elevation={3}>
         {messages.map(({ id, uid, text, photoURL }) => (
           <div 
           key={id} 
@@ -48,9 +61,11 @@ export default function ChatRoom() {
             <p>{text}</p>
           </div>
         ))}
-      </div>
       <div ref={scroll}></div>
       <ChatMsgInput scroll={scroll} />
+      </Paper>
+        {/* </div> */}
+        </Box>
     </div>
   )
 }

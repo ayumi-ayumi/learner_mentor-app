@@ -24,7 +24,6 @@ export default function App() {
       <Routes>
         <Route path={`/signup`} element={<SignUp />} />
         <Route path={`/signin`} element={<SignIn />} />
-        <Route path={`/chat`} element={<Chatroom />} />
         <Route path="/" element={<Layout />}>
           <Route
             index
@@ -34,6 +33,7 @@ export default function App() {
               </RequireAuth>
             }
           />
+          <Route path={`/chat`} element={<Chatroom />} />
           <Route path="myprofile" element={<MyProfile />} />
           {/* <Route path="addprofile" element={<FormProfile/>} />
           <Route path="editprofile" element={<FormProfile />} /> */}
