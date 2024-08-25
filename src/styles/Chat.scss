@@ -132,10 +132,15 @@
 // }
 
 .msgs {
-  width: 80%;
-  margin: 10px auto;
-  min-height: 800px;
+  display: flex;
+  flex-wrap: wrap;
   // border: 1px solid gray;
+  > :not(style) {
+    width: 80%;
+    margin: 10px auto;
+    min-height: 100vh;
+
+  }
 
 }
 .msg {

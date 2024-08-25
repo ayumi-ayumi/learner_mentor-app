@@ -40,15 +40,16 @@ export default function ChatRoom() {
     <div>
       {/* <div className="msgs"> */}
       <Box
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        '& > :not(style)': {
-          m: 4,
-          width: "80%",
-          height: 800,
-        },
-      }}
+      className="msgs"
+      // sx={{
+      //   display: 'flex',
+      //   flexWrap: 'wrap',
+      //   '& > :not(style)': {
+      //     m: 4,
+      //     width: "80%",
+      //     height: 800,
+      //   },
+      // }}
     >
       <Paper elevation={3}>
         {messages.map(({ id, uid, text, photoURL }) => (
