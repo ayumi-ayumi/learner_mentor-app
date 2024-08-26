@@ -138,18 +138,26 @@
   > :not(style) {
     width: 80%;
     margin: 10px auto;
-    min-height: 100vh;
+    min-height: 80vh;
+    align-content: flex-end;
 
   }
 
 }
 .msg {
   display: flex;
-  padding: 20px 10px 0 20px;
-  margin: 20px;
-  border-radius: 3000px;
+  // padding: 20px 10px 0 20px;
+  margin: 10px;
+  border-radius: 50px;
   box-shadow: 0 0 10px rgb(164, 164, 164);
   align-items: center;
+  img {
+    width: 40px;
+    height: 40px;
+    // border-radius: 50%;
+    margin: 2px 5px;
+    // border: 2px solid black;
+  }
 }
 .sent {
   flex-direction: row-reverse;
@@ -166,10 +174,10 @@
   color: black;
 }
 
-.msgs img {
-  width: 60px;
-  height: 60px;
-  // border-radius: 50%;
-  margin: 2px 5px;
-  border: 2px solid black;
-}
+// .msgs img {
+//   width: 40px;
+//   height: 40px;
+//   // border-radius: 50%;
+//   margin: 2px 5px;
+//   // border: 2px solid black;
+// }
