@@ -1,0 +1,14 @@
+.sendMsg {
+  box-shadow: 0 0 10px rgb(164, 164, 164);
+  width: 94%;
+  margin: 0 auto;
+  border-radius: 5px;
+  height: 50px;
+}
+.sendMsg form div {
+  width: 80%;
+}
+.sendMsg form button {
+  margin: 0 0 0 auto;
+  display: block;
+}/*# sourceMappingURL=ChatMsgInput.css.map */

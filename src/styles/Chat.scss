@@ -134,8 +134,10 @@
 .msgs {
   display: flex;
   flex-wrap: wrap;
+  
   // border: 1px solid gray;
   > :not(style) {
+    padding: 10px;
     width: 80%;
     margin: 10px auto;
     min-height: 80vh;
@@ -147,10 +149,14 @@
 .msg {
   display: flex;
   // padding: 20px 10px 0 20px;
-  margin: 10px;
+  // margin: 10px;
   border-radius: 50px;
   box-shadow: 0 0 10px rgb(164, 164, 164);
   align-items: center;
+  width: fit-content;
+  padding: 0 10px;
+  height: 40px;
+
   img {
     width: 40px;
     height: 40px;
@@ -161,12 +167,13 @@
 }
 .sent {
   flex-direction: row-reverse;
+  margin: 10px 10px 10px auto;
 }
 
 .sent p {
   // color: white;
   // background: #0b93f6;
-  align-self: flex-end;
+  // align-self: flex-end;
 }
 
 .received p {

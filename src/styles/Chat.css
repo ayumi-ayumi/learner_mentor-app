@@ -3,6 +3,7 @@
   flex-wrap: wrap;
 }
 .msgs > :not(style) {
+  padding: 10px;
   width: 80%;
   margin: 10px auto;
   min-height: 80vh;
@@ -11,10 +12,13 @@
 
 .msg {
   display: flex;
-  margin: 10px;
   border-radius: 50px;
   box-shadow: 0 0 10px rgb(164, 164, 164);
   align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 10px;
+  height: 40px;
 }
 .msg img {
   width: 40px;
@@ -24,10 +28,7 @@
 
 .sent {
   flex-direction: row-reverse;
-}
-
-.sent p {
-  align-self: flex-end;
+  margin: 10px 10px 10px auto;
 }
 
 .received p {

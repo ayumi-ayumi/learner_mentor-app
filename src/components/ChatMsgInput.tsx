@@ -2,6 +2,7 @@ import { Input } from "@mui/material";
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { db } from "../firebase/BaseConfig";
+import '../styles/ChatMsgInput.scss';
 
 
 import SendIcon from "@mui/icons-material/Send";
@@ -28,17 +29,17 @@ export default function ChatMsgInput({ scroll }) {
   }
 
   return (
-    <div>
+    <div className="sendMsg">
       <form onSubmit={sendMessage}>
-        <div className="sendMsg">
+        <div>
           <Input
-            style={{
-              width: "78%",
-              fontSize: "15px",
-              fontWeight: "550",
-              marginLeft: "5px",
-              marginBottom: "-3px",
-            }}
+            // style={{
+            //   width: "78%",
+            //   fontSize: "15px",
+            //   fontWeight: "550",
+            //   marginLeft: "5px",
+            //   marginBottom: "-3px",
+            // }}
             placeholder="..."
             type="text"
             value={message}

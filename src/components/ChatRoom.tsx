@@ -8,6 +8,7 @@ import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+
 export default function ChatRoom() {
   const scroll = useRef();
   const { currentUser, logInUserProfile } = useAuth();
