@@ -29,9 +29,10 @@
 .sent {
   flex-direction: row-reverse;
   margin: 10px 10px 10px auto;
+  padding: 0 0 0 10px;
 }
 
-.received p {
-  background: #e5e5ea;
-  color: black;
+.received {
+  margin: 10px auto 10px 10px;
+  padding: 0 10px 0 0;
 }/*# sourceMappingURL=Chat.css.map */
