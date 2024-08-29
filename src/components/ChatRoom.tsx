@@ -29,7 +29,6 @@ export default function ChatRoom() {
     });
     return () => unsubscribe();
   }, []);
-  console.log(messages)
 
 
   // const showDescription = (src) => {

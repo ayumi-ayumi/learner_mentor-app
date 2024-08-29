@@ -6,7 +6,10 @@
   height: 50px;
 }
 .sendMsg form div {
-  width: 80%;
+  width: 90%;
+  display: flex;
+  margin: 0 auto;
+  padding: 5px;
 }
 .sendMsg form button {
   margin: 0 0 0 auto;

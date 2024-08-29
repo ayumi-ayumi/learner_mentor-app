@@ -33,13 +33,13 @@ export default function ChatMsgInput({ scroll }) {
       <form onSubmit={sendMessage}>
         <div>
           <Input
-            // style={{
-            //   width: "78%",
-            //   fontSize: "15px",
-            //   fontWeight: "550",
-            //   marginLeft: "5px",
-            //   marginBottom: "-3px",
-            // }}
+            style={{
+              width: "78%",
+              fontSize: "15px",
+              fontWeight: "550",
+              marginLeft: "5px",
+              marginBottom: "-3px",
+            }}
             placeholder="..."
             type="text"
             value={message}
