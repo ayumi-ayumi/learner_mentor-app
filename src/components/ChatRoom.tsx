@@ -52,6 +52,7 @@ export default function ChatRoom() {
       // }}
     >
       <Paper elevation={3}>
+        <Paper>aa</Paper>
         {messages.map(({ id, uid, text, photoURL }) => (
           <div 
           key={id} 

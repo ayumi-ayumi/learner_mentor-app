@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   
   // border: 1px solid gray;
-  > :not(style) {
+  > :not(style) { //except ()
     padding: 10px;
     width: 80%;
     margin: 10px auto;

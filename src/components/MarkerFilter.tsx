@@ -15,7 +15,7 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
   return (
     <Box
       sx={{
-        height: "80px",
+        // height: "80px",
         borderRadius: 1,
         margin: "20px"
       }}

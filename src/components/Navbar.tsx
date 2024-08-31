@@ -10,7 +10,7 @@ export default function Navbar() {
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
-
+console.log(logInUserProfile)
   const handleSignOut = () => {
     logOut()
       .then(() => {
@@ -37,6 +37,7 @@ export default function Navbar() {
           display: "flex",
           padding: "0 20px",
           justifyContent: "space-between",
+          alignItems: "center"
         }}
       >
         <Link className="site-logo" to="/">Learner or Mentor</Link>
@@ -44,7 +45,7 @@ export default function Navbar() {
         <div>
           <IconButton
             id="basic-button"
-            size="large"
+            size="small"
             aria-label="account of current user"
             aria-controls={open ? "basic-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
@@ -53,6 +54,7 @@ export default function Navbar() {
             color="inherit"
           >
             <AccountCircle />
+            {/* <img src={logInUserProfile.avater}/> */}
           </IconButton>
           <Menu
             id="basic-menu"

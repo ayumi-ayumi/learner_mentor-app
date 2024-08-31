@@ -28,7 +28,7 @@ export default function ChatMsgInput({ scroll }) {
     scroll.current.scrollIntoView({ behavior: "smooth" });
   }
 
-  return (
+  return 
     <div className="sendMsg">
       <form onSubmit={sendMessage}>
         <div>
@@ -50,6 +50,6 @@ export default function ChatMsgInput({ scroll }) {
         </div>
       </form>
     </div>
-  )
+  
 }
 
