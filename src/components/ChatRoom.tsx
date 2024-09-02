@@ -8,14 +8,16 @@ import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { useParams } from 'react-router-dom';
 
 export default function ChatRoom() {
   const scroll = useRef();
   const { currentUser, logInUserProfile } = useAuth();
-
+  const params = useParams();
+  console.log(params.sendTo)
   //Fetch messages
   const [messages, setMessages] = useState([]);
-  
+
   useEffect(() => {
     const messagesRef = collection(db, 'messages');
     const q = query(messagesRef, orderBy("createdAt"), limit(25));
@@ -24,7 +26,7 @@ export default function ChatRoom() {
       // console.log(123)
       // const fetchedMessages = snapshot.docs.map((doc) => console.log(doc.id));
       // const fetchedMessages:messageType[] = snapshot.docs.map((doc) =>  ({...doc.data()}));
-      const fetchedMessages:messageType[] = snapshot.docs.map((doc) =>  ({...doc.data(), id: doc.id}));
+      const fetchedMessages: messageType[] = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setMessages(fetchedMessages);
     });
     return () => unsubscribe();
@@ -40,7 +42,7 @@ export default function ChatRoom() {
     <div>
       {/* <div className="msgs"> */}
       <Box
-      className="msgs"
+        className="msgs"
       // sx={{
       //   display: 'flex',
       //   flexWrap: 'wrap',
@@ -50,24 +52,24 @@ export default function ChatRoom() {
       //     height: 800,
       //   },
       // }}
-    >
-      <Paper elevation={3}>
-        <Paper>aa</Paper>
-        {messages.map(({ id, uid, text, photoURL }) => (
-          <div 
-          key={id} 
-          className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
-          >
-            <img src={photoURL}/>
-            {/* <img src={photoURL} alt={showDescription(photoURL)} /> */}
-            <p>{text}</p>
-          </div>
-        ))}
-      <div ref={scroll}></div>
-      <ChatMsgInput scroll={scroll} />
-      </Paper>
+      >
+        <Paper elevation={3}>
+          <Paper>{params.sendTo}</Paper>
+          {messages.map(({ id, uid, text, photoURL }) => (
+              <div
+                key={id}
+                className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
+              >
+                <img src={photoURL} />
+                {/* <img src={photoURL} alt={showDescription(photoURL)} /> */}
+                <p>{text}</p>
+              </div>
+          ))}
+          <div ref={scroll}></div>
+          <ChatMsgInput scroll={scroll} />
+        </Paper>
         {/* </div> */}
-        </Box>
+      </Box>
     </div>
   )
 }
