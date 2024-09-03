@@ -27,7 +27,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
   const [isFav, setIsFav] = useState(false);
   const { logInUserProfile } = useAuth();
   const navigate = useNavigate();
-  
+
 
   const showAvaterDescription = (src) => {
     const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
@@ -70,7 +70,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
               </div>
 
               <Stack direction="row" justifyContent="center" spacing={1}>
-                <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`)}>
+                <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}>
                   <ChatIcon color="primary" />
                 </IconButton>
                 <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>

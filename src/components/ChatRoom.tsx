@@ -8,15 +8,27 @@ import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 export default function ChatRoom() {
   const scroll = useRef();
   const { currentUser, logInUserProfile } = useAuth();
   const params = useParams();
-  console.log(params.sendTo)
+  const location = useLocation()
+  const [uid, setUid] 
+  = useState(location.state.uid)
+  // = useState<{ uid: string }>(location.state as { uid: string })
+  // console.log(params.sendTo)
+  console.log(uid)
   //Fetch messages
   const [messages, setMessages] = useState([]);
+  const { users } = useAuth();
+  
+  // const sendTo = users.map((user) => console.log(typeof(user.uid)));
+  const sendTo = users.find((user) => user.uid === uid);
+  console.log(sendTo.name)
+  
+
 
   useEffect(() => {
     const messagesRef = collection(db, 'messages');
@@ -54,7 +66,7 @@ export default function ChatRoom() {
       // }}
       >
         <Paper elevation={3}>
-          <Paper>{params.sendTo}</Paper>
+          <Paper><div>{sendTo.name}</div></Paper>
           {messages.map(({ id, uid, text, photoURL }) => (
               <div
                 key={id}
