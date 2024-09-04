@@ -6,18 +6,18 @@
   border: 3px solid black;
 }
 
-.avaterImg {
+.avatarImg {
   height: 130px;
   width: 100px;
   border-radius: 5px;
   border: 1px solid gray;
 }
 
-.avaterImg:hover {
+.avatarImg:hover {
   opacity: 0.4;
 }
 
-.avater-container {
+.avatar-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }/*# sourceMappingURL=ShowAvater.css.map */

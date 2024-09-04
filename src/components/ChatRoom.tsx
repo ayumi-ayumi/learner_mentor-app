@@ -3,7 +3,7 @@ import ChatMsgInput from './ChatMsgInput'
 import { db } from '../firebase/BaseConfig';
 import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useAuth } from '../context/AuthProvider';
-import { avaterImgs } from '../Props/props';
+import { avatarImgs } from '../Props/props';
 import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
 import Paper from '@mui/material/Paper';
@@ -15,19 +15,19 @@ export default function ChatRoom() {
   const { currentUser, logInUserProfile } = useAuth();
   const params = useParams();
   const location = useLocation()
-  const [uid, setUid] 
-  = useState(location.state.uid)
+  const [uid, setUid]
+    = useState(location.state.uid)
   // = useState<{ uid: string }>(location.state as { uid: string })
   // console.log(params.sendTo)
   console.log(uid)
   //Fetch messages
   const [messages, setMessages] = useState([]);
   const { users } = useAuth();
-  
+
   // const sendTo = users.map((user) => console.log(typeof(user.uid)));
   const sendTo = users.find((user) => user.uid === uid);
   console.log(sendTo.name)
-  
+
 
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ChatRoom() {
 
 
   // const showDescription = (src) => {
-  //   const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
+  //   const desc = avatarImgs.filter(img => img.src === src).map(el => el.description).toString()
   //   return desc
   // }
 
@@ -67,15 +67,15 @@ export default function ChatRoom() {
       >
         <Paper elevation={3}>
           <Paper><div>{sendTo.name}</div></Paper>
-          {messages.map(({ id, uid, text, photoURL }) => (
-              <div
-                key={id}
-                className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
-              >
-                <img src={photoURL} />
-                {/* <img src={photoURL} alt={showDescription(photoURL)} /> */}
-                <p>{text}</p>
-              </div>
+          {messages.map(({ id, uid, text, avatar }) => (
+            <div
+              key={id}
+              className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
+            >
+              <img src={avatar} alt='pic'/>
+              {/* <img src={avatar} alt={showDescription(avatar)} /> */}
+              <p>{text}</p>
+            </div>
           ))}
           <div ref={scroll}></div>
           <ChatMsgInput scroll={scroll} />

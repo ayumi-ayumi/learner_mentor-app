@@ -13,7 +13,7 @@ export interface UserProfileType {
   workingDuration: string,
   programmingLanguages: string[],
   languages: string[],
-  avater: string
+  avatar: string
 }
 
 export interface CafeDetailType {
@@ -58,10 +58,10 @@ export interface Props {
 }
 
 export interface messageType {
-    text: string,
-    photoURL: string,
-    uid: string,
-    createdAt: FieldValue,
-    created_by:string,
-    id: string
-  }
+  text: string,
+  photoURL: string,
+  uid: string,
+  createdAt: FieldValue,
+  created_by: string,
+  id: string
+}

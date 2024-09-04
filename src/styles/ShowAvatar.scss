@@ -3,26 +3,24 @@
   width: 100px;
   box-sizing: border-box;
   border-radius: 5px;
-  border: 3px solid black
+  border: 3px solid black;
 }
 
-.avaterImg {
+.avatarImg {
   height: 130px;
   width: 100px;
   border-radius: 5px;
   border: 1px solid gray;
 }
-  
-.avaterImg:hover {
+
+.avatarImg:hover {
   opacity: 0.4;
-  }
-// .avaterImg:active {
+}
+// .avatarImg:active {
 //   background-color: red;
 //  }
 
-
-
-.avater-container {
+.avatar-container {
   // height: 80px;
   // width: 100%;
   display: grid;

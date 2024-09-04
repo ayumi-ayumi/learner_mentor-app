@@ -13,9 +13,9 @@ export const options_Langugages = ["German", "English", "Spanish", "French", "It
   "Russian", "Chinese", "Japanese", "Korean"]
 
 export const options_ProgrammingLanguages = ["HTML&CSS", "JavaScript", "React", "TypeScript", "Python",
-  "PHP",  "C", "C++", "Java"]
+  "PHP", "C", "C++", "Java"]
 
-export const options_cafeDetail = ["Wifi", "Power sockets", "Long stay", "Work-friendly table/chair", "Terrace", 
+export const options_cafeDetail = ["Wifi", "Power sockets", "Long stay", "Work-friendly table/chair", "Terrace",
   "pet-friendly", "Quiet", "Video/audio calls", "Bathroom"]
 // export const options_learnerORmentor = [
 //   {
@@ -216,18 +216,18 @@ export const defaultValues: UserProfileType = {
   programmingLanguages: [],
   languages: [],
   uid: "",
-  avater: ""
+  avatar: ""
 };
 
-export const avaterImgs = [
-  { id: 1, src: 'avaters/avater1.svg', description: "black clothes with glasses" },
-  { id: 2, src: 'avaters/avater2.svg', description: "three eyes with twin tails" },
-  { id: 3, src: 'avaters/avater3.svg', description: "serious face with a laptop" },
-  { id: 4, src: 'avaters/avater4.svg', description: "crossing arms with glasses" },
-  { id: 5, src: 'avaters/avater5.svg', description: "hoodie with beard" },
-  { id: 6, src: 'avaters/avater6.svg', description: "pony tail with mustache" },
-  { id: 7, src: 'avaters/avater7.svg', description: "crossing arms with hair band" },
-  { id: 8, src: 'avaters/avater8.svg', description: "sweater with glasses and beard" },
-  { id: 9, src: 'avaters/avater9.svg', description: "eye with pony tail" },
-  { id: 10, src: 'avaters/avater10.svg', description: "hoodie with beard and thick hait" }
+export const avatarImgs = [
+  { id: 1, src: 'avatars/avatar1.svg', description: "black clothes with glasses" },
+  { id: 2, src: 'avatars/avatar2.svg', description: "three eyes with twin tails" },
+  { id: 3, src: 'avatars/avatar3.svg', description: "serious face with a laptop" },
+  { id: 4, src: 'avatars/avatar4.svg', description: "crossing arms with glasses" },
+  { id: 5, src: 'avatars/avatar5.svg', description: "hoodie with beard" },
+  { id: 6, src: 'avatars/avatar6.svg', description: "pony tail with mustache" },
+  { id: 7, src: 'avatars/avatar7.svg', description: "crossing arms with hair band" },
+  { id: 8, src: 'avatars/avatar8.svg', description: "sweater with glasses and beard" },
+  { id: 9, src: 'avatars/avatar9.svg', description: "eye with pony tail" },
+  { id: 10, src: 'avatars/avatar10.svg', description: "hoodie with beard and thick hait" }
 ]

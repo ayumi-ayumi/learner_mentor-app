@@ -17,18 +17,18 @@ export default function ChatMsgInput({ scroll }) {
     // const messagesRef = doc(db, 'messages', currentUser.uid)
     const messagesRef = collection(db, "messages");
     // setDoc(messagesRef,{
-    addDoc(messagesRef,{
+    addDoc(messagesRef, {
       text: message,
-      photoURL: logInUserProfile?.avater,
+      avatar: logInUserProfile?.avatar,
       uid: logInUserProfile?.uid,
       createdAt: serverTimestamp(),
-      created_by:logInUserProfile?.uid
+      created_by: logInUserProfile?.uid
     })
     setMessage("");
     scroll.current.scrollIntoView({ behavior: "smooth" });
   }
 
-  return 
+  return (
     <div className="sendMsg">
       <form onSubmit={sendMessage}>
         <div>
@@ -50,6 +50,6 @@ export default function ChatMsgInput({ scroll }) {
         </div>
       </form>
     </div>
-  
+  )
 }
 

@@ -7,7 +7,7 @@ import { FormInputText } from "../form-components/FormInputText";
 import { FormInputRadio } from "../form-components/FormInputRadio";
 import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
 import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import ShowAvater from './ShowAvater'
+import ShowAvatar from './ShowAvatar'
 import { Button, Container, Stack, Alert } from "@mui/material";
 import {
   options_learnerORmentor,
@@ -30,7 +30,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const [selectedPlace, setSelectedPlace] = useState<Place | undefined>(userProfile?.place);
   const { currentUser, logInUserProfile } = useAuth();
   // const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
-  const [avater, setAvater] = useState(userProfile?.avater);
+  const [avatar, setAvatar] = useState(userProfile?.avatar);
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
@@ -52,7 +52,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         // timestamp: serverTimestamp(),
         place: selectedPlace,
         // place: place,
-        avater: avater
+        avatar: avatar
       })
     setSaved(true)
     navigate("/");
@@ -78,8 +78,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             }}
             className="form-container"
           >
-            <ShowAvater setAvater={setAvater} defaultAvater={userProfile?.avater} />
-            <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address}/>
+            <ShowAvatar setAvatar={setAvatar} defaultAvatar={userProfile?.avatar} />
+            <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
             <FormInputRadio
               name={"learnerORmentor"}

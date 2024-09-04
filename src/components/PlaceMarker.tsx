@@ -15,7 +15,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { CafeDetailType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
-import { avaterImgs } from "../Props/props";
+import { avatarImgs } from "../Props/props";
 import { useNavigate } from "react-router-dom";
 import '../styles/PlaceMarker.scss'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -29,8 +29,8 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
   const navigate = useNavigate();
 
 
-  const showAvaterDescription = (src) => {
-    const desc = avaterImgs.filter(img => img.src === src).map(el => el.description).toString()
+  const showAvatarDescription = (src) => {
+    const desc = avatarImgs.filter(img => img.src === src).map(el => el.description).toString()
     return desc
   }
 
@@ -61,7 +61,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
             <Box className="card-container">
               <div className="card_upper">
                 <div className="card_upper left">
-                  <img src={data.avater} className="card_upper left avatar" aria-label={showAvaterDescription(data.avater)} />
+                  <img src={data.avatar} className="card_upper left avatar" aria-label={showAvatarDescription(data.avatar)} />
                 </div>
                 <div className="card_upper right">
                   <div className="learnerORmentor">{data.learnerORmentor}</div>
