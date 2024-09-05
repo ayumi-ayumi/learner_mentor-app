@@ -18,17 +18,12 @@ export default function ChatRoom() {
   const [uid, setUid]
     = useState(location.state.uid)
   // = useState<{ uid: string }>(location.state as { uid: string })
-  // console.log(params.sendTo)
-  console.log(uid)
   //Fetch messages
   const [messages, setMessages] = useState([]);
   const { users } = useAuth();
 
   // const sendTo = users.map((user) => console.log(typeof(user.uid)));
   const sendTo = users.find((user) => user.uid === uid);
-  console.log(sendTo.name)
-
-
 
   useEffect(() => {
     const messagesRef = collection(db, 'messages');
@@ -72,7 +67,7 @@ export default function ChatRoom() {
               key={id}
               className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
             >
-              <img src={avatar} alt='pic'/>
+              <img src={`../${avatar}`} alt='pic'/>
               {/* <img src={avatar} alt={showDescription(avatar)} /> */}
               <p>{text}</p>
             </div>
