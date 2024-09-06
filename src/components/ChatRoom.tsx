@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthProvider';
 import { avatarImgs } from '../Props/props';
 import '../styles/Chat.scss'
 import { messageType } from '../interfaces/interfaces';
-import Paper from '@mui/material/Paper';
+import { Paper, Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -47,36 +47,25 @@ export default function ChatRoom() {
 
   return (
     <div>
-      {/* <div className="msgs"> */}
-      <Box
-        className="msgs"
-      // sx={{
-      //   display: 'flex',
-      //   flexWrap: 'wrap',
-      //   '& > :not(style)': {
-      //     m: 4,
-      //     width: "80%",
-      //     height: 800,
-      //   },
-      // }}
-      >
-        <Paper elevation={3}>
-          <Paper><div>{sendTo.name}</div></Paper>
-          {messages.map(({ id, uid, text, avatar }) => (
-            <div
-              key={id}
-              className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
-            >
-              <img src={`../${avatar}`} alt='pic'/>
-              {/* <img src={avatar} alt={showDescription(avatar)} /> */}
-              <p>{text}</p>
-            </div>
-          ))}
+      <Container className="msgs">
+        <Paper elevation={3} className="msgs paper">
+          <div className="roomName">{sendTo?.name}</div>
+          <div className="msgs display">
+            {messages.map(({ id, uid, text, avatar }) => (
+              <div
+                key={id}
+                className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
+              >
+                <img src={`../${avatar}`} alt='pic' />
+                {/* <img src={avatar} alt={showDescription(avatar)} /> */}
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
           <div ref={scroll}></div>
           <ChatMsgInput scroll={scroll} />
         </Paper>
-        {/* </div> */}
-      </Box>
+      </Container>
     </div>
   )
 }
