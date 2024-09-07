@@ -2,7 +2,7 @@ import { Input } from "@mui/material";
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { db } from "../firebase/BaseConfig";
-import '../styles/ChatMsgInput.scss';
+import '../styles/ChatRoom.scss';
 
 
 import SendIcon from "@mui/icons-material/Send";
@@ -22,7 +22,7 @@ export default function ChatMsgInput({ scroll }) {
       avatar: logInUserProfile?.avatar,
       uid: logInUserProfile?.uid,
       createdAt: serverTimestamp(),
-      created_by: logInUserProfile?.uid
+      // created_by: logInUserProfile?.uid,
     })
     setMessage("");
     scroll.current.scrollIntoView({ behavior: "smooth" });

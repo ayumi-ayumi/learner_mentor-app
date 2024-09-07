@@ -4,7 +4,7 @@ import { db } from '../firebase/BaseConfig';
 import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useAuth } from '../context/AuthProvider';
 import { avatarImgs } from '../Props/props';
-import '../styles/Chat.scss'
+import '../styles/ChatRoom.scss'
 import { messageType } from '../interfaces/interfaces';
 import { Paper, Container } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -27,12 +27,9 @@ export default function ChatRoom() {
 
   useEffect(() => {
     const messagesRef = collection(db, 'messages');
-    const q = query(messagesRef, orderBy("createdAt"), limit(25));
+    const q = query(messagesRef, orderBy("createdAt"));
+    // const q = query(messagesRef, orderBy("createdAt"), limit(25));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      // console.log(snapshot.docs.map((doc) => console.log(doc.data().text)))
-      // console.log(123)
-      // const fetchedMessages = snapshot.docs.map((doc) => console.log(doc.id));
-      // const fetchedMessages:messageType[] = snapshot.docs.map((doc) =>  ({...doc.data()}));
       const fetchedMessages: messageType[] = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setMessages(fetchedMessages);
     });
@@ -47,25 +44,28 @@ export default function ChatRoom() {
 
   return (
     <div>
-      <Container className="msgs">
-        <Paper elevation={3} className="msgs paper">
-          <div className="roomName">{sendTo?.name}</div>
-          <div className="msgs display">
-            {messages.map(({ id, uid, text, avatar }) => (
-              <div
-                key={id}
-                className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
-              >
-                <img src={`../${avatar}`} alt='pic' />
-                {/* <img src={avatar} alt={showDescription(avatar)} /> */}
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-          <div ref={scroll}></div>
-          <ChatMsgInput scroll={scroll} />
-        </Paper>
-      </Container>
+      <div className="chat-container">
+        {/* <Paper elevation={3} className="msgs paper"> */}
+        <div className="sentToName">
+          <div><img src='../avatars/avatar10.svg'/></div>
+          <div>{sendTo?.name}</div>
+        </div>
+        <div className="chat-display">
+          {messages.map(({ id, uid, text, avatar }) => (
+            <div
+              key={id}
+              className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
+            >
+              <img src={`../${avatar}`} alt='pic' />
+              {/* <img src={avatar} alt={showDescription(avatar)} /> */}
+              <p>{text}</p>
+            </div>
+          ))}
+        </div>
+        <ChatMsgInput scroll={scroll} />
+        <div ref={scroll}></div>
+        {/* </Paper> */}
+      </div>
     </div>
   )
 }

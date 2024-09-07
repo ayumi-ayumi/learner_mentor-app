@@ -1,17 +1,9 @@
-.msgs {
+.chat-container {
   padding: 10px;
   margin: 10px auto;
-  max-height: 80vh;
 }
-.msgs .paper {
-  min-height: 80vh;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-}
-.msgs .display {
+.chat-container .chat-display {
   width: 100%;
-  overflow-y: scroll;
 }
 
 .sendTo_bar {
@@ -51,11 +43,15 @@
   height: 70%;
 }
 
-.roomName {
-  border: 1px solid gray;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 7px 0px gray;
-  margin-top: 0;
+.sentToNameName {
+  background-color: #222a41;
+  color: white;
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }/*# sourceMappingURL=Chat.css.map */

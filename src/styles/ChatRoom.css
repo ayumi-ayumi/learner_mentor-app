@@ -1,0 +1,86 @@
+body {
+  background-color: #93aad4;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+}
+
+.msg {
+  display: flex;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgb(164, 164, 164);
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 10px;
+  height: 40px;
+}
+.msg img {
+  width: 40px;
+  height: 40px;
+  margin: 2px 5px;
+}
+
+.chat-display {
+  padding-bottom: 120px;
+}
+
+.sent {
+  flex-direction: row-reverse;
+  margin: 10px 10px 10px auto;
+  padding: 0 0 0 10px;
+}
+
+.received {
+  margin: 10px auto 10px 10px;
+  padding: 0 10px 0 0;
+}
+
+.sentToName {
+  background-color: #999eab;
+  color: white;
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  font-size: 1.7rem;
+}
+.sentToName img {
+  width: 60px;
+  height: 60px;
+  margin: 2px 5px;
+  border: 1px solid black;
+  border-radius: 50px;
+  background-color: white;
+  display: block;
+}
+
+.sendMsg {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+  border-top: 1px solid lightgray;
+  margin-left: -5px;
+  padding: 10px;
+  padding-bottom: 20px;
+  background-color: #fafafa;
+}
+.sendMsg form div {
+  display: flex;
+}
+.sendMsg form button {
+  margin: 0 0 0 auto;
+  display: block;
+}/*# sourceMappingURL=ChatRoom.css.map */
