@@ -37,8 +37,8 @@ export default function ChatMsgInput({ scroll }) {
               width: "78%",
               fontSize: "15px",
               fontWeight: "550",
-              marginLeft: "5px",
-              marginBottom: "-3px",
+              // marginLeft: "5px",
+              // marginBottom: "-3px",
             }}
             placeholder="..."
             type="text"
