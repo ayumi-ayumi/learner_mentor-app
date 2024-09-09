@@ -8,6 +8,7 @@ import '../styles/ChatRoom.scss';
 import SendIcon from "@mui/icons-material/Send";
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 
+// export default function ChatMsgInput() {
 export default function ChatMsgInput({ scroll }) {
   const [message, setMessage] = useState("");
   const { currentUser, logInUserProfile } = useAuth(); //uid

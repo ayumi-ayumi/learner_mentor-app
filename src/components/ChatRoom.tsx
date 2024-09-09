@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ChatMsgInput from './ChatMsgInput'
 import { db } from '../firebase/BaseConfig';
 import { collection, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import { useLocation, useParams } from 'react-router-dom';
 
 export default function ChatRoom() {
-  const scroll = useRef();
+  const scroll = useRef(null);
   const { currentUser, logInUserProfile } = useAuth();
   const params = useParams();
   const location = useLocation()
@@ -22,10 +22,10 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const { users } = useAuth();
 
-  // const sendTo = users.map((user) => console.log(typeof(user.uid)));
   const sendTo = users.find((user) => user.uid === uid);
 
   useEffect(() => {
+    
     const messagesRef = collection(db, 'messages');
     const q = query(messagesRef, orderBy("createdAt"));
     // const q = query(messagesRef, orderBy("createdAt"), limit(25));
@@ -33,6 +33,7 @@ export default function ChatRoom() {
       const fetchedMessages: messageType[] = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setMessages(fetchedMessages);
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -42,10 +43,13 @@ export default function ChatRoom() {
   //   return desc
   // }
 
+  useEffect(() => {
+    window.scroll(0, 9999)
+  }, [messages]);
+
   return (
     <div>
       <div className="chat-container">
-        {/* <Paper elevation={3} className="msgs paper"> */}
         <div className="sentToName">
           <div><img src='../avatars/avatar10.svg'/></div>
           <div>{sendTo?.name}</div>
@@ -56,15 +60,13 @@ export default function ChatRoom() {
               key={id}
               className={`msg ${uid === currentUser?.uid ? "sent" : "received"}`}
             >
-              <img src={`../${avatar}`} alt='pic' />
-              {/* <img src={avatar} alt={showDescription(avatar)} /> */}
+              <img src={`../${avatar}`} alt='avatar' />
               <p>{text}</p>
             </div>
           ))}
         </div>
-        <ChatMsgInput scroll={scroll} />
         <div ref={scroll}></div>
-        {/* </Paper> */}
+        <ChatMsgInput scroll={scroll} />
       </div>
     </div>
   )
