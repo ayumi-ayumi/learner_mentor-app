@@ -48,7 +48,7 @@ export default function ChatRoom() {
   }, [messages]);
 
   return (
-    <div>
+    // <div>
       <div className="chat-container">
         <div className="sentToName">
           <div><img src='../avatars/avatar10.svg'/></div>
@@ -68,7 +68,7 @@ export default function ChatRoom() {
         <div ref={scroll}></div>
         <ChatMsgInput scroll={scroll} />
       </div>
-    </div>
+    // </div>
   )
 }
 
