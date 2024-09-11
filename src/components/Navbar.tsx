@@ -37,7 +37,10 @@ export default function Navbar() {
           display: "flex",
           padding: "0 20px",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
+          boxSizing: "border-box",
+          width: "100%",
+          position: "fixed"
         }}
       >
         <Link className="site-logo" to="/">Learner or Mentor</Link>

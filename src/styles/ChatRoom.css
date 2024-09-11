@@ -18,12 +18,15 @@ body {
   width: -moz-fit-content;
   width: fit-content;
   padding: 0 10px;
-  height: 40px;
+  height: 50px;
 }
 .msg img {
   width: 40px;
   height: 40px;
   margin: 2px 5px;
+  background-color: #fff;
+  border-radius: 50px;
+  border: 1px solid #aca6a6;
 }
 
 .chat-display {
@@ -34,11 +37,13 @@ body {
   flex-direction: row-reverse;
   margin: 10px 10px 10px auto;
   padding: 0 0 0 10px;
+  background-color: #8ad68a;
 }
 
 .received {
   margin: 10px auto 10px 10px;
   padding: 0 10px 0 0;
+  background-color: #fff;
 }
 
 .sentToName {
@@ -47,7 +52,7 @@ body {
   height: 75px;
   width: 100%;
   position: sticky;
-  top: 0;
+  top: 60px;
   left: 0;
   display: flex;
   align-items: center;
