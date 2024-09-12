@@ -55,7 +55,7 @@ export function AuthProvider({ children }: Props) {
   }, []);
   // console.log(currentUser)
 
-  //Obtain data from firebase by onSnapshot
+  //Obtain the users data from firebase by onSnapshot
   const dataCollectionRef = collection(db, 'users')
   useEffect(() => {
     const unsubscribe = onSnapshot(dataCollectionRef, (snapshot) => {
