@@ -40,7 +40,7 @@ export default function Navbar() {
           alignItems: "center",
           boxSizing: "border-box",
           width: "100%",
-          position: "fixed"
+          // position: "fixed"
         }}
       >
         <Link className="site-logo" to="/">Learner or Mentor</Link>
