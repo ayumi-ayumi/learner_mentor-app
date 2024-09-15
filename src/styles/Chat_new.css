@@ -247,7 +247,8 @@
   color: white;
   border-radius: 10px 0px 10px 10px;
 }
-.home .container .chat .input {
+
+.input {
   height: 50px;
   background-color: white;
   padding: 10px;
@@ -255,29 +256,30 @@
   align-items: center;
   justify-content: space-between;
 }
-.home .container .chat .input input {
+.input input {
   width: 100%;
-  border: none;
-  outline: none;
   color: #2f2d52;
   font-size: 18px;
+  box-sizing: border-box;
+  height: 40px;
+  margin: 0 3px;
 }
-.home .container .chat .input input::-moz-placeholder {
+.input input::-moz-placeholder {
   color: lightgray;
 }
-.home .container .chat .input input::placeholder {
+.input input::placeholder {
   color: lightgray;
 }
-.home .container .chat .input .send {
+.input .send {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.home .container .chat .input .send img {
+.input .send img {
   height: 24px;
   cursor: pointer;
 }
-.home .container .chat .input .send button {
+.input .send button {
   border: none;
   padding: 10px 15px;
   color: white;

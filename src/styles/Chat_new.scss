@@ -281,45 +281,46 @@
         }
       }
 
-      .input {
-        height: 50px;
-        background-color: white;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    }
+  }
+}
+.input {
+  height: 50px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  input {
+    width: 100%;
+    color: #2f2d52;
+    font-size: 18px;
+    box-sizing: border-box;
+    height: 40px;
+    margin: 0 3px;
 
-        input {
-          width: 100%;
-          border: none;
-          outline: none;
-          color: #2f2d52;
-          font-size: 18px;
+    &::placeholder {
+      color: lightgray;
+    }
+  }
 
-          &::placeholder {
-            color: lightgray;
-          }
-        }
+  .send {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-        .send {
-          display: flex;
-          align-items: center;
-          gap: 10px;
+    img {
+      height: 24px;
+      cursor: pointer;
+    }
 
-          img {
-            height: 24px;
-            cursor: pointer;
-          }
-
-          button {
-            border: none;
-            padding: 10px 15px;
-            color: white;
-            background-color: #8da4f1;
-            cursor: pointer;
-          }
-        }
-      }
+    button {
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      background-color: #8da4f1;
+      cursor: pointer;
     }
   }
 }
