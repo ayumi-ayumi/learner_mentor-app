@@ -22,6 +22,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { updateProfile } from "firebase/auth";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
@@ -54,6 +55,13 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         // place: place,
         avatar: avatar
       })
+    //create empty user chats on firestore
+    setDoc(doc(db, "userChats", currentUser.uid), {});
+    //Update profile
+    updateProfile(currentUser, {
+      displayName: data.name,
+      photoURL: avatar,
+    });
     setSaved(true)
     navigate("/");
   };

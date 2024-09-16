@@ -13,7 +13,7 @@ import Layout from "./Layout";
 import AddCafe from "./components/AddCafe";
 import { defaultValues } from "./Props/props";
 import Chatroom from './components/ChatRoom'
-import Chat_new from "./components/Chat_new";
+import Chat_Home from "./components/Chat_Home";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -35,7 +35,7 @@ export default function App() {
               </RequireAuth>
             }
           />
-          <Route path={"/chat/:sendTo"} element={<Chat_new />} />
+          <Route path={"/chat/:sendTo"} element={<Chat_Home />} />
           {/* <Route path={"/chat/:sendTo"} element={<Chatroom />} /> */}
           {/* <Route path={`/chat`} element={<Chatroom />} /> */}
           <Route path="myprofile" element={<MyProfile />} />

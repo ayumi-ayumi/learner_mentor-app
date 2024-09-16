@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
-// import Messages from "./Messages";
+import Messages from "./Messages";
 import Input from "./Chat_Input_new";
 import { ChatContext } from "../context/ChatContext";
 import '../styles/Chat_new.scss'
 
 
-const Chat = () => {
+
+export default function Chat () {
   const { data } = useContext(ChatContext);
+  console.log(data)
 
   return (
     <div className="chat">
       <div className="chatInfo">
         <span>{data.user?.displayName}</span>
       </div>
-      {/* <Messages /> */}
+      <Messages />
       <Input/>
     </div>
   );
 };
-
-export default Chat;
