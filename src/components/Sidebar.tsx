@@ -6,7 +6,7 @@ import Chats from './Chats'
 export default function Sidebar () {
   return (
     <div className="sidebar">
-      <Navbar />
+      {/* <Navbar /> */}
       <Search/>
       <Chats/>
     </div>

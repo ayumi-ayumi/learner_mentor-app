@@ -57,11 +57,13 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
       })
     //create empty user chats on firestore
     setDoc(doc(db, "userChats", currentUser.uid), {});
-    //Update profile
+
+    //Update Auth 
     updateProfile(currentUser, {
       displayName: data.name,
       photoURL: avatar,
     });
+
     setSaved(true)
     navigate("/");
   };
