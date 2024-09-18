@@ -52,8 +52,10 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
         // id: nanoid(),
         // timestamp: serverTimestamp(),
         place: selectedPlace,
+        displayName: data.name,
         // place: place,
-        avatar: avatar
+        avatar: avatar,
+        photoURL: avatar,
       })
     //create empty user chats on firestore
     setDoc(doc(db, "userChats", currentUser.uid), {});
