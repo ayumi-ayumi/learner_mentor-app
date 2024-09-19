@@ -39,9 +39,12 @@ export default function Search () {
         setUser(doc.data());
       });
     } catch (err) {
+      console.log(err)
       setErr(true);
     }
   };
+
+  console.log(user)
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
@@ -53,6 +56,8 @@ export default function Search () {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
+
+        console.log(combinedId)
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -79,11 +84,14 @@ export default function Search () {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
 
     setUser(null);
     setUsername("")
   };
+  
   return (
     <div className="search">
       <div className="searchForm">
