@@ -18,9 +18,10 @@ import { useAuth } from "../context/AuthProvider";
 
 
 
-export default function Search () {
+export default function Search() {
   const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  // const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
 
   // const { currentUser } = useContext(AuthContext);
@@ -34,8 +35,13 @@ export default function Search () {
     );
 
     try {
+      // const querySnapshot = await getDocs(q);
+      // const userData = querySnapshot.forEach((doc) => doc.data());
+      // console.log(userData)
+      // setUser(userData);
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
+        console.log(doc.data())
         setUser(doc.data());
       });
     } catch (err) {
@@ -57,41 +63,71 @@ export default function Search () {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
 
-        console.log(combinedId)
-    try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+    // try {
+    //   const res = await getDoc(doc(db, "chats", combinedId));
 
-      if (!res.exists()) {
-        //create a chat in chats collection
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+    //   if (!res.exists()) {
+    //     //create a chat in chats collection
+    //     console.log(123)
+    //     await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-        //create user chats
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
+    //     //create user chats
+    //     await updateDoc(doc(db, "userChats", currentUser.uid), {
+    //       [combinedId + ".userInfo"]: {
+    //         uid: user.uid,
+    //         displayName: user.displayName,
+    //         photoURL: user.photoURL,
+    //       },
+    //       [combinedId + ".date"]: serverTimestamp(),
+    //     });
 
-        await updateDoc(doc(db, "userChats", user.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: currentUser.uid,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-      }
-    } catch (err) {
-      console.log(err)
+    //     await updateDoc(doc(db, "userChats", user.uid), {
+    //       [combinedId + ".userInfo"]: {
+    //         uid: currentUser.uid,
+    //         displayName: currentUser.displayName,
+    //         photoURL: currentUser.photoURL,
+    //       },
+    //       [combinedId + ".date"]: serverTimestamp(),
+    //     });
+    //   }
+    // } catch (err) {
+    //   console.log(err)
+    // }
+
+
+    // try {
+    const res = await getDoc(doc(db, "chats", combinedId));
+    if (res.exists()) {
+      //create a chat in chats collection
+      await setDoc(doc(db, "chats", combinedId), { messages: [] });
+      console.log(combinedId)
+
+      //create user chats
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [combinedId + ".userInfo"]: {
+          uid: user.uid,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        },
+        [combinedId + ".date"]: serverTimestamp(),
+      });
+
+      await updateDoc(doc(db, "userChats", user.uid), {
+        [combinedId + ".userInfo"]: {
+          uid: currentUser.uid,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        },
+        [combinedId + ".date"]: serverTimestamp(),
+      });
     }
-
-    setUser(null);
-    setUsername("")
+    // } catch (err) {
+    // console.log(err)
+    // }
+    // setUser(null);
+    // setUsername("")
   };
-  
+
   return (
     <div className="search">
       <div className="searchForm">
@@ -105,6 +141,7 @@ export default function Search () {
       </div>
       {err && <span>User not found!</span>}
       {user && (
+        // <div className="userChat">
         <div className="userChat" onClick={handleSelect}>
           <img src={user.photoURL} alt="" />
           <div className="userChatInfo">
