@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase/BaseConfig";
 
-// import Message from "./Message";
+import Message from "./Message";
 import '../styles/Chat_new.scss'
 
 
@@ -25,9 +25,9 @@ const Messages = () => {
 
   return (
     <div className="messages">
-      {/* {messages.map((m) => (
+      {messages.map((m) => (
         <Message message={m} key={m.id} />
-      ))} */}
+      ))}
     </div>
   );
 };
