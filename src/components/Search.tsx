@@ -97,7 +97,7 @@ export default function Search() {
 
     // try {
     const res = await getDoc(doc(db, "chats", combinedId));
-    if (res.exists()) {
+    if (!res.exists()) {
       //create a chat in chats collection
       await setDoc(doc(db, "chats", combinedId), { messages: [] });
       console.log(combinedId)
@@ -143,7 +143,8 @@ export default function Search() {
       {user && (
         // <div className="userChat">
         <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
+          <img src={`../${user.photoURL}`}alt="" />
+          {/* <img src={user.photoURL} alt="" /> */}
           <div className="userChatInfo">
             <span>{user.displayName}</span>
           </div>
