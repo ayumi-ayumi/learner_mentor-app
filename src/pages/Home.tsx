@@ -9,8 +9,10 @@ export default function Home() {
 
   return (
     <>
-      <MarkerFilter setFilter={setFilter} />
-      <MapWindow filter={filter} />
+      <div style={{maxWidth: '80%', margin: "0 auto"}}>
+        <MarkerFilter setFilter={setFilter} />
+        <MapWindow filter={filter} />
+      </div>
     </>
   );
 }

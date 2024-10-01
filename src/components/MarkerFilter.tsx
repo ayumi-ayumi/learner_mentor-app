@@ -17,7 +17,8 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
       sx={{
         // height: "80px",
         borderRadius: 1,
-        margin: "20px"
+        margin: "20px 0",
+        // width:'100%'
       }}
     >
       <ToggleButtonGroup
@@ -26,6 +27,7 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
         exclusive
         onChange={handleChange}
         aria-label="Platform"
+        fullWidth={true}
       >
         <ToggleButton onClick={() => props.setFilter("learner")} value="Learner">Learner</ToggleButton>
         <ToggleButton onClick={() => props.setFilter("mentor")} value="Mentor">Mentor</ToggleButton>

@@ -41,7 +41,7 @@ export default function Search() {
       // setUser(userData);
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        console.log(doc.data())
+        // console.log(doc.data())
         setUser(doc.data());
       });
     } catch (err) {
@@ -50,7 +50,7 @@ export default function Search() {
     }
   };
 
-  console.log(user)
+  // console.log(user)
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
@@ -100,7 +100,7 @@ export default function Search() {
     if (!res.exists()) {
       //create a chat in chats collection
       await setDoc(doc(db, "chats", combinedId), { messages: [] });
-      console.log(combinedId)
+      // console.log(combinedId)
 
       //create user chats
       await updateDoc(doc(db, "userChats", currentUser.uid), {

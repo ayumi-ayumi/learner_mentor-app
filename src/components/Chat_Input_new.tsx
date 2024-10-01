@@ -17,10 +17,10 @@ const Input = () => {
   const [text, setText] = useState("");
 
   const { currentUser } = useAuth();
-  console.log(currentUser)
+  // console.log(currentUser)
   // const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  console.log(data)
+  // console.log(data)
 
   const handleSend = async () => {
       await updateDoc(doc(db, "chats", data.chatId), {
