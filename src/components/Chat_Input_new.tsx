@@ -17,7 +17,7 @@ const Input = () => {
   const [text, setText] = useState("");
 
   const { currentUser } = useAuth();
-  // console.log(currentUser)
+  console.log(currentUser)
   // const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   // console.log(data)
