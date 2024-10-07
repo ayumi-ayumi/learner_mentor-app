@@ -97,8 +97,8 @@ export default function Search() {
 
     // try {
     const res = await getDoc(doc(db, "chats", combinedId));
-    console.log(res)
-    if (res.exists()) {
+    console.log(res.exists())
+    if (res.exists()===false) {
     // if (!res.exists()) {
       //create a chat in chats collection
       console.log(123)
