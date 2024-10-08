@@ -70,7 +70,8 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
               </div>
 
               <Stack direction="row" justifyContent="center" spacing={1}>
-                <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}>
+                <IconButton aria-label="chat" onClick={() => navigate(`/chat`)}>
+                {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}> */}
                   <ChatIcon color="primary" />
                 </IconButton>
                 <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>

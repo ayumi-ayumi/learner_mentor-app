@@ -35,7 +35,8 @@ export default function App() {
               </RequireAuth>
             }
           />
-          <Route path={"/chat/:sendTo"} element={<Chat_Home />} />
+          <Route path={"/chat"} element={<Chat_Home />} />
+          {/* <Route path={"/chat/:sendTo"} element={<Chat_Home />} /> */}
           {/* <Route path={"/chat/:sendTo"} element={<Chatroom />} /> */}
           {/* <Route path={`/chat`} element={<Chatroom />} /> */}
           <Route path="myprofile" element={<MyProfile />} />
