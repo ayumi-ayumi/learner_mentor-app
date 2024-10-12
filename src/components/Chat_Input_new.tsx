@@ -15,22 +15,18 @@ import { useAuth } from "../context/AuthProvider";
 
 const Input = () => {
   const [text, setText] = useState("");
-
   const { currentUser } = useAuth();
-  console.log(currentUser)
-  // const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  // console.log(data)
 
   const handleSend = async () => {
-      await updateDoc(doc(db, "chats", data.chatId), {
-        messages: arrayUnion({
-          id: uuid(),
-          text,
-          senderId: currentUser.uid,
-          date: Timestamp.now(),
-        }),
-      });
+    await updateDoc(doc(db, "chats", data.chatId), {
+      messages: arrayUnion({
+        id: uuid(),
+        text,
+        senderId: currentUser.uid,
+        date: Timestamp.now(),
+      }),
+    });
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
@@ -48,12 +44,17 @@ const Input = () => {
 
     setText("");
   };
-  
+
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSend();
+  };
+
   return (
     <div className="input">
       <input
         type="text"
         placeholder="Type something..."
+        onKeyDown={handleKey}
         onChange={(e) => setText(e.target.value)}
         value={text}
       />

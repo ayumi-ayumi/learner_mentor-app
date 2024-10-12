@@ -18,15 +18,12 @@ import { useAuth } from "../context/AuthProvider";
 
 
 
-export default function Search() {
+export default function Search(props) {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState();
-  // const [user, setUser] = useState(null);
+  const [clickedUser, setClickedUser] = useState(props.sendTo);
   const [err, setErr] = useState(false);
-
-  // const { currentUser } = useContext(AuthContext);
   const { currentUser } = useAuth();
-
 
   const handleSearch = async () => {
     const q = query(
@@ -35,22 +32,14 @@ export default function Search() {
     );
 
     try {
-      // const querySnapshot = await getDocs(q);
-      // const userData = querySnapshot.forEach((doc) => doc.data());
-      // console.log(userData)
-      // setUser(userData);
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data())
         setUser(doc.data());
       });
     } catch (err) {
-      console.log(err)
       setErr(true);
     }
   };
-
-  // console.log(user)
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
@@ -97,14 +86,13 @@ export default function Search() {
 
     // try {
     const res = await getDoc(doc(db, "chats", combinedId));
-    console.log(res.exists())
+    console.log(!res.exists())
     if (res.exists()===false) {
     // if (!res.exists()) {
       //create a chat in chats collection
-      console.log(123)
       await setDoc(doc(db, "chats", combinedId), { messages: [] });
-      // console.log(combinedId)
 
+    }
       //create user chats
       await updateDoc(doc(db, "userChats", currentUser.uid), {
         [combinedId + ".userInfo"]: {
@@ -123,7 +111,6 @@ export default function Search() {
         },
         [combinedId + ".date"]: serverTimestamp(),
       });
-    }
     // } catch (err) {
     // console.log(err)
     // }

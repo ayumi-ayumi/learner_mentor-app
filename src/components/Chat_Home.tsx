@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
 import Chat from './Chat_new'
 import { useAuth } from '../context/AuthProvider';
@@ -7,19 +7,25 @@ import { useLocation, useParams } from 'react-router-dom';
 export default function Chat_Home() {
   const { users } = useAuth();
   const location = useLocation()
-  console.log(location)
-  if (location.state) {
-    const [uid, setUid]
-      = useState(location.state.uid)
-    const sendTo = users.find((user) => user.uid === uid);
+  const [sendTo, setSendTo] = useState()
+  const [uid, setUid] = useState()
 
-    console.log(sendTo)
-  }
+
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state)
+      setUid(location.state.uid)
+      const sendTo = users.find((user) => user.uid === uid);
+      setSendTo(sendTo)
+    }
+  }, [uid]);
+
+
 
   return (
     <div className='home'>
       <div className="container">
-        <Sidebar />
+        <Sidebar sendTo={sendTo}/>
         <Chat />
       </div>
     </div>
