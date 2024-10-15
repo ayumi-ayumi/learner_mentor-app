@@ -6,16 +6,15 @@ import { ChatContext } from "../context/ChatContext";
 import { db } from '../firebase/BaseConfig';
 
 
-export default function Chats () {
+export default function Chats (props) {
   const [chats, setChats] = useState([]);
-  const { currentUser } = useAuth();
-  // const { currentUser } = useContext(AuthContext);
+  const [clickedUser, setClickedUser] = useState("");  //the data of clicked user
+  const { currentUser, users } = useAuth();
   const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-        console.log(doc.data())
         setChats(doc.data());
       });
 
@@ -27,11 +26,15 @@ export default function Chats () {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  // console.log(chats)
-
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
   };
+
+    useEffect(() => {
+    const clickedUserData = users.find(user => user.uid === props.sendTo)
+    setClickedUser(clickedUserData);
+    if (clickedUser) handleSelect({photoURL: clickedUser.photoURL, displayName: clickedUser.name, uid: props.sendTo})
+  },[]);
 
   return (
     <div className="chats">

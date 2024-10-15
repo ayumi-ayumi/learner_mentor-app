@@ -4,12 +4,11 @@ import Search from "./Search"
 import Chats from './Chats'
 
 export default function Sidebar (props) {
-  console.log(props.sendTo)
   return (
     <div className="sidebar">
       {/* <Navbar /> */}
-      <Search sendTo={props.sendTo}/>
-      <Chats/>
+      <Search/>
+      <Chats sendTo={props.sendTo}/>
     </div>
   );
 };

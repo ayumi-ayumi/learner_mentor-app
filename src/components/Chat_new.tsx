@@ -8,8 +8,6 @@ import '../styles/Chat_new.scss'
 
 export default function Chat () {
   const { data } = useContext(ChatContext);
-  console.log(data)
-
   return (
     <div className="chat">
       <div className="chatInfo">
