@@ -16,6 +16,7 @@ import Chatroom from './components/ChatRoom'
 import Chat_Home from "./components/Chat_Home";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const homeUrl = "/learner_mentor-app/";
 
 export default function App() {
   const { logInUserProfile } = useAuth();
@@ -24,9 +25,9 @@ export default function App() {
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>
       <Routes>
-        <Route path={`/signup`} element={<SignUp />} />
-        <Route path={`/signin`} element={<SignIn />} />
-        <Route path="/" element={<Layout />}>
+        <Route path={homeUrl+`signup`} element={<SignUp />} />
+        <Route path={homeUrl+`signin`} element={<SignIn />} />
+        <Route path={homeUrl} element={<Layout />}>
           <Route
             index
             element={
@@ -35,18 +36,18 @@ export default function App() {
               </RequireAuth>
             }
           />
-          <Route path={"/chat"} element={<Chat_Home />} />
+          <Route path={homeUrl+`chat`} element={<Chat_Home />} />
           {/* <Route path={"/chat/:sendTo"} element={<Chat_Home />} /> */}
           {/* <Route path={"/chat/:sendTo"} element={<Chatroom />} /> */}
           {/* <Route path={`/chat`} element={<Chatroom />} /> */}
-          <Route path="myprofile" element={<MyProfile />} />
+          <Route path={homeUrl+`myprofile`} element={<MyProfile />} />
           {/* <Route path="addprofile" element={<FormProfile/>} />
           <Route path="editprofile" element={<FormProfile />} /> */}
-          <Route path="addprofile" element={<FormProfile defaultValues={defaultValues} />} />
-          <Route path="editprofile" element={<FormProfile defaultValues={logInUserProfile} />} />
-          <Route path="addcafe" element={<AddCafe />} />
+          <Route path={homeUrl+`addprofile`} element={<FormProfile defaultValues={defaultValues} />} />
+          <Route path={homeUrl+`editprofile`} element={<FormProfile defaultValues={logInUserProfile} />} />
+          <Route path={homeUrl+`addcafe`} element={<AddCafe />} />
         </Route>
-        <Route path="*" element={<ErrorPage />} />
+        <Route path={homeUrl+`*`} element={<ErrorPage />} />
       </Routes>
     </APIProvider>
   );

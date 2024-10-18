@@ -9,6 +9,8 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const { currentUser, createUser } = useAuth();
   const navigate = useNavigate();
+  const homeUrl = "/learner_mentor-app/";
+
 
   const paperStyle = {
     padding: 20,
@@ -31,9 +33,9 @@ export default function SignUp() {
     const email = e.target.email.value;
     const password = e.target.password.value;
     createUser(email, password)
-    .then((result) => {
+      .then((result) => {
         console.log("Signed up with:", result)
-        navigate("/signin");
+        navigate(homeUrl + `signin`);
       })
       .catch((error) => {
         console.log(error.message)
@@ -79,14 +81,14 @@ export default function SignUp() {
               </Typography>
             )}
             <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                style={btnstyle}
-                fullWidth
-              >
-                Sign Up
-              </Button>
+              type="submit"
+              color="primary"
+              variant="contained"
+              style={btnstyle}
+              fullWidth
+            >
+              Sign Up
+            </Button>
             {/* {currentUser ? (
             // {clickedButton ? (
               <Button

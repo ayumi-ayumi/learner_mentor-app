@@ -11,6 +11,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const { currentUser, loginUser } = useAuth();
   const navigate = useNavigate();
+  const homeUrl = "/learner_mentor-app/";
 
   const paperStyle = {
     padding: 20,
@@ -41,7 +42,7 @@ export default function SignIn() {
     loginUser(email, password)
     .then((result) => {
       console.log("Signed in with:", result);
-      navigate("/");
+      navigate(homeUrl);
     })
     .catch((error) => {
       console.log(error.message)

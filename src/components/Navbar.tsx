@@ -10,12 +10,13 @@ export default function Navbar() {
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile } = useAuth();
   const navigate = useNavigate();
-  // console.log(logInUserProfile)
+  const homeUrl = "/learner_mentor-app/";
+
   const handleSignOut = () => {
     logOut()
       .then(() => {
         console.log("User logged out successfully");
-        navigate("/signin");
+        navigate(homeUrl+`signin`);
       })
       .catch((error) => console.error(error));
   };
@@ -68,9 +69,9 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={() => navigate('/myprofile')}>My Profile</MenuItem>
-            <MenuItem onClick={() => navigate('/addcafe')}>Add Cafe</MenuItem>
-            <MenuItem onClick={() => navigate('/chat')}>Message</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'/myprofile')}>My Profile</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'/addcafe')}>Add Cafe</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'/chat')}>Message</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </div>

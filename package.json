@@ -1,11 +1,12 @@
 {
+  "homepage": "https://ayumi-ayumi.github.io/learner_mentor-app/",
   "name": "react_google_map",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "cross-env PUBLIC_URL=/learner_mentor-app react-scripts build",
     "preview": "vite preview",
     "format": "prettier --write src",
     "lint": "eslint src",
@@ -37,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
