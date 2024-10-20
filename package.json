@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "cross-env PUBLIC_URL=/learner_mentor-app react-scripts build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write src",
     "lint": "eslint src",
