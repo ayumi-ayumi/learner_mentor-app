@@ -36,6 +36,8 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
+  const homeUrl = "/learner_mentor-app/";
+
 
   // useEffect(() => {
   //   if (logInUserProfile) setUserProfile(logInUserProfile)
@@ -67,7 +69,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
     });
 
     setSaved(true)
-    navigate("/");
+    navigate(homeUrl);
   };
 
   const handleReset = () => {

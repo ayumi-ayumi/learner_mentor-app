@@ -27,6 +27,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
   const [isFav, setIsFav] = useState(false);
   const { logInUserProfile } = useAuth();
   const navigate = useNavigate();
+  const homeUrl = "/learner_mentor-app/";
 
 
   const showAvatarDescription = (src) => {
@@ -70,7 +71,7 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
               </div>
 
               <Stack direction="row" justifyContent="center" spacing={1}>
-                <IconButton aria-label="chat" onClick={() => navigate(`/chat`, { state: { uid: data.uid }} )} >
+                <IconButton aria-label="chat" onClick={() => navigate(homeUrl+`chat`, { state: { uid: data.uid }} )} >
                 {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat`)}> */}
                 {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}> */}
                   <ChatIcon color="primary" />

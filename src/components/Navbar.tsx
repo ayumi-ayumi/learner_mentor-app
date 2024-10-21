@@ -44,7 +44,7 @@ export default function Navbar() {
           // position: "fixed"
         }}
       >
-        <Link className="site-logo" to="/">Learner or Mentor</Link>
+        <Link className="site-logo" to={homeUrl}>Learner or Mentor</Link>
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
           <IconButton
@@ -69,9 +69,9 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={() => navigate(homeUrl+'/myprofile')}>My Profile</MenuItem>
-            <MenuItem onClick={() => navigate(homeUrl+'/addcafe')}>Add Cafe</MenuItem>
-            <MenuItem onClick={() => navigate(homeUrl+'/chat')}>Message</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'myprofile')}>My Profile</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'addcafe')}>Add Cafe</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl+'chat')}>Message</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </div>

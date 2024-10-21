@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function MyProfile() {
   const { logInUserProfile } = useAuth();
   const navigate = useNavigate();
+  const homeUrl = "/learner_mentor-app/";
+
 
   return (
     <>
@@ -17,7 +19,7 @@ export default function MyProfile() {
           (<>
             <Button
               variant="contained"
-              onClick={() => navigate('/addprofile')}
+              onClick={() => navigate(homeUrl + 'addprofile')}
             >
               + Add my profile
             </Button>
