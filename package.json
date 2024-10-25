@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "cross-env PUBLIC_URL=/learner_mentor-app react-scripts build",
     "preview": "vite preview",
     "format": "prettier --write src",
     "lint": "eslint src",
-    "deploy": "gh-pages -d dist"
+    "deploy":  "npm run build && gh-pages -d build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
