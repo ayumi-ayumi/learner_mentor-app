@@ -4,7 +4,7 @@ import { ChatContext } from "../context/ChatContext";
 import { useAuth } from "../context/AuthProvider";
 
 
-const Message = ({ message }) => {
+export default function Message({ message }) {
   // const { currentUser } = useContext(AuthContext);
   const { currentUser } = useAuth();
 
@@ -45,5 +45,3 @@ const Message = ({ message }) => {
     </div>
   );
 };
-
-export default Message;

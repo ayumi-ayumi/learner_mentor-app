@@ -26,6 +26,8 @@ export function AuthProvider({ children }: Props) {
   const [currentUser, setCurrentUser] = useState<UserType>(null); //email, password, uid
   const [logInUserProfile, setLogInUserProfile] = useState<UserProfileType>();
   const [users, setUsers] = useState<UserProfileType[]>([]);
+const homeUrl = "/learner_mentor-app/";
+
 
   const createUser = (email: string, password: string) => {
     setLoading(true);
@@ -80,6 +82,7 @@ export function AuthProvider({ children }: Props) {
     logOut,
     logInUserProfile,
     users,
+    homeUrl
   };
 
   return (

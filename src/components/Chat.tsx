@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import Messages from "./Messages";
-import Input from "./Chat_Input_new";
+import Input from "./Chat_Input";
 import { ChatContext } from "../context/ChatContext";
-import '../styles/Chat_new.scss'
+import '../styles/Chat.scss'
 
-
-
-export default function Chat () {
+export default function Chat() {
   const { data } = useContext(ChatContext);
   return (
     <div className="chat">
@@ -14,7 +12,7 @@ export default function Chat () {
         <span>{data.user?.displayName}</span>
       </div>
       <Messages />
-      <Input/>
+      <Input />
     </div>
   );
 };

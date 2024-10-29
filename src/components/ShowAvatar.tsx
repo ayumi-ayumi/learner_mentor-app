@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { avatarImgs } from '../Props/props'
 import '../styles/ShowAvatar.scss'
 

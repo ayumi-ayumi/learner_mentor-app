@@ -21,7 +21,6 @@ import { useAuth } from "../context/AuthProvider";
 import CheckIcon from '@mui/icons-material/Check';
 import { PlaceAutoComplete } from "./PlaceAutoComplete";
 import { useNavigate } from "react-router-dom";
-import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { updateProfile } from "firebase/auth";
 
 // export default function FormProfile() {

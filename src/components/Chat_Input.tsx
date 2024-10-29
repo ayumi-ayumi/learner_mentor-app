@@ -8,12 +8,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/BaseConfig";
-import '../styles/Chat_new.scss'
-
+import '../styles/Chat.scss'
 import { v4 as uuid } from "uuid";
 import { useAuth } from "../context/AuthProvider";
 
-const Input = () => {
+
+export default function Input() {
   const [text, setText] = useState("");
   const { currentUser } = useAuth();
   const { data } = useContext(ChatContext);
@@ -64,5 +64,3 @@ const Input = () => {
     </div>
   );
 };
-
-export default Input;

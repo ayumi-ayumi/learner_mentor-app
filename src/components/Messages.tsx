@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase/BaseConfig";
 import Message from "./Message";
-import '../styles/Chat_new.scss';
+import '../styles/Chat.scss';
 
 
-const Messages = () => {
+export default function Messages() {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
 
@@ -30,5 +30,3 @@ const Messages = () => {
     </div>
   );
 };
-
-export default Messages;

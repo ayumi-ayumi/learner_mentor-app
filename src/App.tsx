@@ -16,10 +16,10 @@ import Chatroom from './components/ChatRoom'
 import Chat_Home from "./components/Chat_Home";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const homeUrl = "/learner_mentor-app/";
+// const homeUrl = "/learner_mentor-app/";
 
 export default function App() {
-  const { logInUserProfile } = useAuth();
+  const { logInUserProfile, homeUrl} = useAuth();
   const location = useLocation()
 
   return (

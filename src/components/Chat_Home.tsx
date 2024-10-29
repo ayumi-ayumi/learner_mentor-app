@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
-import Chat from './Chat_new'
+import Chat from './Chat'
 import { useLocation } from 'react-router-dom';
 
 export default function Chat_Home() {
