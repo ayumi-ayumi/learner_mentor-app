@@ -8,15 +8,15 @@ import "../styles/Navbar.scss";
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const { logOut, logInUserProfile } = useAuth();
+  const { logOut, logInUserProfile, homeUrl } = useAuth();
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
   const handleSignOut = () => {
     logOut()
       .then(() => {
         console.log("User logged out successfully");
-        navigate(homeUrl+`signin`);
+        navigate(homeUrl + `signin`);
       })
       .catch((error) => console.error(error));
   };
@@ -47,19 +47,20 @@ export default function Navbar() {
         <Link className="site-logo" to={homeUrl}>Learner or Mentor</Link>
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
-          <IconButton
-            id="basic-button"
-            size="small"
-            aria-label="account of current user"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-            {/* <img src={logInUserProfile.avatar}/> */}
-          </IconButton>
+          {logInUserProfile ?
+            <img src={logInUserProfile.avatar} onClick={handleClick} /> :
+            <IconButton
+              id="basic-button"
+              size="small"
+              aria-label="account of current user"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>}
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -69,9 +70,9 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={() => navigate(homeUrl+'myprofile')}>My Profile</MenuItem>
-            <MenuItem onClick={() => navigate(homeUrl+'addcafe')}>Add Cafe</MenuItem>
-            <MenuItem onClick={() => navigate(homeUrl+'chat')}>Message</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl + 'myprofile')}>My Profile</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl + 'addcafe')}>Add Cafe</MenuItem>
+            <MenuItem onClick={() => navigate(homeUrl + 'chat')}>Message</MenuItem>
             <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </div>

@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import React from "react";
 import Home from "./pages/Home";
 import FormProfile from "./components/FormProfile";
@@ -12,7 +12,6 @@ import RequireAuth from "./Auth/RequireAuth";
 import Layout from "./Layout";
 import AddCafe from "./components/AddCafe";
 import { defaultValues } from "./Props/props";
-import Chatroom from './components/ChatRoom'
 import Chat_Home from "./components/Chat_Home";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -20,7 +19,6 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function App() {
   const { logInUserProfile, homeUrl} = useAuth();
-  const location = useLocation()
 
   return (
     <APIProvider apiKey={API_KEY} libraries={["places"]}>

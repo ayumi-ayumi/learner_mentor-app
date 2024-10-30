@@ -6,9 +6,9 @@ import ShowProfile from "./ShowProfile";
 import { useNavigate } from "react-router-dom";
 
 export default function MyProfile() {
-  const { logInUserProfile } = useAuth();
+  const { logInUserProfile, homeUrl } = useAuth();
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
 
   return (

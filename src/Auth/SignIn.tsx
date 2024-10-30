@@ -9,9 +9,9 @@ import CheckIcon from '@mui/icons-material/Check';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignIn() {
   const [error, setError] = useState("");
-  const { currentUser, loginUser } = useAuth();
+  const { currentUser, loginUser,homeUrl } = useAuth();
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
   const paperStyle = {
     padding: 20,

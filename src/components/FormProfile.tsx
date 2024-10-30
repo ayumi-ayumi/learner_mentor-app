@@ -28,14 +28,14 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
 
   const [userProfile, setUserProfile] = useState<UserProfileType | undefined>(defaultValues)
   const [selectedPlace, setSelectedPlace] = useState<Place | undefined>(userProfile?.place);
-  const { currentUser, logInUserProfile } = useAuth();
+  const { currentUser, homeUrl } = useAuth();
   // const [place, setPlace] = useState<Place>({ address: defaultValues?.place.address, position: defaultValues?.place.position });
   const [avatar, setAvatar] = useState(userProfile?.avatar);
   const [saved, setSaved] = useState(false);
   const methods = useForm<UserProfileType>({ defaultValues });
   const learnerORmentor = methods.watch("learnerORmentor")
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
 
   // useEffect(() => {

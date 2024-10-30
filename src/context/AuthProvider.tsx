@@ -17,6 +17,7 @@ interface AuthContextType {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   logInUserProfile: UserProfileType | undefined,
   users: UserProfileType[],
+  homeUrl: string
 }
 
 const AuthContext = createContext<AuthContextType>(null!);

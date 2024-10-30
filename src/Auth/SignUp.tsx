@@ -7,9 +7,9 @@ import { useAuth, } from "../context/AuthProvider";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SignUp() {
   const [error, setError] = useState("");
-  const { currentUser, createUser } = useAuth();
+  const { currentUser, createUser, homeUrl } = useAuth();
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
 
   const paperStyle = {

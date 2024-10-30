@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 
 export default function Message({ message }) {
   // const { currentUser } = useContext(AuthContext);
-  const { currentUser } = useAuth();
+  const { currentUser, homeUrl } = useAuth();
 
   const { data } = useContext(ChatContext);
 
@@ -23,7 +23,7 @@ export default function Message({ message }) {
     >
       <div className="messageInfo">
         <img
-          src={`../${message.senderId === currentUser.uid
+          src={homeUrl + `${message.senderId === currentUser.uid
             ? currentUser.photoURL
             : data.user.photoURL}`}
           alt=""

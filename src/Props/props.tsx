@@ -219,15 +219,17 @@ export const defaultValues: UserProfileType = {
   avatar: ""
 };
 
+  const homeUrl = "/learner_mentor-app/";
+
 export const avatarImgs = [
-  { id: 1, src: 'avatars/avatar1.svg', description: "black clothes with glasses" },
-  { id: 2, src: 'avatars/avatar2.svg', description: "three eyes with twin tails" },
-  { id: 3, src: 'avatars/avatar3.svg', description: "serious face with a laptop" },
-  { id: 4, src: 'avatars/avatar4.svg', description: "crossing arms with glasses" },
-  { id: 5, src: 'avatars/avatar5.svg', description: "hoodie with beard" },
-  { id: 6, src: 'avatars/avatar6.svg', description: "pony tail with mustache" },
-  { id: 7, src: 'avatars/avatar7.svg', description: "crossing arms with hair band" },
-  { id: 8, src: 'avatars/avatar8.svg', description: "sweater with glasses and beard" },
-  { id: 9, src: 'avatars/avatar9.svg', description: "eye with pony tail" },
-  { id: 10, src: 'avatars/avatar10.svg', description: "hoodie with beard and thick hait" }
+  { id: 1, src: homeUrl + 'avatars/avatar1.svg', description: "black clothes with glasses" },
+  { id: 2, src: homeUrl + 'avatars/avatar2.svg', description: "three eyes with twin tails" },
+  { id: 3, src: homeUrl + 'avatars/avatar3.svg', description: "serious face with a laptop" },
+  { id: 4, src: homeUrl + 'avatars/avatar4.svg', description: "crossing arms with glasses" },
+  { id: 5, src: homeUrl + 'avatars/avatar5.svg', description: "hoodie with beard" },
+  { id: 6, src: homeUrl + 'avatars/avatar6.svg', description: "pony tail with mustache" },
+  { id: 7, src: homeUrl + 'avatars/avatar7.svg', description: "crossing arms with hair band" },
+  { id: 8, src: homeUrl + 'avatars/avatar8.svg', description: "sweater with glasses and beard" },
+  { id: 9, src: homeUrl + 'avatars/avatar9.svg', description: "eye with pony tail" },
+  { id: 10, src: homeUrl + 'avatars/avatar10.svg', description: "hoodie with beard and thick hait" }
 ]

@@ -25,9 +25,9 @@ import { Stack, Box, IconButton } from "@mui/material";
 export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, isOpen: boolean, setMarkerID: any }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [isFav, setIsFav] = useState(false);
-  const { logInUserProfile } = useAuth();
+  const { logInUserProfile, homeUrl } = useAuth();
   const navigate = useNavigate();
-  const homeUrl = "/learner_mentor-app/";
+  // const homeUrl = "/learner_mentor-app/";
 
 
   const showAvatarDescription = (src) => {

@@ -8,7 +8,7 @@ import { db } from '../firebase/BaseConfig';
 export default function Chats (props) {
   const [chats, setChats] = useState([]);
   const [clickedUser, setClickedUser] = useState("");  //the data of clicked user
-  const { currentUser, users } = useAuth();
+  const { currentUser, users, homeUrl } = useAuth();
   const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Chats (props) {
           key={chat[0]}
           onClick={() => handleSelect(chat[1].userInfo)}
         >
-          <img src={`../${chat[1].userInfo.photoURL}`} alt="" />
+          <img src={homeUrl + `${chat[1].userInfo.photoURL}`} alt="" />
           {/* <img src={chat[1].userInfo.photoURL} alt="" /> */}
           <div className="userChatInfo">
             <span>{chat[1].userInfo.displayName}</span>

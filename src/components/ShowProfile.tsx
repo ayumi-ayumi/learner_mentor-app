@@ -6,14 +6,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router-dom";
 
 export default function ShowProfile() {
-  const { logInUserProfile } = useAuth();
+  const { logInUserProfile, homeUrl } = useAuth();
   const navigate = useNavigate();
 
   return (
     <>
       <Container maxWidth="sm">
         <div>
-          <Button onClick={() => navigate('/editprofile')} variant="contained" startIcon={<EditIcon />}>
+          <Button onClick={() => navigate(homeUrl + 'editprofile')} variant="contained" startIcon={<EditIcon />}>
             Edit
           </Button>
         </div>
