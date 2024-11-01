@@ -7,7 +7,8 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-import { FormInputProps } from "../interfaces/interfaces";
+import { FormInputProps } from "../../interfaces/interfaces";
+
 
 export const FormInputRadio = ({
   name,

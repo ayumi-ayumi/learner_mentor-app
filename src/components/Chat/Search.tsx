@@ -10,8 +10,8 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
-import { db } from '../firebase/BaseConfig';
-import { useAuth } from "../context/AuthProvider";
+import { db } from '../../firebase/BaseConfig';
+import { useAuth } from "../../context/AuthProvider";
 
 export default function Search() {
   const [username, setUsername] = useState("");

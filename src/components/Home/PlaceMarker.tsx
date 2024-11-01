@@ -13,11 +13,11 @@ import LanguageIcon from '@mui/icons-material/Language';
 import HistoryIcon from '@mui/icons-material/History';
 import CodeIcon from '@mui/icons-material/Code';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { CafeDetailType } from "../interfaces/interfaces";
-import { useAuth } from "../context/AuthProvider";
-import { avatarImgs } from "../Props/props";
+import { CafeDetailType } from "../../interfaces/interfaces";
+import { useAuth } from "../../context/AuthProvider";
+import { avatarImgs } from "../../Props/props";
 import { useNavigate } from "react-router-dom";
-import '../styles/PlaceMarker.scss'
+import '../../styles/PlaceMarker.scss'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Stack, Box, IconButton } from "@mui/material";
 
@@ -71,9 +71,9 @@ export default function PlaceMarker({ data, isOpen, setMarkerID }: { data: any, 
               </div>
 
               <Stack direction="row" justifyContent="center" spacing={1}>
-                <IconButton aria-label="chat" onClick={() => navigate(homeUrl+`chat`, { state: { uid: data.uid }} )} >
-                {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat`)}> */}
-                {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}> */}
+                <IconButton aria-label="chat" onClick={() => navigate(homeUrl + `chat`, { state: { uid: data.uid } })} >
+                  {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat`)}> */}
+                  {/* <IconButton aria-label="chat" onClick={() => navigate(`/chat/${data.name}`, { state: { uid: data.uid } })}> */}
                   <ChatIcon color="primary" />
                 </IconButton>
                 <IconButton aria-label="favorite" onClick={() => setIsFav(!isFav)}>

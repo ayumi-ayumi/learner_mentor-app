@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
-import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
 import { collection, addDoc, serverTimestamp, } from "firebase/firestore";
-import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
+import { FormInputCheckbox } from "../components/form-components/FormInputCheckbox";
+import { PlaceAutoCompleteForCafe } from "../components/Profile/PlaceAutoComplete";
 import { Button, Container, Stack, Alert } from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
 import { options_cafeDetail } from "../Props/props";
 import { CafePlace, CafeDetailType } from "../interfaces/interfaces";
-import CheckIcon from '@mui/icons-material/Check';
-import { PlaceAutoCompleteForCafe } from "./PlaceAutoComplete";
-import { useNavigate } from "react-router-dom";
+import "../styles/FormProfile.scss";
 
 export default function AddCafe() {
 

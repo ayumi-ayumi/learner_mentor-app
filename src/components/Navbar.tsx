@@ -48,7 +48,7 @@ export default function Navbar() {
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div>
           {logInUserProfile ?
-            <img src={logInUserProfile.avatar} onClick={handleClick} /> :
+            <img className="avatar-img" src={logInUserProfile.avatar} onClick={handleClick} /> :
             <IconButton
               id="basic-button"
               size="small"

@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
-import "../styles/FormProfile.scss";
 import { db } from "../firebase/BaseConfig";
+import { updateProfile } from "firebase/auth";
 import { serverTimestamp, doc, setDoc } from "firebase/firestore";
-import { FormInputText } from "../form-components/FormInputText";
-import { FormInputRadio } from "../form-components/FormInputRadio";
-import { FormInputCheckbox } from "../form-components/FormInputCheckbox";
-import { FormInputDropdown } from "../form-components/FormInputDropdown";
-import ShowAvatar from './ShowAvatar'
+import ShowAvatar from '../components/Profile/ShowAvatar'
+import { PlaceAutoComplete } from "../components/Profile/PlaceAutoComplete";
 import { Button, Container, Stack, Alert } from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
 import {
   options_learnerORmentor,
   options_LearningDuration,
@@ -18,10 +17,11 @@ import {
 } from "../Props/props";
 import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
-import CheckIcon from '@mui/icons-material/Check';
-import { PlaceAutoComplete } from "./PlaceAutoComplete";
-import { useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth";
+import "../styles/FormProfile.scss";
+import { FormInputText } from "../components/form-components/FormInputText";
+import { FormInputRadio } from "../components/form-components/FormInputRadio";
+import { FormInputDropdown } from "../components/form-components/FormInputDropdown";
+import { FormInputCheckbox } from "../components/form-components/FormInputCheckbox";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {

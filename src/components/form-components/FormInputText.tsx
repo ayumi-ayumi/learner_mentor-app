@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import { FormInputProps } from "../interfaces/interfaces";
+import { FormInputProps } from "../../interfaces/interfaces";
 import React from "react";
 
 export const FormInputText = ({ name, label }: FormInputProps) => {

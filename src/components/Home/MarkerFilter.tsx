@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/MarkerFilter.scss'
+import '../../styles/MarkerFilter.scss'
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 export default function MarkerFilter(props: { setFilter: (arg0: string) => void; }) {

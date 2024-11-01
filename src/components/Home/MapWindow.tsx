@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../styles/MapWindow.scss";
+import "../../styles/MapWindow.scss";
 import { Map } from "@vis.gl/react-google-maps";
 import PlaceMarker, { PlaceMarkerCafe } from "./PlaceMarker";
-import { CafeDetailType, UserProfileType } from "../interfaces/interfaces";
-import { db } from "../firebase/BaseConfig";
+import { CafeDetailType, UserProfileType } from "../../interfaces/interfaces";
+import { db } from "../../firebase/BaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../../context/AuthProvider";
 
 export default function MapWindow({ filter }: { filter: string }) {
   const { users } = useAuth();
@@ -52,23 +52,23 @@ export default function MapWindow({ filter }: { filter: string }) {
         mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
       >
         {visibleUsers.map((user) => (
-            <PlaceMarker
-              isOpen={user.uid == markerID}
-              setMarkerID={setMarkerID}
-              key={user.uid}
-              data={user}
-            />
+          <PlaceMarker
+            isOpen={user.uid == markerID}
+            setMarkerID={setMarkerID}
+            key={user.uid}
+            data={user}
+          />
         ))}
 
         {visibleCafes?.map((cafe) => (
-            <PlaceMarkerCafe
-              isOpen={cafe.place.placeId == markerID}
-              setMarkerID={setMarkerID}
-              markerID={markerID}
-              markerCafePlaceID={cafe.place.placeId}
-              key={cafe.place.placeId}
-              data={cafe}
-            />
+          <PlaceMarkerCafe
+            isOpen={cafe.place.placeId == markerID}
+            setMarkerID={setMarkerID}
+            markerID={markerID}
+            markerCafePlaceID={cafe.place.placeId}
+            key={cafe.place.placeId}
+            data={cafe}
+          />
         ))}
       </Map>
     </>

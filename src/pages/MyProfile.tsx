@@ -2,7 +2,7 @@ import React, { } from "react";
 import "../styles/FormProfile.scss";
 import { Button } from "@mui/material";
 import { useAuth } from "../context/AuthProvider";
-import ShowProfile from "./ShowProfile";
+import ShowProfile from "../components/ShowProfile";
 import { useNavigate } from "react-router-dom";
 
 export default function MyProfile() {

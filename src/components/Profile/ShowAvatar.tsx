@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { avatarImgs } from '../Props/props'
-import '../styles/ShowAvatar.scss'
+import { avatarImgs } from '../../Props/props'
+import '../../styles/ShowAvatar.scss'
 
 export default function ShowAvatar({ setAvatar, defaultAvatar }) {
 

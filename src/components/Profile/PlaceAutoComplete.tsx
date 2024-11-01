@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMap, useMapsLibrary, } from "@vis.gl/react-google-maps";
 import React from "react";
-import { CafePlace, Place, UserProfileType } from "../interfaces/interfaces";
+import { CafePlace, Place, UserProfileType } from "../../interfaces/interfaces";
 
 export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }: { onPlaceSelect: React.Dispatch<React.SetStateAction<Place | undefined>>, defaultPlace: string | undefined }) => {
   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);

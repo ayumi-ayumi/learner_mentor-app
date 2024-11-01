@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "./Navbar"
-import Search from "./Search"
 import Chats from './Chats'
+import Search from "./Search";
 
 export default function Sidebar (props) {
   return (
     <div className="sidebar">
-      {/* <Navbar /> */}
       <Search/>
       <Chats sendTo={props.sendTo}/>
     </div>

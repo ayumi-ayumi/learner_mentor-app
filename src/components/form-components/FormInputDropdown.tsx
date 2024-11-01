@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormControl, MenuItem, Select, OutlinedInput, Checkbox, FormHelperText, FormLabel, FormControlLabel, FormGroup } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-import { FormInputProps } from "../interfaces/interfaces";
+import { FormInputProps } from "../../interfaces/interfaces";
 
 export const FormInputDropdown = ({
   name,
