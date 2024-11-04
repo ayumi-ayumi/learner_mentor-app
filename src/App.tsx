@@ -1,18 +1,18 @@
 import { Routes, Route } from "react-router-dom";
 import React from "react";
+import { APIProvider } from "@vis.gl/react-google-maps";
 import Home from "./pages/Home";
 import FormProfile from "./pages/FormProfile";
 import MyProfile from "./pages/MyProfile";
 import AddCafe from "./pages/AddCafe";
-import { APIProvider } from "@vis.gl/react-google-maps";
-import { useAuth } from "./context/AuthProvider";
+import Chat_Home from "./pages/Chat_Home";
+import ErrorPage from "./pages/Error";
 import SignIn from "./Auth/SignIn";
 import SignUp from "./Auth/SignUp";
 import RequireAuth from "./Auth/RequireAuth";
-import Layout from "./Layout";
-import ErrorPage from "./Error";
+import Layout from "./layout/Layout";
+import { useAuth } from "./context/AuthProvider";
 import { defaultValues } from "./Props/props";
-import Chat_Home from "./pages/Chat_Home";
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 // const homeUrl = "/learner_mentor-app/";

@@ -1,6 +1,6 @@
 import React from "react";
-import '../../styles/MarkerFilter.scss'
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import '../../styles/MarkerFilter.scss'
 
 export default function MarkerFilter(props: { setFilter: (arg0: string) => void; }) {
   const [alignment, setAlignment] = React.useState('all');
@@ -15,10 +15,11 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
   return (
     <Box
       sx={{
-        // height: "80px",
-        borderRadius: 1,
-        margin: "20px 0",
-        // width:'100%'
+      //   // height: "80px",
+      //   borderRadius: 1,
+      //   margin: "20px 0",
+      //   // width:'100%'
+      // paddingTop: "100px"
       }}
     >
       <ToggleButtonGroup
@@ -37,14 +38,3 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
     </Box>
   );
 }
-
-// <div className="filter-tab">
-//   <div onClick={()=>props.setFilter("learner")}>Learner</div>
-//   <div onClick={()=>props.setFilter("mentor")}>Mentor</div>
-//   <div onClick={()=>props.setFilter("cafes")}>Cafes</div>
-//   <div onClick={()=>props.setFilter("all")}>Show ALL</div>
-//   {/* <div style={{backgroundColor:"#22ccff"}} onClick={()=>props.setFilter("learner")}>Learner</div>
-//   <div style={{backgroundColor:"yellow"}} onClick={()=>props.setFilter("mentor")}>Mentor</div>
-//   <div style={{backgroundColor:"pink"}} onClick={()=>props.setFilter("cafes")}>Cafes</div>
-//   <div onClick={()=>props.setFilter("all")}>Show ALL</div> */}
-// </div>
