@@ -6,6 +6,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useAuth } from "../../context/AuthProvider";
 import { CafeDetailType, UserProfileType } from "../../interfaces/interfaces";
 import "../../styles/MapWindow.scss";
+import { ControlPanel } from "./Control-panel";
 
 export default function MapWindow({ filter }: { filter: string }) {
   const { users } = useAuth();
@@ -44,13 +45,14 @@ export default function MapWindow({ filter }: { filter: string }) {
   return (
     <div className="map">
       <Map
+        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
         zoom={12}
         center={center}
         gestureHandling={"greedy"}
-        disableDefaultUI={false} //trueにすると、ズームのボタンなどが全て非表示になる
-        style={{ minHeight: "50vh" }}
-        // style={{ minWidth: 800, minHeight: "80vh" }}
-        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID} //To use a marker, map ID is needed
+        disableDefaultUI //trueにすると、ズームのボタンなどが全て非表示になる
+        // style={{ minHeight: "50vh"}}
+        // className="map"
+        style={{ minWidth: 800, minHeight: "80vh" }}
       >
         {visibleUsers.map((user) => (
           <PlaceMarker
@@ -72,6 +74,7 @@ export default function MapWindow({ filter }: { filter: string }) {
           />
         ))}
       </Map>
+      <ControlPanel />
     </div>
   );
 }

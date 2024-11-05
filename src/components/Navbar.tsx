@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Menu, MenuItem, IconButton } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 import "../styles/Navbar.scss";
 
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const { logOut, logInUserProfile, homeUrl } = useAuth();
   const navigate = useNavigate();
@@ -20,8 +20,7 @@ export default function Navbar() {
       .catch((error) => console.error(error));
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (event:any) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
