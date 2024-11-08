@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <>
       <div className="main_container">
-        <MarkerFilter setFilter={setFilter} />
-        <MapWindow filter={filter} />
+        {/* <MarkerFilter setFilter={setFilter} /> */}
+        <MapWindow filter={filter} setFilter={setFilter} />
       </div>
     </>
   );

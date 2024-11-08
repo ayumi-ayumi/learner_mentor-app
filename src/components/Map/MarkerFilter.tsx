@@ -2,7 +2,7 @@ import React from "react";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import '../../styles/MarkerFilter.scss'
 
-export default function MarkerFilter(props: { setFilter: (arg0: string) => void; }) {
+export default function MarkerFilter({ setFilter }) {
   const [alignment, setAlignment] = React.useState('all');
 
   const handleChange = (
@@ -30,10 +30,10 @@ export default function MarkerFilter(props: { setFilter: (arg0: string) => void;
         aria-label="Platform"
         fullWidth={true}
       >
-        <ToggleButton onClick={() => props.setFilter("learner")} value="Learner">Learner</ToggleButton>
-        <ToggleButton onClick={() => props.setFilter("mentor")} value="Mentor">Mentor</ToggleButton>
-        <ToggleButton onClick={() => props.setFilter("cafes")} value="cafes">Cafes</ToggleButton>
-        <ToggleButton onClick={() => props.setFilter("all")} value="show all">Show all</ToggleButton>
+        <ToggleButton onClick={() => setFilter("learner")} value="Learner">Learner</ToggleButton>
+        <ToggleButton onClick={() => setFilter("mentor")} value="Mentor">Mentor</ToggleButton>
+        <ToggleButton onClick={() => setFilter("cafes")} value="cafes">Cafes</ToggleButton>
+        <ToggleButton onClick={() => setFilter("all")} value="show all">Show all</ToggleButton>
       </ToggleButtonGroup>
     </Box>
   );

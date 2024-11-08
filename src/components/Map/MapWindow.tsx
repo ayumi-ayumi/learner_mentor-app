@@ -6,9 +6,9 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useAuth } from "../../context/AuthProvider";
 import { CafeDetailType, UserProfileType } from "../../interfaces/interfaces";
 import "../../styles/MapWindow.scss";
-import { ControlPanel } from "./Control-panel";
+import ControlPanel from "./Control-panel";
 
-export default function MapWindow({ filter }: { filter: string }) {
+export default function MapWindow({ filter, setFilter }) {
   const { users } = useAuth();
   const center = { lat: 52.52, lng: 13.41 }; //Berlin
   const [markerID, setMarkerID] = useState(null);
@@ -74,7 +74,7 @@ export default function MapWindow({ filter }: { filter: string }) {
           />
         ))}
       </Map>
-      <ControlPanel />
+      <ControlPanel filter={filter} setFilter={setFilter}/>
     </div>
   );
 }
