@@ -13,13 +13,21 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 // };
 
 export default function ControlPanel({ filter, setFilter }) {
-  console.log(filter)
+  // console.log(filter)
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setAge(event.target.value as string);
+  // };
 
-  const style = { fontSize: "0.75em", position: "absolute", right: "0", top: "0", margin: "24px", backgroundColor: "#fff" }
+  const style = { 
+    fontSize: "0.75em", 
+    position: "absolute", 
+    right: "0", top: "0", 
+    margin: "24px", 
+    backgroundColor: "#fff", 
+    boxShadow: "0px 0px 13px 7px #a5a3a3" 
+  }
+
   return (
     <div style={style}>
       <FormControl sx={{ m: 1, minWidth: 150 }} >

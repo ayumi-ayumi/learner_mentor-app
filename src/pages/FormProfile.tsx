@@ -17,11 +17,11 @@ import {
 } from "../Props/props";
 import { Place, UserProfileType } from "../interfaces/interfaces";
 import { useAuth } from "../context/AuthProvider";
-import "../styles/FormProfile.scss";
 import { FormInputText } from "../components/form-components/FormInputText";
 import { FormInputRadio } from "../components/form-components/FormInputRadio";
 import { FormInputDropdown } from "../components/form-components/FormInputDropdown";
 import { FormInputCheckbox } from "../components/form-components/FormInputCheckbox";
+import "../styles/FormProfile.scss";
 
 // export default function FormProfile() {
 export default function FormProfile({ defaultValues }: { defaultValues: UserProfileType | undefined }) {
@@ -78,11 +78,21 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
   return (
     <>
       <FormProvider {...methods}>
-        <Container maxWidth="sm" component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-          {saved && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            Your profile is save successfully.
-          </Alert>}
-          <Stack
+        <Container
+          maxWidth="sm"
+          component="form"
+          onSubmit={methods.handleSubmit(onSubmit)}
+          style={{
+            display: "grid",
+          }}
+          className="form-container"
+
+        >
+          {saved &&
+            <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+              Your profile is save successfully.
+            </Alert>}
+          {/* <Stack
             style={{
               display: "grid",
               // gridRowGap: "20px",
@@ -90,7 +100,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
               // margin: "10px 300px",
             }}
             className="form-container"
-          >
+          > */}
             <ShowAvatar setAvatar={setAvatar} defaultAvatar={userProfile?.avatar} />
             <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address} />
             <FormInputText name="name" label="Name" />
@@ -125,7 +135,7 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
               </Button>
               <Button onClick={handleReset}>Reset</Button>
             </Stack>
-          </Stack>
+          {/* </Stack> */}
         </Container>
       </FormProvider>
     </>
