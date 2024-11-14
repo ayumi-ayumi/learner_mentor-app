@@ -16,7 +16,6 @@ export default function ShowAvatar({ setAvatar, defaultAvatar }) {
   }
 
   return (
-    <>
       <div className='avatar-container'>
         {avatarImgs.map((avatar) => (
           <div key={avatar.id}>
@@ -24,7 +23,6 @@ export default function ShowAvatar({ setAvatar, defaultAvatar }) {
           </div>))
         }
       </div>
-    </>
   )
 }
 

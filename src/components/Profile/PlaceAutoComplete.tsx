@@ -1,7 +1,8 @@
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useMap, useMapsLibrary, } from "@vis.gl/react-google-maps";
-import React from "react";
 import { CafePlace, Place, UserProfileType } from "../../interfaces/interfaces";
+import TextField from '@mui/material/TextField';
 
 export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }: { onPlaceSelect: React.Dispatch<React.SetStateAction<Place | undefined>>, defaultPlace: string | undefined }) => {
   const [placeAutocomplete, setPlaceAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
@@ -38,10 +39,12 @@ export const PlaceAutoComplete = ({ onPlaceSelect, defaultPlace }: { onPlaceSele
   }, [onPlaceSelect, placeAutocomplete]);
 
   return (
-    <div className="autocomplete-container">
-      <input ref={inputRef}
+    <div>
+      {/* <input ref={inputRef}
         defaultValue={defaultPlace}
-      />
+      /> */}
+      <TextField id="outlined-basic" label="Address" variant="standard" inputRef={inputRef} defaultValue={defaultPlace}/>
+
     </div>
   );
 };
@@ -58,9 +61,9 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }: { setPlace: React.Dispatc
       fields: ['geometry', 'place_id'],
       componentRestrictions: { country: "de" },
     };
-
+    
     setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
-
+    
   }, [places]);
 
   useEffect(() => {
@@ -81,9 +84,10 @@ export const PlaceAutoCompleteForCafe = ({ setPlace }: { setPlace: React.Dispatc
   }, [setPlace, placeAutocomplete]);
 
   return (
-    <div className="autocomplete-container">
-      <input ref={inputRef}
-      />
+    <div>
+      {/* <input ref={inputRef}
+      /> */}
+    <TextField id="outlined-basic" label="Address" variant="standard" inputRef={inputRef} />
     </div>
   );
 };

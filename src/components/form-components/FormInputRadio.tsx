@@ -18,24 +18,27 @@ export const FormInputRadio = ({
   const { control } = useFormContext();
 
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field, fieldState: { error } }) => (
-        <FormControl {...field} error={!!error}>
-          <FormLabel>{label}</FormLabel>
-          <RadioGroup>
-            {options?.map((option) => (
-              <FormControlLabel
-                value={option}
-                control={<Radio checked={field.value === option} />}
-                label={option}
-                key={option}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      )}
-    ></Controller>
+    <div>
+
+      <Controller
+        control={control}
+        name={name}
+        render={({ field, fieldState: { error } }) => (
+          <FormControl {...field} error={!!error}>
+            <FormLabel>{label}</FormLabel>
+            <RadioGroup>
+              {options?.map((option) => (
+                <FormControlLabel
+                  value={option}
+                  control={<Radio checked={field.value === option} />}
+                  label={option}
+                  key={option}
+                />
+              ))}
+            </RadioGroup>
+          </FormControl>
+        )}
+      ></Controller>
+    </div>
   );
 };

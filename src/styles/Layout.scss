@@ -8,11 +8,13 @@ header {
 }
 
 main {
+  background-color: #DFF2EB;
   padding-top: 140px;
   width: 100%;
-  background-color: #DFF2EB;
+  // height: 80vh;
 }
 
-// footer {
-
-// }
+footer {
+  height: 2vh;
+  background-color: #4A628A;
+}

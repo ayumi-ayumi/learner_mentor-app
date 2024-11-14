@@ -35,12 +35,8 @@ export default function App() {
             }
           />
           <Route path={homeUrl + `chat`} element={<Chat_Home />} />
-          {/* <Route path={"/chat/:sendTo"} element={<Chat_Home />} /> */}
-          {/* <Route path={"/chat/:sendTo"} element={<Chatroom />} /> */}
-          {/* <Route path={`/chat`} element={<Chatroom />} /> */}
           <Route path={homeUrl + `myprofile`} element={<MyProfile />} />
-          {/* <Route path="addprofile" element={<FormProfile/>} />
-          <Route path="editprofile" element={<FormProfile />} /> */}
+          {/* <Route path={homeUrl + `myprofile`} element={<FormProfile defaultValues={logInUserProfile} />} /> */}
           <Route path={homeUrl + `addprofile`} element={<FormProfile defaultValues={defaultValues} />} />
           <Route path={homeUrl + `editprofile`} element={<FormProfile defaultValues={logInUserProfile} />} />
           <Route path={homeUrl + `addcafe`} element={<AddCafe />} />

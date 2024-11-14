@@ -101,40 +101,40 @@ export default function FormProfile({ defaultValues }: { defaultValues: UserProf
             }}
             className="form-container"
           > */}
-            <ShowAvatar setAvatar={setAvatar} defaultAvatar={userProfile?.avatar} />
-            <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address} />
-            <FormInputText name="name" label="Name" />
-            <FormInputRadio
-              name={"learnerORmentor"}
-              label={"I am a "}
-              options={options_learnerORmentor}
-            />
-            {learnerORmentor === "Learner" && (<FormInputRadio
-              name={"learningDuration"}
-              label={"I have been learning for "}
-              options={options_LearningDuration}
-            />)}
-            {learnerORmentor === "Mentor" && (<FormInputRadio
-              name={"workingDuration"}
-              label={"I have been working for "}
-              options={options_WorkingDuration}
-            />)}
-            <FormInputCheckbox
-              name={"programmingLanguages"}
-              label={"My skills"}
-              options={options_ProgrammingLanguages}
-            />
-            <FormInputDropdown
-              name="languages"
-              label="Languages"
-              options={options_Langugages}
-            />
-            <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
-              <Button onClick={handleReset}>Reset</Button>
-            </Stack>
+          <ShowAvatar setAvatar={setAvatar} defaultAvatar={userProfile?.avatar} />
+          <FormInputText name="name" label="Name" />
+          <PlaceAutoComplete onPlaceSelect={setSelectedPlace} defaultPlace={userProfile?.place?.address} />
+          <FormInputRadio
+            name={"learnerORmentor"}
+            label={"I am a "}
+            options={options_learnerORmentor}
+          />
+          {learnerORmentor === "Learner" && (<FormInputRadio
+            name={"learningDuration"}
+            label={"I have been learning for "}
+            options={options_LearningDuration}
+          />)}
+          {learnerORmentor === "Mentor" && (<FormInputRadio
+            name={"workingDuration"}
+            label={"I have been working for "}
+            options={options_WorkingDuration}
+          />)}
+          <FormInputCheckbox
+            name={"programmingLanguages"}
+            label={"My skills"}
+            options={options_ProgrammingLanguages}
+          />
+          <FormInputDropdown
+            name="languages"
+            label="Languages"
+            options={options_Langugages}
+          />
+          <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Button variant="contained" type="submit">
+              Save
+            </Button>
+            <Button onClick={handleReset}>Reset</Button>
+          </Stack>
           {/* </Stack> */}
         </Container>
       </FormProvider>

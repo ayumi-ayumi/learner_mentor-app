@@ -1,16 +1,18 @@
-
 .form-container {
   font-family: "Arial", sans-serif;
-  background-color: #e0e2dd;
+  background-color: #FAFAFA;
   padding: 30px;
   // display: flex;
   // justify-content: center;
   // align-items: center;
   // height: 100vh;
   // margin: 0;
-
+  > div {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
 }
-
+}
 // .form-container {
 //   background-color: white;
 //   padding: 30px;
@@ -20,7 +22,8 @@
 //   // max-width: 400px;
 // }
 
-label, legend {
+label,
+legend {
   font-size: 18px;
   margin-bottom: 5px;
 }

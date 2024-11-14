@@ -122,7 +122,7 @@ export default function SignIn() {
               </Button>
             )} */}
             <Typography>
-              Don't have an account? <Link to="/signup">Sign up</Link>
+              Don't have an account? <Link to={homeUrl + `signup`}>Sign up</Link>
             </Typography>
           </Paper>
         </Grid>
