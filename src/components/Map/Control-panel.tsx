@@ -30,7 +30,7 @@ export default function ControlPanel({ filter, setFilter }) {
 
   return (
     <div style={style}>
-      <FormControl sx={{ m: 1, minWidth: 150 }} >
+      <FormControl sx={{ m: 1, minWidth: 120 }} >
         <Select
           value={filter}
           // onChange={handleChange}

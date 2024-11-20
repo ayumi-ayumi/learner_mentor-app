@@ -31,6 +31,7 @@ export default function Navbar() {
   return (
     <>
       <div className="nav_container">
+        <img src="assets/logo/logo.png" alt="logo"  />
         <Link className="site_logo" to={homeUrl}>Learner or Mentor</Link>
         {logInUserProfile && <div>Hello {logInUserProfile?.name}</div>}
         <div className="user_icon">

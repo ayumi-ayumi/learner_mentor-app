@@ -52,7 +52,7 @@ export default function MapWindow({ filter, setFilter }) {
         disableDefaultUI //trueにすると、ズームのボタンなどが全て非表示になる
         // style={{ minHeight: "50vh"}}
         // className="map"
-        style={{ minWidth: 800, minHeight: "80vh" }}
+        style={{ minWidth: 800, minHeight: "62vh" }}
       >
         {visibleUsers.map((user) => (
           <PlaceMarker
